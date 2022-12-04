@@ -7,13 +7,13 @@ const LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 const WORD_RE = /^[a-z]+$/;
 const MAXATTEMPTS = 20;
 
-export type WoodSearch = {
+export type WordSearch = {
 	grid: string[][];
 	solved: string[][];
 	unplaced: string[];
 	words: string[];
 };
-export const wordsearch = (words: string[], width = 20, height = 20): WoodSearch => {
+export const wordsearch = (words: string[], width = 20, height = 20): WordSearch => {
 	const opts = {
 		backwards: 0.5,
 		letters: LETTERS

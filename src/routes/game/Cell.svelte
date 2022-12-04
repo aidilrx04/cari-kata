@@ -1,26 +1,57 @@
 <script lang="ts">
-	export let x: number;
-	export let y: number;
-	export let label: string;
+	import { CELL_WIDTH, cells, isMouseDown, validateAnswer, foundWords } from '$lib/stores';
+	import { strCoordToArray } from '$lib/util';
+
+	export let coord: [number, number];
+
+	// Mouse events
+	const onMouseDown = (event: MouseEvent & { currentTarget: HTMLSpanElement }) => {
+		const targetElement = event.currentTarget;
+
+		$cells.start = strCoordToArray(targetElement?.dataset?.coord as string).map((coord) =>
+			Number(coord)
+		);
+
+		$isMouseDown = true;
+	};
+
+	const onMouseUp = (event: MouseEvent & { currentTarget: HTMLSpanElement }) => {
+		const targetElement = event.currentTarget;
+
+		$cells.end = strCoordToArray(targetElement?.dataset.coord as string).map((coord) =>
+			Number(coord)
+		);
+
+		// check user answer
+		$validateAnswer = true;
+
+		$isMouseDown = false;
+	};
 </script>
 
-<span data-coord={[x, y]} on:mousedown on:mouseup title="{x}, {y}">
-	{label.trim() === '' ? '-' : label}
+<span
+	style:height="{$CELL_WIDTH}px"
+	style:width="{$CELL_WIDTH}px"
+	on:mousedown={onMouseDown}
+	on:mouseup={onMouseUp}
+	data-coord={coord}
+	style:color={$foundWords.coords.filter((n) => n[0] === coord[0] && n[1] === coord[1]).length > 0
+		? 'white'
+		: 'black'}
+	class="flex items-center justify-center z-10 box-border select-none uppercase font-normal"
+>
+	<slot />
 </span>
 
 <style>
 	span {
-		user-select: none;
+		/* user-select: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		z-index: 2;
-		/* pointer-events: none; */
-		display: inline-block;
-		width: var(--width, 30px);
-		min-width: var(--width, 30px);
-		height: var(--height, 30px);
-		display: grid;
-		place-items: center;
-		/* border: 1px solid gray; */
-		box-sizing: border-box;
-		cursor: pointer;
+		border: 1px solid lightgray;
+		border-collapse: collapse;
+		box-sizing: border-box; */
 	}
 </style>
