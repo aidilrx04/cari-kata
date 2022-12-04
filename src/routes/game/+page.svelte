@@ -47,9 +47,6 @@
 		}
 	}
 
-	$: if ($cells.start.length > 0 && $cells.end.length > 0) {
-	}
-
 	// helper fns
 
 	/** validate points in cellcoord*/
