@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Modal from '$lib/Modal.svelte';
 	import {
 		cells,
 		currentColor,
@@ -6,14 +7,17 @@
 		grid,
 		hideFiller,
 		highlights,
+		isGameStarted,
+		startTime,
 		validateAnswer,
 		words
 	} from '$lib/stores';
+	import Timer from '$lib/Timer.svelte';
 	import { colors, getDirection, validatePath } from '$lib/util';
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
 
-	const TOTAL_COLUMNS = 7;
+	const TOTAL_COLUMNS = 8;
 	const TOTAL_ROWS = TOTAL_COLUMNS + 2;
 	const _words = [
 		{ id: 22072, word: 'tabut', length: 5 },
@@ -114,7 +118,15 @@
 		</div>
 		<div class="timer flex flex-col items-end justify-center">
 			<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
-			<span class="block text-slate-800 text-3xl">00:15</span>
+			{#if $startTime}
+				<Timer
+					startAt={$startTime}
+					startCounting={$isGameStarted}
+					_class="block text-slate-800 text-3xl"
+				/>
+			{:else}
+				<span class="placeholder block text-slate-800 text-3xl">00:00</span>
+			{/if}
 		</div>
 	</header>
 
@@ -123,7 +135,23 @@
 	>
 
 	<div class="game mt-3">
-		<Grid words={_words} columns={TOTAL_COLUMNS} rows={TOTAL_ROWS} />
-		<Words />
+		{#if $isGameStarted}
+			<Grid words={_words} columns={TOTAL_COLUMNS} rows={TOTAL_ROWS} />
+			<Words />
+		{:else}
+			<div class="relative max-w-full">
+				<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
+					<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
+					<div class="content">
+						<button
+							on:click={() => ($isGameStarted = true)}
+							class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
+							>Main</button
+						>
+					</div>
+					<div slot="footer" />
+				</Modal>
+			</div>
+		{/if}
 	</div>
 </div>

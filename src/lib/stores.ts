@@ -35,3 +35,7 @@ export const foundWords = writable<{
 export const currentColor = writable(colors[Math.floor(Math.random() * colors.length)]);
 
 export const hideFiller = writable(false);
+
+export const isGameStarted = writable(false);
+
+export const startTime = derived(isGameStarted, ($isGameStarted) => $isGameStarted && new Date());
