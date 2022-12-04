@@ -42,16 +42,3 @@
 >
 	<slot />
 </span>
-
-<style>
-	span {
-		/* user-select: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 2;
-		border: 1px solid lightgray;
-		border-collapse: collapse;
-		box-sizing: border-box; */
-	}
-</style>
