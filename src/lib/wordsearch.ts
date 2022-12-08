@@ -113,7 +113,6 @@ export const wordsearch = (
 			x = ox;
 			y = oy;
 
-			console.log(word);
 			for (let l = 0; l < word.length; l++) {
 				grid[y][x] = word.charAt(l);
 
@@ -130,7 +129,6 @@ export const wordsearch = (
 		}
 
 		if (usedWords.length >= config.totalWordsInGrid) {
-			console.log(usedWords);
 			break;
 		}
 	}
