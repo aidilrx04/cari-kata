@@ -58,7 +58,7 @@
 	style="position: relative; top: 0; left: 50%; transform: translate(-50%, 0)"
 >
 	<Highlights />
-	<div id="grid">
+	<div id="grid" class="bg-gray-50 rounded-md shadow-sm">
 		{#each $gridStore as row, r}
 			<Row>
 				{#each row as cell, c}
