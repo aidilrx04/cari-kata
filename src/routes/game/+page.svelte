@@ -14,23 +14,11 @@
 	} from '$lib/stores';
 	import Timer from '$lib/Timer.svelte';
 	import { colors, getDirection, validatePath } from '$lib/util';
+	import type { PageData } from './$types';
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
 
-	const TOTAL_COLUMNS = 8;
-	const TOTAL_ROWS = TOTAL_COLUMNS + 2;
-	const _words = [
-		{ id: 22072, word: 'tabut', length: 5 },
-		{ id: 19911, word: 'salih', length: 5 },
-		{ id: 24315, word: 'wahyu', length: 5 },
-		{ id: 4512, word: 'cop', length: 3 },
-		{ id: 12252, word: 'kupon', length: 5 },
-		{ id: 9632, word: 'kecam', length: 5 },
-		{ id: 7714, word: 'hirup', length: 5 },
-		{ id: 19571, word: 'rokok', length: 5 },
-		{ id: 4577, word: 'cuti', length: 4 },
-		{ id: 5706, word: 'duduk', length: 5 }
-	].map((word) => word.word);
+	export let data: PageData;
 
 	// effects
 	$: if ($validateAnswer) {
@@ -136,7 +124,8 @@
 
 	<div class="game mt-3">
 		{#if $isGameStarted}
-			<Grid words={_words} columns={TOTAL_COLUMNS} rows={TOTAL_ROWS} />
+			<Grid words={data.words.map((word) => word.word)} type={data.type} />
+
 			<Words />
 		{:else}
 			<div class="relative max-w-full">
