@@ -24,7 +24,6 @@ export type DirectionInfo = {
 };
 
 const LETTERS = 'abcdefghijklmnopqrstuvwxyz';
-const WORD_RE = /^[a-zA-Z]+$/;
 const MAX_ATTEMPTS = 30;
 
 export const wordsearch = (
