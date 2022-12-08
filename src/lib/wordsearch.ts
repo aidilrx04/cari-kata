@@ -11,7 +11,7 @@ export type WordSearch = {
 export type WordSearchOption = {
 	backwards: number;
 	totalWordsInGrid: number;
-	letters: string;
+	letters?: string;
 };
 
 export type DirectionInfo = {
@@ -36,6 +36,10 @@ export const wordsearch = (
 		letters: LETTERS
 	}
 ): WordSearch => {
+	if (!config.letters) {
+		config.letters = LETTERS;
+	}
+
 	const usedWords: string[] = [];
 	const unplaced: string[] = [];
 
