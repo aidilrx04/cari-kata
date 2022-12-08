@@ -37,7 +37,5 @@
 	},
 	"type": "module",
 	"license": "MIT",
-	"dependencies": {
-		"two.js": "^0.8.10"
-	}
+	"dependencies": {}
 }
