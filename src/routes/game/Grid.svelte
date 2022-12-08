@@ -11,12 +11,12 @@
 		hideFiller
 	} from '$lib/stores';
 	import { onMount } from 'svelte';
+	import type { Mode } from '$lib/modes';
 
 	export let words: string[];
-	export let columns: number;
-	export let rows: number;
+	export let type: Mode;
 
-	const { grid, solved, words: gridWords } = wordsearch(words, columns, rows);
+	const { grid, solved, words: gridWords } = wordsearch(words, type.grid.column, type.grid.row);
 
 	let gridContainer: HTMLDivElement;
 
@@ -31,7 +31,7 @@
 
 	// effects
 	$: if ($gridRect) {
-		$CELL_WIDTH = $gridRect.width / columns;
+		$CELL_WIDTH = $gridRect.width / type.grid.column;
 	}
 
 	// lifecycle events
