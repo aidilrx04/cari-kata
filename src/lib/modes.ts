@@ -6,6 +6,7 @@ export type Mode = {
 	words: number;
 	backwordProb: number;
 	diagonalProb: number;
+	type: MODES;
 };
 
 export enum MODES {
@@ -24,7 +25,8 @@ export const MODE_TYPES: {
 		},
 		words: 6,
 		backwordProb: 0.25,
-		diagonalProb: 0.25
+		diagonalProb: 0.25,
+		type: MODES.EASY
 	},
 	[MODES.NORMAL]: {
 		grid: {
@@ -33,7 +35,8 @@ export const MODE_TYPES: {
 		},
 		words: 8,
 		backwordProb: 0.5,
-		diagonalProb: 0.5
+		diagonalProb: 0.5,
+		type: MODES.NORMAL
 	},
 	[MODES.HARD]: {
 		grid: {
@@ -42,6 +45,7 @@ export const MODE_TYPES: {
 		},
 		words: 12,
 		backwordProb: 0.75,
-		diagonalProb: 0.75
+		diagonalProb: 0.75,
+		type: MODES.HARD
 	}
 };
