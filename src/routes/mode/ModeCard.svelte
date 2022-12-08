@@ -1,0 +1,19 @@
+<script lang="ts">
+	export let ctaHref = '#';
+</script>
+
+<div class="mode-card w-[170px] py-2 h-auto bg-gray-50 rounded-md shadow-md my-4">
+	<div class="title font-semibold text-center text-xl mb-2">
+		<slot name="title" />
+	</div>
+	<div class="description text-xs">
+		<slot name="description" />
+	</div>
+	<div class="call-to-action mt-2">
+		<a
+			href={ctaHref}
+			class="bg-violet-600 text-gray-50 block mx-5 px-2 py-1 text-lg text-center rounded shadow-md hover:bg-violet-700"
+			>MAIN</a
+		>
+	</div>
+</div>
