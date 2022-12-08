@@ -13,11 +13,26 @@ export type WordSearch = {
 	unplaced: string[];
 	words: string[];
 };
-export const wordsearch = (words: string[], width = 20, height = 20): WordSearch => {
-	const opts = {
+export type WordSearchOption = {
+	backwards: number;
+};
+
+export const wordsearch = (
+	words: string[],
+	width = 20,
+	height = 20,
+	opt?: WordSearchOption
+): WordSearch => {
+	let opts = {
 		backwards: 0.5,
 		letters: LETTERS
 	};
+	if (opt) {
+		opts = {
+			...opt,
+			letters: LETTERS
+		};
+	}
 
 	// filter out any non-words
 	const oriWords = [...words];
