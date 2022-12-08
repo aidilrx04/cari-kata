@@ -1,73 +1,71 @@
-/*
-original by Dave Eddy
-
-*/
-
-const LETTERS = 'abcdefghijklmnopqrstuvwxyz';
-const WORD_RE = /^[a-z]+$/;
-const MAXATTEMPTS = 20;
+import { shuffle } from './util';
 
 export type WordSearch = {
 	grid: string[][];
 	solved: string[][];
 	unplaced: string[];
 	words: string[];
+	config: WordSearchOption;
 };
+
 export type WordSearchOption = {
 	backwards: number;
+	totalWordsInGrid: number;
+	letters: string;
 };
 
+export type DirectionInfo = {
+	maxX: number; // max starting pos at x-axis
+	maxY: number; // max starting pos at y-axis
+	minX: number; // min starting pos at x-axis
+	minY: number; // min starting pos at y-axis
+	dx: number; // where should next letter be at x-axis
+	dy: number; // where should next letter be at y-axis
+};
+
+const LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+const WORD_RE = /^[a-zA-Z]+$/;
+const MAX_ATTEMPTS = 30;
+
 export const wordsearch = (
-	words: string[],
-	width = 20,
-	height = 20,
-	opt?: WordSearchOption
-): WordSearch => {
-	let opts = {
+	word_list: string[],
+	column: number,
+	row: number,
+	config: WordSearchOption = {
 		backwards: 0.5,
+		totalWordsInGrid: 10,
 		letters: LETTERS
-	};
-	if (opt) {
-		opts = {
-			...opt,
-			letters: LETTERS
-		};
 	}
-
-	// filter out any non-words
-	const oriWords = [...words];
-	words = words.filter((word) => WORD_RE.test(word));
-
-	// sort words by length in descending order(biggest first)
-	words.sort((word1, word2) => (word1.length < word2.length ? -1 : 1));
-
-	// populate the grid with empty arrays
-	const grid: string[][] = new Array(height);
-	for (let i = 0; i < grid.length; i++) {
-		grid[i] = new Array(width);
-	}
-
-	// any invalid/unfit words stored here
+): WordSearch => {
+	const usedWords: string[] = [];
 	const unplaced: string[] = [];
 
-	// loop the words
-	for (let i = 0; i < words.length; i++) {
-		let word = words[i];
-		const originalWord = words[i];
+	// populate the grid with empty arrays
+	const grid: string[][] = new Array(row);
+	for (let i = 0; i < grid.length; i++) {
+		grid[i] = new Array(column);
+	}
 
-		// reverse the word if needed
-		if (Math.random() < opts.backwards) {
-			word = word.split('').reverse().join('');
+	const calcWords = [...word_list];
+	shuffle(calcWords);
+
+	for (let i = 0; i < calcWords.length; i++) {
+		let word = calcWords[i];
+		const originalWord = calcWords[i];
+
+		if (Math.random() < config.backwards) {
+			word = word.split('').reverse().join();
 		}
 
 		let attempts = 0;
-		while (attempts < MAXATTEMPTS) {
+		while (attempts < MAX_ATTEMPTS) {
 			// determine the direction (up-right, right, down-right, down)
 			const direction = Math.floor(Math.random() * 4);
-			const info = directionInfo(word, direction, width, height);
+			const info = directionInfo(word, direction, column, row);
 
 			// word too long, bail out
 			if (info.maxX < 0 || info.maxY < 0 || info.maxX < info.minX || info.maxY < info.minY) {
+				console.log('balls');
 				unplaced.push(originalWord);
 				break;
 			}
@@ -119,13 +117,24 @@ export const wordsearch = (
 				y += info.dy;
 				x += info.dx;
 			}
-			break;
-		} // end placement loopt
 
-		if (attempts >= 20) {
+			// console.log(originalWord);
+			usedWords.push(originalWord);
+			// console.log(usedWords);
+			break;
+		} // end placement loop
+
+		if (attempts >= MAX_ATTEMPTS) {
+			console.log('hehe');
 			unplaced.push(originalWord);
 		}
-	} // end word loop
+
+		if (usedWords.length >= config.totalWordsInGrid) {
+			console.log('woi');
+			console.log(usedWords);
+			break;
+		}
+	}
 
 	const solved = JSON.parse(JSON.stringify(grid));
 
@@ -134,7 +143,7 @@ export const wordsearch = (
 		for (let j = 0; j < grid[i].length; j++) {
 			if (!grid[i][j]) {
 				solved[i][j] = ' ';
-				grid[i][j] = opts.letters.charAt(Math.floor(Math.random() * opts.letters.length));
+				grid[i][j] = config.letters.charAt(Math.floor(Math.random() * config.letters.length));
 			}
 		}
 	}
@@ -144,18 +153,11 @@ export const wordsearch = (
 		grid: grid,
 		solved: solved,
 		unplaced: unplaced,
-		words: oriWords
+		words: usedWords,
+		config
 	};
 };
 
-export type DirectionInfo = {
-	maxX: number; // max starting pos at x-axis
-	maxY: number; // max starting pos at y-axis
-	minX: number; // min starting pos at x-axis
-	minY: number; // min starting pos at y-axis
-	dx: number; // where should next letter be at x-axis
-	dy: number; // where should next letter be at y-axis
-};
 export const directionInfo = (
 	word: string,
 	direction: number,
@@ -225,8 +227,3 @@ export const directionInfo = (
 		dy
 	};
 };
-
-// // test
-// const search = wordsearch(['hi', 'hello'], 20, 20);
-
-// console.log(search);
