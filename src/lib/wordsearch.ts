@@ -57,7 +57,7 @@ export const wordsearch = (
 		const originalWord = calcWords[i];
 
 		if (Math.random() < config.backwards) {
-			word = word.split('').reverse().join();
+			word = word.split('').reverse().join('');
 		}
 
 		let attempts = 0;
@@ -68,7 +68,6 @@ export const wordsearch = (
 
 			// word too long, bail out
 			if (info.maxX < 0 || info.maxY < 0 || info.maxX < info.minX || info.maxY < info.minY) {
-				console.log('balls');
 				unplaced.push(originalWord);
 				break;
 			}
@@ -114,6 +113,7 @@ export const wordsearch = (
 			x = ox;
 			y = oy;
 
+			console.log(word);
 			for (let l = 0; l < word.length; l++) {
 				grid[y][x] = word.charAt(l);
 
@@ -121,19 +121,15 @@ export const wordsearch = (
 				x += info.dx;
 			}
 
-			// console.log(originalWord);
 			usedWords.push(originalWord);
-			// console.log(usedWords);
 			break;
 		} // end placement loop
 
 		if (attempts >= MAX_ATTEMPTS) {
-			console.log('hehe');
 			unplaced.push(originalWord);
 		}
 
 		if (usedWords.length >= config.totalWordsInGrid) {
-			console.log('woi');
 			console.log(usedWords);
 			break;
 		}
