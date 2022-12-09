@@ -6,6 +6,6 @@
 
 <style global>
 	body {
-		@apply bg-slate-50 text-slate-800;
+		@apply bg-slate-100 text-slate-800;
 	}
 </style>
