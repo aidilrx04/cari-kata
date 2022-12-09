@@ -20,7 +20,15 @@ export const load: PageLoad = async (req) => {
 		length: wordLength.toString()
 	}).toString();
 
-	const response = await req.fetch(`${apiUrl}?${queryString}`);
+	let response: Response;
+
+	try {
+		response = await req.fetch(`${apiUrl}?${queryString}`);
+	} catch (e) {
+		console.log('error');
+		throw redirect(302, '/mode');
+	}
+
 	const responseData = await response.json();
 
 	return {
