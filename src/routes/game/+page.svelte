@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Navigation from '$lib/Navigation.svelte';
 	import Modal from '$lib/Modal.svelte';
 	import {
 		cells,
@@ -99,48 +100,54 @@
 </script>
 
 <div class="px-2 max-w-[360px] mx-auto">
-	<header class="flex items-center justify-between">
-		<div class="title">
-			<h2 class="text-2xl text-slate-900 font-semibold">Random Game</h2>
-			<small class="text-sm font-semibold text-slate-600">Senang</small>
-		</div>
-		<div class="timer flex flex-col items-end justify-center">
-			<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
-			{#if $startTime}
-				<Timer
-					startAt={$startTime}
-					startCounting={$isGameStarted}
-					_class="block text-slate-800 text-3xl"
-				/>
-			{:else}
-				<span class="placeholder block text-slate-800 text-3xl">00:00</span>
-			{/if}
-		</div>
+	<header>
+		<Navigation />
 	</header>
 
-	<button on:click={() => ($hideFiller = !$hideFiller)}
-		>{$hideFiller ? 'Show' : 'Hide'} filler</button
-	>
-
-	<div class="game mt-3">
-		{#if $isGameStarted}
-			<Grid words={data.words.map((word) => word.word)} type={data.type} />
-
-			<Words />
-		{:else}
-			<div class="relative max-w-full">
-				<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
-					<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
-					<div class="content">
-						<button
-							on:click={() => ($isGameStarted = true)}
-							class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
-							>Main</button
-						>
-					</div>
-					<div slot="footer" />
-				</Modal>
+	<main>
+		<header class="flex items-center justify-between">
+			<div class="title">
+				<h2 class="text-2xl text-slate-900 font-semibold">Random Game</h2>
+				<small class="text-sm font-semibold text-slate-600">Senang</small>
 			</div>
-		{/if}
-	</div>
+			<div class="timer flex flex-col items-end justify-center">
+				<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
+				{#if $startTime}
+					<Timer
+						startAt={$startTime}
+						startCounting={$isGameStarted}
+						_class="block text-slate-800 text-3xl"
+					/>
+				{:else}
+					<span class="placeholder block text-slate-800 text-3xl">00:00</span>
+				{/if}
+			</div>
+		</header>
+
+		<button on:click={() => ($hideFiller = !$hideFiller)}
+			>{$hideFiller ? 'Show' : 'Hide'} filler</button
+		>
+
+		<div class="game mt-3">
+			{#if $isGameStarted}
+				<Grid words={data.words.map((word) => word.word)} type={data.type} />
+
+				<Words />
+			{:else}
+				<div class="relative max-w-full">
+					<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
+						<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
+						<div class="content">
+							<button
+								on:click={() => ($isGameStarted = true)}
+								class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
+								>Main</button
+							>
+						</div>
+						<div slot="footer" />
+					</Modal>
+				</div>
+			{/if}
+		</div>
+	</main>
 </div>
