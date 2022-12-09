@@ -16,7 +16,14 @@
 	export let words: string[];
 	export let type: Mode;
 
-	const { grid, solved, words: gridWords } = wordsearch(words, type.grid.column, type.grid.row);
+	const {
+		grid,
+		solved,
+		words: gridWords
+	} = wordsearch(words, type.grid.column, type.grid.row, {
+		backwards: type.backwordProb,
+		totalWordsInGrid: type.words
+	});
 
 	let gridContainer: HTMLDivElement;
 
