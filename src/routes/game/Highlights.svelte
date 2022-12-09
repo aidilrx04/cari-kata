@@ -31,21 +31,19 @@
 		<Highlight {highlight} />
 	{/each}
 	{#if $isMouseDown}
-		<div style:z-index="2">
-			<Highlight
-				highlight={{
-					start: $cells.start,
-					end: [mouse.x - $gridRect.x, mouse.y - $gridRect.y],
-					rotation: getAngle(
-						$cells.start[0] * $CELL_WIDTH + $CELL_WIDTH / 2,
-						$cells.start[1] * $CELL_WIDTH + $CELL_WIDTH / 2,
-						mouse.x - $gridRect.x,
-						mouse.y - $gridRect.y
-					),
-					color: $currentColor
-				}}
-				mouseHighlight
-			/>
-		</div>
+		<Highlight
+			highlight={{
+				start: [$cells.start[0], $cells.start[1]],
+				end: [mouse.x - $gridRect.x, mouse.y - $gridRect.y],
+				rotation: getAngle(
+					$cells.start[0] * $CELL_WIDTH + $CELL_WIDTH / 2 + document.documentElement.scrollLeft,
+					$cells.start[1] * $CELL_WIDTH + $CELL_WIDTH / 2 + document.documentElement.scrollTop,
+					mouse.x - $gridRect.x,
+					mouse.y - $gridRect.y
+				),
+				color: $currentColor
+			}}
+			mouseHighlight
+		/>
 	{/if}
 </div>

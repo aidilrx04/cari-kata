@@ -21,8 +21,14 @@
 	style:border-radius="{$HIGHLIGHT / 2}px {$HIGHLIGHT / 2}px"
 	style:width="{calcDistance(
 		{
-			x: highlight.start[0] * $CELL_WIDTH + $CELL_WIDTH / 2,
-			y: highlight.start[1] * $CELL_WIDTH + $CELL_WIDTH / 2
+			x:
+				highlight.start[0] * $CELL_WIDTH +
+				$CELL_WIDTH / 2 +
+				(mouseHighlight ? document.documentElement.scrollLeft : 0),
+			y:
+				highlight.start[1] * $CELL_WIDTH +
+				$CELL_WIDTH / 2 +
+				(mouseHighlight ? document.documentElement.scrollTop : 0)
 		},
 		{
 			x: !mouseHighlight ? highlight.end[0] * $CELL_WIDTH + $CELL_WIDTH / 2 : highlight.end[0],
