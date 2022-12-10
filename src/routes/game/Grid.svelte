@@ -63,6 +63,7 @@
 	id="grid-container"
 	bind:this={gridContainer}
 	style="position: relative; top: 0; left: 50%; transform: translate(-50%, 0)"
+	class="my-3"
 >
 	<Highlights />
 	<div id="grid" class="bg-gray-50 rounded-md shadow-sm">
