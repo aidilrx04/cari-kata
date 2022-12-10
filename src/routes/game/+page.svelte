@@ -136,13 +136,10 @@
 	};
 </script>
 
-<div class="px-2 max-w-[360px] mx-auto">
+<div class="max-w-[360px] mx-auto">
 	<header>
 		<Navigation />
-	</header>
-
-	<main>
-		<header class="flex items-center justify-between">
+		<div class="content-header flex items-center justify-between my-2">
 			<div class="title">
 				<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
 				<small class="text-xs font-semibold text-slate-600 tracking-wider">
@@ -161,8 +158,10 @@
 					<span class="placeholder block text-slate-800 text-3xl">00:00</span>
 				{/if}
 			</div>
-		</header>
+		</div>
+	</header>
 
+	<main>
 		<div class="game mt-3">
 			{#if $isGameStarted}
 				<Grid words={data.words.map((word) => word.word)} type={data.type} />
