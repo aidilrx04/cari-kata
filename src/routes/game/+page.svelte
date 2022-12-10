@@ -163,10 +163,6 @@
 			</div>
 		</header>
 
-		<button on:click={() => ($hideFiller = !$hideFiller)}
-			>{$hideFiller ? 'Show' : 'Hide'} filler</button
-		>
-
 		<div class="game mt-3">
 			{#if $isGameStarted}
 				<Grid words={data.words.map((word) => word.word)} type={data.type} />
