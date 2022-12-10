@@ -145,7 +145,7 @@
 		<header class="flex items-center justify-between">
 			<div class="title">
 				<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
-				<small class="text-sm font-semibold text-slate-600">
+				<small class="text-xs font-semibold text-slate-600 tracking-wider">
 					{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 				</small>
 			</div>
