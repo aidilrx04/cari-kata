@@ -22,8 +22,19 @@
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
 	import { onDestroy } from 'svelte';
+	import { MODES } from '$lib/modes';
 
 	export let data: PageData;
+
+	const title = {
+		[MODES.EASY]: 'Mudah',
+		[MODES.NORMAL]: 'Serdahana',
+		[MODES.HARD]: 'Sukar'
+	};
+	const gameInfo = {
+		title: title[data.type.type],
+		grid: data.type.grid
+	};
 
 	onDestroy(() => {
 		resetStates();
@@ -133,8 +144,10 @@
 	<main>
 		<header class="flex items-center justify-between">
 			<div class="title">
-				<h2 class="text-2xl text-slate-900 font-semibold">Random Game</h2>
-				<small class="text-sm font-semibold text-slate-600">Senang</small>
+				<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
+				<small class="text-sm font-semibold text-slate-600">
+					{gameInfo.grid.column}x{gameInfo.grid.row} GRID
+				</small>
 			</div>
 			<div class="timer flex flex-col items-end justify-center">
 				<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
