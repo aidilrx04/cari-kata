@@ -3,12 +3,15 @@
 	import Modal from '$lib/Modal.svelte';
 	import {
 		cells,
+		CELL_WIDTH,
 		currentColor,
 		foundWords,
 		grid,
+		gridRect,
 		hideFiller,
 		highlights,
 		isGameStarted,
+		isMouseDown,
 		startTime,
 		validateAnswer,
 		words
@@ -18,8 +21,13 @@
 	import type { PageData } from './$types';
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
+	import { onDestroy } from 'svelte';
 
 	export let data: PageData;
+
+	onDestroy(() => {
+		resetStates();
+	});
 
 	// effects
 	$: if ($validateAnswer) {
@@ -96,6 +104,24 @@
 
 	const resetCells = () => {
 		$cells = { start: [], end: [] };
+	};
+
+	const resetStates = () => {
+		$grid = [];
+		$words = [];
+		$CELL_WIDTH = 0;
+		$validateAnswer = false;
+		$cells = { start: [], end: [] };
+		$isMouseDown = false;
+		$highlights = [];
+		$foundWords = {
+			words: [],
+			coords: [],
+			colors: []
+		};
+
+		$hideFiller = false;
+		$isGameStarted = false;
 	};
 </script>
 
