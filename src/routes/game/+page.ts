@@ -7,7 +7,7 @@ export const load: PageLoad = async (req) => {
 
 	const modeStr = url.searchParams.get('mode');
 	const mode = getModeFromStr(modeStr ?? '') as Mode;
-	const shouldRedirect = modeStr && !mode;
+	const shouldRedirect = !modeStr && !mode;
 
 	if (shouldRedirect) throw redirect(307, '/mode');
 
