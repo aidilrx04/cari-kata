@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { createEventDispatcher, onDestroy, SvelteComponent } from 'svelte';
+	import { createEventDispatcher, onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
@@ -7,6 +8,25 @@
 	let modal: HTMLDivElement;
 	export let props: any = {};
 	export let _class: string = '';
+	export let transitionProps: {
+		in?: {
+			duration: number;
+			[key: string]: any;
+		};
+		out?: {
+			duration: number;
+			[key: string]: any;
+		};
+	};
+	const defaultTransition = {
+		in: {
+			duration: 250
+		},
+		out: {
+			duration: 250
+		}
+	};
+	$: transition = { ...defaultTransition, ...transitionProps };
 
 	const handle_keydown = (e) => {
 		if (e.key === 'Escape') {
@@ -44,9 +64,17 @@
 <svelte:window on:keydown={handle_keydown} />
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="modal-background" />
+<div class="modal-background z-30" />
 
-<div {...props} class="modal {_class}" role="dialog" aria-modal="true" bind:this={modal}>
+<div
+	{...props}
+	class="modal z-30 w-auto min-w-[250px] max-w-[360px] {_class}"
+	role="dialog"
+	aria-modal="true"
+	bind:this={modal}
+	in:fade={transition.in}
+	out:fade={transition.out}
+>
 	<slot name="header" />
 	<slot />
 	<slot name="footer">
