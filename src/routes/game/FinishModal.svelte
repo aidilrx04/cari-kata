@@ -4,7 +4,7 @@
 	import { finishTime, startTime, type } from '$lib/stores';
 	import { onDestroy } from 'svelte';
 
-	export let showModal = false;
+	export let showModal = true;
 
 	const MODES_STRING = {
 		[MODES.EASY]: 'Mudah',
@@ -26,7 +26,9 @@
 <div class="finish-modal">
 	{#if showModal}
 		<Modal
-			on:close={() => (showModal = false)}
+			on:close={() => {
+				showModal = false;
+			}}
 			_class="bg-gray-50 shadow-md p-3 rounded-lg"
 			transitionProps={{
 				out: {
