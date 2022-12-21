@@ -5,14 +5,16 @@
 		cells,
 		CELL_WIDTH,
 		currentColor,
+		finishTime,
 		foundWords,
 		grid,
-		gridRect,
 		hideFiller,
 		highlights,
+		isGameFinished,
 		isGameStarted,
 		isMouseDown,
 		startTime,
+		type,
 		validateAnswer,
 		words
 	} from '$lib/stores';
@@ -23,8 +25,10 @@
 	import Words from './Words.svelte';
 	import { onDestroy } from 'svelte';
 	import { MODES } from '$lib/modes';
+	import FinishModal from './FinishModal.svelte';
 
 	export let data: PageData;
+	let showModal = true;
 
 	const title = {
 		[MODES.EASY]: 'Mudah',
@@ -35,6 +39,8 @@
 		title: title[data.type.type],
 		grid: data.type.grid
 	};
+
+	$type = data.type;
 
 	onDestroy(() => {
 		resetStates();
@@ -146,12 +152,24 @@
 					{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 				</small>
 			</div>
+			{#if $isGameFinished}
+				<div>
+					<button
+						class="block m-1 py-2 px-3 text-gray-50 bg-violet-600 rounded uppercase hover:bg-violet-700 transition-colors"
+						on:click={() => {
+							showModal = true;
+							console.log('balls');
+						}}>SELESAI</button
+					>
+				</div>
+			{/if}
 			<div class="timer flex flex-col items-end justify-center">
 				<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
 				{#if $startTime}
 					<Timer
 						startAt={$startTime}
-						startCounting={$isGameStarted}
+						finishAt={$finishTime}
+						startCounting={$isGameStarted && !$isGameFinished}
 						_class="block text-slate-800 text-3xl"
 					/>
 				{:else}
@@ -159,13 +177,25 @@
 				{/if}
 			</div>
 		</div>
+		<!-- 
+		<button on:click={() => ($hideFiller = !$hideFiller)}
+			>{$hideFiller ? 'Show' : 'Hide'} filler</button
+		>
+		<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button> -->
 	</header>
 
 	<main>
 		<div class="game mt-3">
 			{#if $isGameStarted}
+				{#if $isGameFinished}
+					<FinishModal
+						bind:showModal
+						on:close={() => {
+							showModal = false;
+						}}
+					/>
+				{/if}
 				<Grid words={data.words.map((word) => word.word)} type={data.type} />
-
 				<Words />
 			{:else}
 				<div class="relative max-w-full">
