@@ -120,3 +120,11 @@ export function shuffle(array: unknown[]) {
 
 	return array;
 }
+
+export const addPrefix = (number: number, prefix: string, length = 2): string => {
+	const numberStr = number.toString();
+	if (numberStr.length >= length) return numberStr;
+
+	const totalToAdd = length - numberStr.length;
+	return prefix.toString().repeat(totalToAdd).concat(numberStr);
+};
