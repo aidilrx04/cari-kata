@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { addPrefix } from './util';
 
 	export let startAt: Date;
+	export let finishAt: Date | undefined = undefined;
 	export let startCounting: boolean = false;
 	export let _class: string = '';
 
@@ -21,19 +23,16 @@
 			minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 			seconds = Math.floor((distance % (1000 * 60)) / 1000);
 		}, 1000);
+	} else {
+		if (!finishAt) {
+			finishAt = new Date();
+		}
+		clearInterval(intervalId);
 	}
 
 	onDestroy(() => {
 		clearInterval(intervalId);
 	});
-
-	const addPrefix = (number: number, prefix: string, length: number = 2): string => {
-		const numberStr = number.toString();
-		if (numberStr.length >= length) return numberStr;
-
-		const totalToAdd = length - numberStr.length;
-		return prefix.toString().repeat(totalToAdd).concat(numberStr);
-	};
 </script>
 
 <div class="timer {_class}">
