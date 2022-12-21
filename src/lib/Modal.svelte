@@ -4,6 +4,14 @@
 
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
+	const defaultTransition = {
+		in: {
+			duration: 250
+		},
+		out: {
+			duration: 250
+		}
+	};
 
 	let modal: HTMLDivElement;
 	export let props: any = {};
@@ -17,15 +25,7 @@
 			duration: number;
 			[key: string]: any;
 		};
-	};
-	const defaultTransition = {
-		in: {
-			duration: 250
-		},
-		out: {
-			duration: 250
-		}
-	};
+	} = defaultTransition;
 	$: transition = { ...defaultTransition, ...transitionProps };
 
 	const handle_keydown = (e) => {
