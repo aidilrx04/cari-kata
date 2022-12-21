@@ -2,6 +2,8 @@ import { MODE_TYPES, type Mode } from '$lib/modes';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
+const apiUrl = 'http://bahasa-api.coolpage.biz/api/word/';
+
 export const load: PageLoad = async (req) => {
 	const { url } = req;
 
@@ -14,7 +16,6 @@ export const load: PageLoad = async (req) => {
 	const totalWords = 30;
 	const wordLength = mode.grid.column - 2;
 
-	const apiUrl = 'https://bahasa-api.vercel.app/api/word';
 	const queryString = new URLSearchParams({
 		amount: totalWords.toString(),
 		length: wordLength.toString()
@@ -22,8 +23,9 @@ export const load: PageLoad = async (req) => {
 
 	let response: Response;
 
+	const dataURL = `${apiUrl}?${queryString}`;
 	try {
-		response = await req.fetch(`${apiUrl}?${queryString}`);
+		response = await req.fetch(dataURL);
 	} catch (e) {
 		console.log('error');
 		throw redirect(302, '/mode');
