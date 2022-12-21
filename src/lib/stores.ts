@@ -1,4 +1,5 @@
 import { derived, writable } from 'svelte/store';
+import type { Mode } from './modes';
 import { calculateHighlightWidth, colors } from './util';
 
 export const grid = writable<string[][]>([]);
@@ -39,3 +40,23 @@ export const hideFiller = writable(false);
 export const isGameStarted = writable(false);
 
 export const startTime = derived(isGameStarted, ($isGameStarted) => $isGameStarted && new Date());
+
+export const isGameFinished = derived(
+	[isGameStarted, words, foundWords],
+	([$isGameStarted, $words, $foundWords]) => {
+		if (!$isGameStarted) return false;
+		if ($words.length <= 0) return false;
+		if ($foundWords.words.length <= 0) return false;
+		if ($foundWords.words.length !== $words.length) return false;
+
+		return true;
+	}
+);
+
+// export const isGameFinished = writable(false);
+
+export const finishTime = derived(isGameFinished, ($isGameFinished) => {
+	if ($isGameFinished) return new Date();
+});
+
+export const type = writable<Mode>();
