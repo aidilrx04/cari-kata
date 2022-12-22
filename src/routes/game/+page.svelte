@@ -26,6 +26,7 @@
 	import { onDestroy } from 'svelte';
 	import { MODES } from '$lib/modes';
 	import FinishModal from './FinishModal.svelte';
+	import Footer from '$lib/Footer.svelte';
 
 	export let data: PageData;
 	let showModal = true;
@@ -222,4 +223,5 @@
 			{/if}
 		</div>
 	</main>
+	<Footer />
 </div>

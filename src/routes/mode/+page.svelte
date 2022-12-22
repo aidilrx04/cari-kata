@@ -1,4 +1,5 @@
 <script>
+	import Footer from '$lib/Footer.svelte';
 	import Navigation from '$lib/Navigation.svelte';
 	import ModeCard from './ModeCard.svelte';
 </script>
@@ -46,4 +47,5 @@
 			</ModeCard>
 		</div>
 	</div>
+	<Footer />
 </div>
