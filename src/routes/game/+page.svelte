@@ -100,16 +100,24 @@
 
 		// validate each cell
 		let combinedChars = chars.join('');
+		let combinedBackwordChars = chars.reverse().join('');
 		const wordIndex = $words.indexOf(combinedChars);
+		const backwordIndex = $words.indexOf(combinedBackwordChars);
+		let isBackword = false;
 		// invalid word
-		if (wordIndex < 0) {
+		if (wordIndex < 0 && backwordIndex < 0) {
 			console.info('[vp]invalid word');
 			return;
 		}
-		console.info('[vp]found ' + combinedChars);
+
+		if (backwordIndex >= 0 && wordIndex < 0) {
+			isBackword = true;
+		}
+
+		console.info('[vp]found ' + isBackword ? combinedBackwordChars : combinedChars);
 
 		const result = {
-			word: combinedChars,
+			word: isBackword ? combinedBackwordChars : combinedChars,
 			coords: coords,
 			rotation: angle,
 			start: $cells.start,
@@ -177,11 +185,11 @@
 				{/if}
 			</div>
 		</div>
-		<!-- 
+
 		<button on:click={() => ($hideFiller = !$hideFiller)}
 			>{$hideFiller ? 'Show' : 'Hide'} filler</button
 		>
-		<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button> -->
+		<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button>
 	</header>
 
 	<main>
