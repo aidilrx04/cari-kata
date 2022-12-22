@@ -26,7 +26,7 @@
 					</div>
 				</ModeCard>
 				<ModeCard ctaHref="/game?mode=normal">
-					<div class="title" slot="title">Biasa</div>
+					<div class="title" slot="title">Sederhana</div>
 					<div slot="description">
 						<ul class="list-disc ml-5">
 							<li>8x9 grid</li>
@@ -36,7 +36,7 @@
 					</div>
 				</ModeCard>
 				<ModeCard ctaHref="/game?mode=hard">
-					<div class="title" slot="title">Susah</div>
+					<div class="title" slot="title">Sukar</div>
 					<div slot="description">
 						<ul class="list-disc ml-5">
 							<li>8x9 grid</li>
