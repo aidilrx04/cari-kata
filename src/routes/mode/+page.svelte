@@ -1,8 +1,11 @@
 <script>
 	import Footer from '$lib/Footer.svelte';
+	import Meta from '$lib/Meta.svelte';
 	import Navigation from '$lib/Navigation.svelte';
 	import ModeCard from './ModeCard.svelte';
 </script>
+
+<Meta title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
 
 <div class="w-[360px] mx-auto">
 	<header>

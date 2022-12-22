@@ -27,6 +27,7 @@
 	import { MODES } from '$lib/modes';
 	import FinishModal from './FinishModal.svelte';
 	import Footer from '$lib/Footer.svelte';
+	import Meta from '$lib/Meta.svelte';
 
 	export let data: PageData;
 	let showModal = true;
@@ -150,6 +151,11 @@
 		$isGameStarted = false;
 	};
 </script>
+
+<Meta
+	title="Tahap {gameInfo.title} | Cari Kata"
+	description="Main {data.words.map((n) => 'kata ' + n.word)}"
+/>
 
 <div class="max-w-[360px] mx-auto">
 	<header>

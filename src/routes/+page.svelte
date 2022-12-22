@@ -1,7 +1,10 @@
 <script>
 	import Footer from '$lib/Footer.svelte';
+	import Meta from '$lib/Meta.svelte';
 	import Navigation from '$lib/Navigation.svelte';
 </script>
+
+<Meta title="Cari Kata" />
 
 <div id="app" class="max-w-[360px] mx-auto">
 	<Navigation />
