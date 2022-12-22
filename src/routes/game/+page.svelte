@@ -145,7 +145,7 @@
 <div class="max-w-[360px] mx-auto">
 	<header>
 		<Navigation />
-		<div class="content-header flex items-center justify-between my-2">
+		<div class="content-header flex items-center justify-between my-4 px-3">
 			<div class="title">
 				<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
 				<small class="text-xs font-semibold text-slate-600 tracking-wider">
