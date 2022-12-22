@@ -6,10 +6,11 @@
 <footer class="text-center py-8 px-3 mt-6">
 	&copy; {YEAR} Cari Kata
 	<br />
-	Developed by
+	Dibangunkan oleh
 	<a href={GITHUB_PROFILE} target="_blank" rel="noopener noreferrer">@aidilrx04</a>
 	<br />
-	Powered by <a href="http://kit.svelte.dev" target="_blank" rel="noopener noreferrer">SvelteKit</a>
+	Dikuasai oleh
+	<a href="http://kit.svelte.dev" target="_blank" rel="noopener noreferrer">SvelteKit</a>
 </footer>
 
 <style>
