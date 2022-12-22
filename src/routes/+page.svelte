@@ -2,9 +2,11 @@
 	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
 	import Navigation from '$lib/Navigation.svelte';
+	import Ogp from '$lib/OGP.svelte';
 </script>
 
 <Meta title="Cari Kata" />
+<Ogp />
 
 <div id="app" class="max-w-[360px] mx-auto">
 	<Navigation />

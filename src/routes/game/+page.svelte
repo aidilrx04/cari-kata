@@ -28,6 +28,7 @@
 	import FinishModal from './FinishModal.svelte';
 	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
+	import Ogp from '$lib/OGP.svelte';
 
 	export let data: PageData;
 	let showModal = true;
@@ -156,6 +157,7 @@
 	title="Tahap {gameInfo.title} | Cari Kata"
 	description="Main {data.words.map((n) => 'kata ' + n.word)}"
 />
+<Ogp title="Tahap {gameInfo.title} | Cari Kata" />
 
 <div class="max-w-[360px] mx-auto">
 	<header>

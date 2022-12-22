@@ -1,4 +1,5 @@
 <script>
+	import OGP from '$lib/OGP.svelte';
 	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
 	import Navigation from '$lib/Navigation.svelte';
@@ -6,6 +7,7 @@
 </script>
 
 <Meta title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
+<OGP title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
 
 <div class="w-[360px] mx-auto">
 	<header>
