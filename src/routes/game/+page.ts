@@ -4,6 +4,8 @@ import type { PageLoad } from './$types';
 
 const apiUrl = 'http://bahasa-api.coolpage.biz/api/word/';
 
+export const prerender = false;
+
 export const load: PageLoad = async (req) => {
 	const { url } = req;
 
