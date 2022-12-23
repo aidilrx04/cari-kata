@@ -57,7 +57,7 @@
 			<div slot="footer" class="border-t-2 border-t-gray-200 py-2 flex justify-center items-end ">
 				<a
 					href="/mode"
-					class="w-full block py-2 px-3 rounded-lg bg-violet-700 text-gray-50 text-lg mx-1 my-2"
+					class="w-full block py-2 px-3 rounded-lg bg-violet-700 text-gray-50 text-md mx-1 my-2"
 				>
 					<i class="fas fa-refresh" />
 					<span>Semula</span>
