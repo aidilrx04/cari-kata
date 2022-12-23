@@ -84,7 +84,7 @@
 <style>
 	#grid-container {
 		width: 300px;
-		max-width: 100%;
+		max-width: calc(100% - 0.75rem);
 		min-width: 200px;
 	}
 </style>
