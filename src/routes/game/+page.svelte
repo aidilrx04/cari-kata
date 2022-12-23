@@ -117,10 +117,16 @@
 			isBackword = true;
 		}
 
-		console.info(`[vp]found  ${isBackword ? combinedBackwordChars : combinedChars}`);
+		let word = isBackword ? combinedBackwordChars : combinedChars;
+
+		if ($foundWords.words.includes(word)) {
+			return;
+		}
+
+		console.info(`[vp]found  ${word}`);
 
 		const result = {
-			word: isBackword ? combinedBackwordChars : combinedChars,
+			word: word,
 			coords: coords,
 			rotation: angle,
 			start: $cells.start,
