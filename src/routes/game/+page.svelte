@@ -109,15 +109,15 @@
 		let isBackword = false;
 		// invalid word
 		if (wordIndex < 0 && backwordIndex < 0) {
-			console.info('[vp]invalid word');
+			console.info(`[vp]invalid word => ${combinedChars} | ${combinedBackwordChars}`);
 			return;
 		}
 
-		if (backwordIndex >= 0 && wordIndex < 0) {
+		if (wordIndex < 0) {
 			isBackword = true;
 		}
 
-		console.info('[vp]found ' + isBackword ? combinedBackwordChars : combinedChars);
+		console.info(`[vp]found  ${isBackword ? combinedBackwordChars : combinedChars}`);
 
 		const result = {
 			word: isBackword ? combinedBackwordChars : combinedChars,
