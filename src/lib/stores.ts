@@ -60,3 +60,5 @@ export const finishTime = derived(isGameFinished, ($isGameFinished) => {
 });
 
 export const type = writable<Mode>();
+
+export const isTouchDown = writable(false);
