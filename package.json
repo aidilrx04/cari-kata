@@ -38,5 +38,7 @@
 	},
 	"type": "module",
 	"license": "MIT",
-	"dependencies": {}
+	"dependencies": {
+		"chart.js": "^4.1.1"
+	}
 }
