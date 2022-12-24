@@ -44,6 +44,15 @@
 				</li>
 				<li class="bg-inherit">
 					<a
+						href="/stats"
+						class="py-2 px-3 flex justify-start items-center tracking-wide bg-inherit hover:bg-violet-700 transition-colors border-b-0 border-b-slate-400  "
+					>
+						<i class="fas fa-info-circle mr-1 w-[25px] text-center" />
+						Statistik
+					</a>
+				</li>
+				<li class="bg-inherit">
+					<a
 						href="/about"
 						class="py-2 px-3 flex justify-start items-center tracking-wide bg-inherit hover:bg-violet-700 transition-colors border-b-0 border-b-slate-400  "
 					>
