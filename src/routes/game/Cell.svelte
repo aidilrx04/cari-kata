@@ -5,7 +5,8 @@
 		isMouseDown,
 		validateAnswer,
 		foundWords,
-		isTouchDown
+		isTouchDown,
+		isGameFinished
 	} from '$lib/stores';
 	import { strCoordToArray } from '$lib/util';
 
@@ -13,6 +14,8 @@
 
 	// Mouse events
 	const onMouseDown = (event: MouseEvent & { currentTarget: HTMLSpanElement }) => {
+		if ($isGameFinished) return;
+
 		const targetElement = event.currentTarget;
 
 		$cells.start = strCoordToArray(targetElement?.dataset?.coord as string).map((coord) =>
@@ -23,6 +26,8 @@
 	};
 
 	const onMouseUp = (event: MouseEvent & { currentTarget: HTMLSpanElement }) => {
+		if ($isGameFinished) return;
+
 		const targetElement = event.currentTarget;
 
 		$cells.end = strCoordToArray(targetElement?.dataset.coord as string).map((coord) =>
@@ -37,6 +42,8 @@
 
 	// for touch screens
 	const onTouchStart = (e: TouchEvent & { currentTarget: HTMLSpanElement }) => {
+		if ($isGameFinished) return;
+
 		const targetElement = e.currentTarget;
 
 		$cells.start = strCoordToArray(targetElement?.dataset?.coord as string).map((coord) =>
@@ -47,6 +54,8 @@
 	};
 
 	const onTouchEnd = (e: TouchEvent & { currentTarget: HTMLSpanElement }) => {
+		if ($isGameFinished) return;
+
 		const VALID_TOUCH_ELEMENT = 'SPAN';
 		const lastTouched = e.changedTouches[e.changedTouches.length - 1];
 		const position = {

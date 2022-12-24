@@ -29,6 +29,7 @@
 	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
 	import Ogp from '$lib/OGP.svelte';
+	import stats from '$lib/stores/stats';
 
 	export let data: PageData;
 	let showModal = true;
@@ -66,6 +67,38 @@
 			};
 			$currentColor = colors[Math.floor(Math.random() * colors.length)];
 		}
+	}
+
+	// stats
+	$: if ($isGameStarted && $type) {
+		const _type = $type.type;
+		console.log($stats.mode[_type]);
+		$stats = {
+			...$stats,
+			total: $stats.total + 1,
+			mode: {
+				...$stats.mode,
+				[_type]: {
+					...$stats.mode[_type],
+					total: $stats.mode[_type].total + 1
+				}
+			}
+		};
+	}
+
+	$: if ($isGameFinished && $type) {
+		const _type = $type.type;
+		$stats = {
+			...$stats,
+			win: $stats.win + 1,
+			mode: {
+				...$stats.mode,
+				[_type]: {
+					...$stats.mode[_type],
+					win: $stats.mode[_type].win + 1
+				}
+			}
+		};
 	}
 
 	// helper fns
@@ -117,10 +150,16 @@
 			isBackword = true;
 		}
 
-		console.info(`[vp]found  ${isBackword ? combinedBackwordChars : combinedChars}`);
+		let word = isBackword ? combinedBackwordChars : combinedChars;
+
+		if ($foundWords.words.includes(word)) {
+			return;
+		}
+
+		console.info(`[vp]found  ${word}`);
 
 		const result = {
-			word: isBackword ? combinedBackwordChars : combinedChars,
+			word: word,
 			coords: coords,
 			rotation: angle,
 			start: $cells.start,
