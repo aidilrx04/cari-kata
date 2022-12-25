@@ -38,5 +38,4 @@
 			>]
 		</section>
 	</main>
-	<Footer />
 </div>

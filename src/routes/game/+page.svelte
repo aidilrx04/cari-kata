@@ -269,4 +269,3 @@
 		{/if}
 	</div>
 </main>
-<Footer />

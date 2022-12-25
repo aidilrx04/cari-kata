@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Footer from '$lib/Footer.svelte';
 	import Navigation from '$lib/Navigation.svelte';
 	import '../app.css';
 </script>
@@ -7,6 +8,7 @@
 	<Navigation />
 	<div class="px-3">
 		<slot />
+		<Footer />
 	</div>
 </div>
 

@@ -58,4 +58,3 @@
 		</div>
 	</div>
 </main>
-<Footer />

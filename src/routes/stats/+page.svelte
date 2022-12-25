@@ -91,7 +91,6 @@
 			</div>
 		</div>
 	</main>
-	<Footer />
 </div>
 
 <style>
