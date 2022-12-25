@@ -5,6 +5,7 @@ import { writable } from 'svelte/store';
 export type Stats = {
 	win: number;
 	total: number;
+	total_time: number; // in seconds; only when win effect this
 	history: string[];
 	mode: {
 		[MODES.EASY]: { total: number; win: number };
@@ -27,6 +28,7 @@ export type Stats = {
 let statsState: Stats = {
 	win: 0,
 	total: 0,
+	total_time: 0,
 	history: [],
 	mode: {
 		[MODES.EASY]: { total: 0, win: 0 },

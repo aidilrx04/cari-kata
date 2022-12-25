@@ -86,11 +86,12 @@
 		};
 	}
 
-	$: if ($isGameFinished && $type) {
+	$: if ($isGameFinished && $type && $finishTime !== undefined && $startTime !== false) {
 		const _type = $type.type;
 		$stats = {
 			...$stats,
 			win: $stats.win + 1,
+			total_time: $stats.total_time + ($finishTime?.getTime() - $startTime.getTime()),
 			mode: {
 				...$stats.mode,
 				[_type]: {
