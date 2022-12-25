@@ -27,7 +27,6 @@
 
 <div id="stats">
 	<header>
-		<Navigation />
 		<div class="titles px-3 my-3">
 			<h1 class="text-2xl text-slate-800 uppercase tracking-wider">Statistik</h1>
 			<small class="uppercase text-slate-600 text-xs">Anda sepanjang bermain</small>
