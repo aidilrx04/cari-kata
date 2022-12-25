@@ -5,7 +5,9 @@
 
 <div class="max-w-screen-lg mx-auto">
 	<Navigation />
-	<slot />
+	<div class="px-3">
+		<slot />
+	</div>
 </div>
 
 <style global>
