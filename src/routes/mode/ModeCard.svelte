@@ -2,7 +2,9 @@
 	export let ctaHref = '#';
 </script>
 
-<div class="mode-card w-full p-3 h-auto bg-gray-50 rounded-md shadow-md my-4">
+<div
+	class="mode-card w-full w-max-xs sm:max-w-[250px] md:max-w-[300px] mx-auto p-3 h-auto bg-gray-50 rounded-md shadow-md my-4"
+>
 	<div class="title font-semibold text-center text-xl mb-2">
 		<slot name="title" />
 	</div>
