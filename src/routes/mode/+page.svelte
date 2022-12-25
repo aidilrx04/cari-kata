@@ -9,7 +9,7 @@
 <Meta title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
 <OGP title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
 
-<div class="w-[360px] mx-auto">
+<div class="w-[360px] max-w-full mx-auto">
 	<header>
 		<Navigation />
 		<div class="title w-[300px] mx-auto">
