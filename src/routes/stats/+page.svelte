@@ -25,7 +25,7 @@
 	$: console.log(averageTime);
 </script>
 
-<div id="stats" class="w-[360px] mx-auto">
+<div id="stats">
 	<header>
 		<Navigation />
 		<div class="titles px-3 my-3">

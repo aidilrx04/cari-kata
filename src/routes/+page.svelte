@@ -8,7 +8,7 @@
 <Meta title="Cari Kata" />
 <Ogp />
 
-<div id="app" class="max-w-[360px] mx-auto">
+<div id="app">
 	<Navigation />
 	<header class="mx-2 bg-gray-50 py-7 px-3 my-4 rounded-xl">
 		<div class="title">
