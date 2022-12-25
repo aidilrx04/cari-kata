@@ -4,8 +4,8 @@
 	import '../app.css';
 </script>
 
+<Navigation />
 <div class="max-w-screen-xl mx-auto">
-	<Navigation />
 	<div class="px-3">
 		<slot />
 		<Footer />
