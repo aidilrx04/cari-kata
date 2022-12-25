@@ -62,11 +62,16 @@
 <div
 	id="grid-container"
 	bind:this={gridContainer}
-	style="position: relative; top: 0; left: 50%; transform: translate(-50%, 0)"
-	class="my-3"
+	class="
+default: mb-3 mx-auto
+sma: sm:w-full sm:max-w-[360px]
+med: 
+lar: lg:
+w-full
+"
 >
 	<Highlights />
-	<div id="grid" class="bg-gray-50 rounded-md shadow-sm">
+	<div id="grid" class="bg-gray-50 rounded-md shadow-md">
 		{#each $gridStore as row, r}
 			<Row>
 				{#each row as cell, c}
@@ -82,9 +87,4 @@
 </div>
 
 <style>
-	#grid-container {
-		width: 300px;
-		max-width: calc(100% - 0.75rem);
-		min-width: 200px;
-	}
 </style>

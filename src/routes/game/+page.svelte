@@ -199,7 +199,7 @@
 />
 <Ogp title="Tahap {gameInfo.title} | Cari Kata" />
 
-<header>
+<header class="lg:hidden">
 	<div class="content-header flex items-center justify-between my-4 px-3">
 		<div class="title">
 			<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
@@ -233,38 +233,80 @@
 		</div>
 	</div>
 
-	<!-- <button on:click={() => ($hideFiller = !$hideFiller)}
-			>{$hideFiller ? 'Show' : 'Hide'} filler</button
-		>
-		<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button> -->
+	<button on:click={() => ($hideFiller = !$hideFiller)}
+		>{$hideFiller ? 'Show' : 'Hide'} filler</button
+	>
+	<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button>
 </header>
 
-<main>
-	<div class="game mt-3">
+<main class="bg-gray-50 p-3 relative my-5">
+	{#if !$isGameStarted}
+		<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
+			<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
+			<div class="content">
+				<button
+					on:click={() => ($isGameStarted = true)}
+					class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
+					>Main</button
+				>
+			</div>
+			<div slot="footer" />
+		</Modal>
+	{/if}
+	{#if $isGameFinished}
+		<FinishModal
+			bind:showModal
+			on:close={() => {
+				showModal = false;
+			}}
+		/>
+	{/if}
+	<div
+		class="
+default: game grid grid-cols-1 relative min-h-[400px]
+sma: 
+med: md:
+lar: lg:grid-cols-2 lg:gap-3
+	"
+	>
 		{#if $isGameStarted}
-			{#if $isGameFinished}
-				<FinishModal
-					bind:showModal
-					on:close={() => {
-						showModal = false;
-					}}
-				/>
-			{/if}
 			<Grid words={data.words.map((word) => word.word)} type={data.type} />
-			<Words />
-		{:else}
-			<div class="relative max-w-full">
-				<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
-					<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
-					<div class="content">
-						<button
-							on:click={() => ($isGameStarted = true)}
-							class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
-							>Main</button
-						>
+			<div>
+				<header class="hidden lg:block">
+					<div class="content-header flex items-center justify-between my-4 px-3">
+						<div class="title">
+							<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
+							<small class="text-xs font-semibold text-slate-600 tracking-wider">
+								{gameInfo.grid.column}x{gameInfo.grid.row} GRID
+							</small>
+						</div>
+						{#if $isGameFinished}
+							<div>
+								<button
+									class="block m-1 py-2 px-3 text-gray-50 bg-violet-600 rounded uppercase hover:bg-violet-700 transition-colors"
+									on:click={() => {
+										showModal = true;
+										console.log('balls');
+									}}>SELESAI</button
+								>
+							</div>
+						{/if}
+						<div class="timer flex flex-col items-end justify-center">
+							<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
+							{#if $startTime}
+								<Timer
+									startAt={$startTime}
+									finishAt={$finishTime}
+									startCounting={$isGameStarted && !$isGameFinished}
+									_class="block text-slate-800 text-3xl"
+								/>
+							{:else}
+								<span class="placeholder block text-slate-800 text-3xl">00:00</span>
+							{/if}
+						</div>
 					</div>
-					<div slot="footer" />
-				</Modal>
+				</header>
+				<Words />
 			</div>
 		{/if}
 	</div>
