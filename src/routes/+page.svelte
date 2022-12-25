@@ -9,7 +9,6 @@
 <Ogp />
 
 <div id="app">
-	<Navigation />
 	<header class="mx-2 bg-gray-50 py-7 px-3 my-4 rounded-xl">
 		<div class="title">
 			<span class="block text-slate-700">Selamat Datang ke</span>
