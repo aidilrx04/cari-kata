@@ -27,13 +27,18 @@
 
 <div id="stats">
 	<header>
-		<div class="titles px-3 my-3">
+		<div class="titles my-3">
 			<h1 class="text-2xl text-slate-800 uppercase tracking-wider">Statistik</h1>
 			<small class="uppercase text-slate-600 text-xs">Anda sepanjang bermain</small>
 		</div>
 	</header>
-	<main class="mx-3 p-3 bg-gray-50 rounded-lg">
-		<div class="stats-cards grid gap-6 mt-3 mb-5 grid-cols-2 grid-rows-2">
+	<main class=" p-3 bg-gray-50 rounded-lg">
+		<div
+			class="
+default: stats-cards grid gap-3 mt-3 mb-5 grid-cols-2
+lar: lg:grid-cols-4
+"
+		>
 			<div class="stat-card bg-violet-600">
 				<i class="fas fa-play block text-6xl mt-3" />
 				<span class="font-semibold text-xl text-center">{$stats.total}</span>
@@ -100,5 +105,8 @@
 
 	.stat-card > span:not(.inline) {
 		@apply block;
+	}
+	.stat-card i {
+		@apply mb-auto;
 	}
 </style>
