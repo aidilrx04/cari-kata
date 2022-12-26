@@ -1,7 +1,28 @@
 <script lang="ts">
 	export let showDropdown = false;
 
-	let dropdown: HTMLDivElement;
+	const links = [
+		{
+			label: 'Utama',
+			icon: 'fa-home',
+			url: '/'
+		},
+		{
+			label: 'Main',
+			icon: 'fa-play',
+			url: '/mode'
+		},
+		{
+			label: 'Statistik',
+			icon: 'fa-chart-simple',
+			url: '/stats'
+		},
+		{
+			label: 'Tentang',
+			icon: 'fa-circle-info',
+			url: '/about'
+		}
+	];
 
 	const toggleDropdown = () => {
 		showDropdown = !showDropdown;
@@ -32,33 +53,17 @@
 					nav-list block  bg-transparent w-full shadow-lg z-30 relative 
 					lg:flex"
 					>
-						<li class="bg-inherit">
-							<a
-								href="/"
-								class="py-2 px-3 flex justify-start items-center tracking-wide bg-inherit hover:bg-violet-700 transition-colors border-b border-b-slate-400  "
-							>
-								<i class="fas fa-home mr-1 w-[25px] text-center" />
-								Utama
-							</a>
-						</li>
-						<li class="bg-inherit">
-							<a
-								href="/mode"
-								class="py-2 px-3 flex justify-start items-center tracking-wide bg-inherit hover:bg-violet-700 transition-colors border-b border-b-slate-400  "
-							>
-								<i class="fas fa-play mr-1 w-[25px] text-center" />
-								Main
-							</a>
-						</li>
-						<li class="bg-inherit">
-							<a
-								href="/stats"
-								class="py-2 px-3 flex justify-start items-center tracking-wide bg-inherit hover:bg-violet-700 transition-colors border-b border-b-slate-400  "
-							>
-								<i class="fas fa-chart-simple mr-1 w-[25px] text-center" />
-								Statistik
-							</a>
-						</li>
+						{#each links as link}
+							<li class="bg-inherit">
+								<a
+									href={link.url}
+									class="py-2 px-3 flex justify-start items-center tracking-wide bg-inherit hover:bg-violet-700 transition-colors border-b border-b-slate-400  "
+								>
+									<i class="fas {link.icon} mr-1 w-[25px] text-center" />
+									{link.label}
+								</a>
+							</li>
+						{/each}
 					</ul>
 				</div>
 				<button class="lg:hidden toggler text-4xl text-center w-[30px]" on:click={toggleDropdown}>
