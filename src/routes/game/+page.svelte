@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Navigation from '$lib/Navigation.svelte';
 	import Modal from '$lib/Modal.svelte';
 	import {
 		cells,
@@ -30,6 +29,7 @@
 	import Meta from '$lib/Meta.svelte';
 	import Ogp from '$lib/OGP.svelte';
 	import stats from '$lib/stores/stats';
+	import { error } from '@sveltejs/kit';
 
 	export let data: PageData;
 	let showModal = true;

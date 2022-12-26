@@ -27,15 +27,17 @@
 		</section>
 		<section class="about my-3 py-2">
 			<h2 class="text-lg text-slate-800">TENTANG</h2>
-			<p class="text-sm text-slate-600" />
-			Cari Kata adalah sebuah aplikasi laman web permainan cari kata dalam talian. Permainan cari kata
-			ialah permainan perkataan yang terdiri daripada huruf perkataan yang diletakkan dalam gird. Objektif
-			permainan ini ada mencari dan menandakan semua perkataan yang tersembunyi di dalam grid. [<a
-				class="underline text-violet-700"
-				href="https://en.wikipedia.org/wiki/Word_search"
-				rel="noreferrer"
-				target="_blank">Wikipedia</a
-			>]
+			<p class="text-md text-slate-700">
+				Cari Kata adalah sebuah aplikasi laman web permainan cari kata dalam talian. Permainan cari
+				kata ialah permainan perkataan yang terdiri daripada huruf perkataan yang diletakkan dalam
+				gird. Objektif permainan ini ada mencari dan menandakan semua perkataan yang tersembunyi di
+				dalam grid. [<a
+					class="underline text-violet-700"
+					href="https://en.wikipedia.org/wiki/Word_search"
+					rel="noreferrer"
+					target="_blank">Wikipedia</a
+				>]
+			</p>
 		</section>
 	</main>
 </div>

@@ -1,8 +1,5 @@
 <script lang="ts">
-	import Footer from '$lib/Footer.svelte';
-	import Navigation from '$lib/Navigation.svelte';
 	import stats from '$lib/stores/stats';
-	import { onMount } from 'svelte';
 	import ModeChart from './ModeChart.svelte';
 
 	const calculateAverage = (total_time: number, total: number) => {
