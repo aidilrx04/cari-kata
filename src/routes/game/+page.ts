@@ -2,7 +2,10 @@ import { MODE_TYPES, type Mode } from '$lib/modes';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-const apiUrl = 'http://bahasa-api.coolpage.biz/api/word/';
+// const apiUrl = 'http://bahasa-api.coolpage.biz/api/word/';
+const apiUrl = 'https://bahasa-api.vercel.app/api/word';
+
+export const prerender = false;
 
 export const load: PageLoad = async (req) => {
 	const { url } = req;
