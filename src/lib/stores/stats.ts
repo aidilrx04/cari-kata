@@ -25,8 +25,7 @@ export type Stats = {
 // 		hard: 0
 // 	}
 // };
-
-let statsState: Stats = {
+const defaultStats = {
 	win: 0,
 	total: 0,
 	total_time: 0,
@@ -38,6 +37,7 @@ let statsState: Stats = {
 		[MODES.IMPOSSIBLE]: { total: 0, win: 0 }
 	}
 };
+let statsState: Stats = defaultStats;
 
 if (browser) {
 	if (typeof localStorage !== undefined) {
@@ -50,18 +50,7 @@ if (browser) {
 				const keys = Object.keys(statsState.mode);
 				if (Number(keys[0])) {
 					// replace old data
-					statsState = {
-						...statsState,
-						mode: {
-							...statsState.mode,
-							[MODES.EASY]: { ...statsState[1] },
-							[MODES.NORMAL]: { ...statsState[2] },
-							[MODES.HARD]: { ...statsState[3] }
-						}
-					};
-					delete statsState.mode[1];
-					delete statsState.mode[2];
-					delete statsState.mode[3];
+					statsState = defaultStats;
 				}
 			} catch (e) {
 				// do nothing
