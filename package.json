@@ -1,6 +1,6 @@
 {
 	"name": "cari-katate",
-	"version": "0.9.2-alpha",
+	"version": "0.11.16",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
