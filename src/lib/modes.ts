@@ -14,14 +14,14 @@ export interface Mode {
 }
 
 export enum MODES {
-	EASY = 1,
-	NORMAL = 2,
-	HARD = 3,
-	IMPOSSIBLE = 4
+	EASY = 'easy',
+	NORMAL = 'normal',
+	HARD = 'hard',
+	IMPOSSIBLE = 'impossible'
 }
 
 export const MODE_TYPES: {
-	[key: number]: Mode;
+	[key: string]: Mode;
 } = {
 	[MODES.EASY]: {
 		grid: {

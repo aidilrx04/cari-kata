@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { foundWords, words, displayTexts } from '$lib/stores';
-	$: console.log($foundWords);
 </script>
 
 <div

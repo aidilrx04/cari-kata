@@ -44,9 +44,9 @@ export const load: PageLoad = async (req) => {
 };
 
 const getModeFromStr = (modeStr: string): Mode | false => {
-	const validModes = ['easy', 'normal', 'hard', 'impossible'];
+	const validModes = Object.entries(MODE_TYPES).map((n) => n[1].type.toString());
 	const modeIndex = validModes.indexOf(modeStr);
 	if (modeIndex < 0) return false;
 
-	return MODE_TYPES[modeIndex + 1];
+	return MODE_TYPES[validModes[modeIndex]];
 };

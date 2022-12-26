@@ -23,13 +23,10 @@
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
 	import { onDestroy } from 'svelte';
-	import { MODES } from '$lib/modes';
 	import FinishModal from './FinishModal.svelte';
-	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
 	import Ogp from '$lib/OGP.svelte';
 	import stats from '$lib/stores/stats';
-	import { error } from '@sveltejs/kit';
 
 	export let data: PageData;
 	let showModal = true;
@@ -65,7 +62,6 @@
 	// stats
 	$: if ($isGameStarted && $type) {
 		const _type = $type.type;
-		console.log($stats.mode[_type]);
 		$stats = {
 			...$stats,
 			total: $stats.total + 1,
@@ -226,10 +222,10 @@
 		</div>
 	</div>
 
-	<!-- <button on:click={() => ($hideFiller = !$hideFiller)}
+	<button on:click={() => ($hideFiller = !$hideFiller)}
 		>{$hideFiller ? 'Show' : 'Hide'} filler</button
 	>
-	<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button> -->
+	<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button>
 </header>
 
 <main class="bg-gray-50 p-3 relative my-5">

@@ -39,7 +39,6 @@ let statsState: Stats = {
 	}
 };
 
-console.log(typeof localStorage !== undefined);
 if (browser) {
 	if (typeof localStorage !== undefined) {
 		const storedStats = localStorage.getItem('stats');
@@ -48,6 +47,22 @@ if (browser) {
 		} else {
 			try {
 				statsState = JSON.parse(storedStats);
+				const keys = Object.keys(statsState.mode);
+				if (Number(keys[0])) {
+					// replace old data
+					statsState = {
+						...statsState,
+						mode: {
+							...statsState.mode,
+							[MODES.EASY]: { ...statsState[1] },
+							[MODES.NORMAL]: { ...statsState[2] },
+							[MODES.HARD]: { ...statsState[3] }
+						}
+					};
+					delete statsState.mode[1];
+					delete statsState.mode[2];
+					delete statsState.mode[3];
+				}
 			} catch (e) {
 				// do nothing
 			}
