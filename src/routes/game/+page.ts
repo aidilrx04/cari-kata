@@ -1,4 +1,5 @@
 import { MODE_TYPES, type Mode } from '$lib/modes';
+import type { Word } from '$lib/types';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
@@ -37,13 +38,13 @@ export const load: PageLoad = async (req) => {
 	const responseData = await response.json();
 
 	return {
-		words: responseData as { id: number; word: string; length: number }[],
+		words: responseData as Word[],
 		type: mode
 	};
 };
 
 const getModeFromStr = (modeStr: string): Mode | false => {
-	const validModes = ['easy', 'normal', 'hard'];
+	const validModes = ['easy', 'normal', 'hard', 'impossible'];
 	const modeIndex = validModes.indexOf(modeStr);
 	if (modeIndex < 0) return false;
 

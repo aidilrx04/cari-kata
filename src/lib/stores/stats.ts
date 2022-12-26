@@ -11,6 +11,7 @@ export type Stats = {
 		[MODES.EASY]: { total: number; win: number };
 		[MODES.NORMAL]: { total: number; win: number };
 		[MODES.HARD]: { total: number; win: number };
+		[MODES.IMPOSSIBLE]: { total: number; win: number };
 	};
 };
 
@@ -33,7 +34,8 @@ let statsState: Stats = {
 	mode: {
 		[MODES.EASY]: { total: 0, win: 0 },
 		[MODES.NORMAL]: { total: 0, win: 0 },
-		[MODES.HARD]: { total: 0, win: 0 }
+		[MODES.HARD]: { total: 0, win: 0 },
+		[MODES.IMPOSSIBLE]: { total: 0, win: 0 }
 	}
 };
 

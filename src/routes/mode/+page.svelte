@@ -6,7 +6,7 @@
 
 	const cards = [
 		{
-			title: 'Mudah',
+			title: MODE_TYPES[MODES.EASY].title,
 			description: `
 			<ul class="list-disc desc-list">
 				<li>${MODE_TYPES[MODES.EASY].grid.column}x${MODE_TYPES[MODES.EASY].grid.row} grid</li>
@@ -18,7 +18,7 @@
 			cta_label: 'MAIN'
 		},
 		{
-			title: 'Sederhana',
+			title: MODE_TYPES[MODES.NORMAL].title,
 			description: `
 			<ul class="list-disc desc-list">
 				<li>${MODE_TYPES[MODES.NORMAL].grid.column}x${MODE_TYPES[MODES.HARD].grid.row} grid</li>
@@ -30,7 +30,7 @@
 			cta_label: 'MAIN'
 		},
 		{
-			title: 'Sukar',
+			title: MODE_TYPES[MODES.HARD].title,
 			description: `
 			<ul class="list-disc desc-list">
 				<li>${MODE_TYPES[MODES.HARD].grid.column}x${MODE_TYPES[MODES.HARD].grid.row} grid</li>
@@ -39,6 +39,18 @@
 			</ul>
 			`,
 			url: '/game?mode=hard',
+			cta_label: 'MAIN'
+		},
+		{
+			title: MODE_TYPES[MODES.IMPOSSIBLE].title,
+			description: `
+			<ul class="list-disc desc-list"> 
+				<li>13x15 grid</li>
+				<li>Sebahagian huruf disembunyikan</li>
+				<li>Segala daripada Sukar</li>
+			</ul>
+			`,
+			url: '/game?mode=impossible',
 			cta_label: 'MAIN'
 		}
 	];
