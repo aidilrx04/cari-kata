@@ -23,24 +23,14 @@
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
 	import { onDestroy } from 'svelte';
-	import { MODES } from '$lib/modes';
 	import FinishModal from './FinishModal.svelte';
-	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
 	import Ogp from '$lib/OGP.svelte';
 	import stats from '$lib/stores/stats';
-	import { error } from '@sveltejs/kit';
 
 	export let data: PageData;
 	let showModal = true;
-
-	const title = {
-		[MODES.EASY]: 'Mudah',
-		[MODES.NORMAL]: 'Serdahana',
-		[MODES.HARD]: 'Sukar'
-	};
 	const gameInfo = {
-		title: title[data.type.type],
 		grid: data.type.grid
 	};
 
@@ -72,7 +62,6 @@
 	// stats
 	$: if ($isGameStarted && $type) {
 		const _type = $type.type;
-		console.log($stats.mode[_type]);
 		$stats = {
 			...$stats,
 			total: $stats.total + 1,
@@ -194,15 +183,15 @@
 </script>
 
 <Meta
-	title="Tahap {gameInfo.title} | Cari Kata"
+	title="Tahap {data.type.title} | Cari Kata"
 	description="Main {data.words.map((n) => 'kata ' + n.word)}"
 />
-<Ogp title="Tahap {gameInfo.title} | Cari Kata" />
+<Ogp title="Tahap {data.type.title} | Cari Kata" />
 
 <header class="lg:hidden">
 	<div class="content-header flex items-center justify-between my-4 px-3">
 		<div class="title">
-			<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
+			<h2 class="text-2xl text-slate-900 font-semibold">{data.type.title}</h2>
 			<small class="text-xs font-semibold text-slate-600 tracking-wider">
 				{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 			</small>
@@ -270,12 +259,15 @@ lar: lg:grid-cols-2 lg:gap-3
 	"
 	>
 		{#if $isGameStarted}
-			<Grid words={data.words.map((word) => word.word)} type={data.type} />
+			<Grid
+				words={data.type.preprocess ? data.type.preprocess(data.words) : data.words}
+				type={data.type}
+			/>
 			<div>
 				<header class="hidden lg:block">
 					<div class="content-header flex items-center justify-between my-4 px-3">
 						<div class="title">
-							<h2 class="text-2xl text-slate-900 font-semibold">{gameInfo.title}</h2>
+							<h2 class="text-2xl text-slate-900 font-semibold">{data.type.title}</h2>
 							<small class="text-xs font-semibold text-slate-600 tracking-wider">
 								{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 							</small>

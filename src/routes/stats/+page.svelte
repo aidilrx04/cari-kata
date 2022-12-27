@@ -18,8 +18,6 @@
 
 	$: if ($stats.win > 0 && $stats.total_time > 0)
 		averageTime = calculateAverage($stats.total_time, $stats.win);
-
-	$: console.log(averageTime);
 </script>
 
 <div id="stats">

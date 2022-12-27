@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let ctaHref = '#';
+	export let ctaLabel = 'MAIN';
 </script>
 
 <div
@@ -15,7 +16,7 @@
 		<a
 			href={ctaHref}
 			class="bg-violet-600 text-gray-50 block mx-5 px-2 py-1 text-lg text-center rounded shadow-md hover:bg-violet-700"
-			>MAIN</a
+			>{ctaLabel}</a
 		>
 	</div>
 </div>

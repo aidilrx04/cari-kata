@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { foundWords, words } from '$lib/stores';
+	import { foundWords, words, displayTexts } from '$lib/stores';
 </script>
 
 <div
@@ -11,13 +11,23 @@ med: md:grid-cols-3
 lar: lg:place-content-start lg:place-items-starts
 "
 >
-	{#each $words as word (word)}
+	{#each $words as word, i (word)}
 		<div
 			style:background-color={$foundWords.colors[$foundWords.words.indexOf(word)]}
 			style:color={$foundWords.words.indexOf(word) >= 0 ? '#f9fafb' : '#1e293b'}
-			class="word px-3 py-1 mx-2 mb-1 uppercase bg-slate-200 rounded-full text-sm w-full text-center text-ellipsis"
+			class="word px-3 py-1 mx-2 mb-1 uppercase bg-slate-200 rounded-full text-sm w-full text-center text-ellipsis tabular-nums"
 		>
-			{word}
+			{#each $displayTexts[i].split('') as char, j}
+				{#if $foundWords.words.indexOf(word) >= 0}
+					<span class:underline={char === '_'} class="mr-[1px]">
+						{word[j]}
+					</span>
+				{:else}
+					<span class="mr-[1px]">
+						{char}
+					</span>
+				{/if}
+			{/each}
 		</div>
 	{/each}
 </div>

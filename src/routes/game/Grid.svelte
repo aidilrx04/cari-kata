@@ -8,27 +8,42 @@
 		grid as gridStore,
 		words as wordsStore,
 		gridRect,
-		hideFiller
+		hideFiller,
+		displayTexts
 	} from '$lib/stores';
 	import { onMount } from 'svelte';
 	import type { Mode } from '$lib/modes';
+	import type { Word } from '$lib/types';
 
-	export let words: string[];
+	export let words: Word[];
 	export let type: Mode;
 
 	const {
 		grid,
 		solved,
 		words: gridWords
-	} = wordsearch(words, type.grid.column, type.grid.row, {
-		backwards: type.backwordProb,
-		totalWordsInGrid: type.words
-	});
+	} = wordsearch(
+		words.map((word) => word.word),
+		type.grid.column,
+		type.grid.row,
+		{
+			backwards: type.backwordProb,
+			totalWordsInGrid: type.words
+		}
+	);
 
 	let gridContainer: HTMLDivElement;
 
 	// actual grid for calculation and rendering
 	$wordsStore = gridWords;
+	$displayTexts = type.preprocess
+		? gridWords.map((word) => {
+				const index = words.findIndex((w) => w.word === word);
+				return words[index].displayText as string;
+		  })
+		: [...gridWords];
+
+	$: console.log($wordsStore, $displayTexts);
 
 	$: if ($hideFiller) {
 		$gridStore = solved;

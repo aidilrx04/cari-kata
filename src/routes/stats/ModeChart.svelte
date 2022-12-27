@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MODES } from '$lib/modes';
+	import { MODES, MODE_TYPES } from '$lib/modes';
 	import type { Stats } from '$lib/stores/stats';
 
 	// ! Dont forget to minify this
@@ -15,7 +15,7 @@
 	import { onMount } from 'svelte';
 
 	export let stats: Stats;
-	const LABELS = ['Mudah', 'Sederhana', 'Sukar'];
+	const LABELS = Object.entries(MODE_TYPES).map((n) => n[1].title);
 
 	let canvas: HTMLCanvasElement;
 

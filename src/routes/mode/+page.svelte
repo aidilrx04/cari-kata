@@ -1,9 +1,59 @@
 <script>
 	import OGP from '$lib/OGP.svelte';
-	import Footer from '$lib/Footer.svelte';
 	import Meta from '$lib/Meta.svelte';
-	import Navigation from '$lib/Navigation.svelte';
 	import ModeCard from './ModeCard.svelte';
+	import { MODES, MODE_TYPES } from '$lib/modes';
+
+	const cards = [
+		{
+			title: MODE_TYPES[MODES.EASY].title,
+			description: `
+			<ul class="list-disc desc-list">
+				<li>${MODE_TYPES[MODES.EASY].grid.column}x${MODE_TYPES[MODES.EASY].grid.row} grid</li>
+				<li>Perkataan terbalik kurang</li>
+				<li>Perkataan condong kurang</li>
+			</ul>
+			`,
+			url: '/game?mode=easy',
+			cta_label: 'MAIN'
+		},
+		{
+			title: MODE_TYPES[MODES.NORMAL].title,
+			description: `
+			<ul class="list-disc desc-list">
+				<li>${MODE_TYPES[MODES.NORMAL].grid.column}x${MODE_TYPES[MODES.HARD].grid.row} grid</li>
+				<li>Perkataan terbalik biasa</li>
+				<li>Perkataan condong biasa</li>
+			</ul>
+			`,
+			url: '/game?mode=normal',
+			cta_label: 'MAIN'
+		},
+		{
+			title: MODE_TYPES[MODES.HARD].title,
+			description: `
+			<ul class="list-disc desc-list">
+				<li>${MODE_TYPES[MODES.HARD].grid.column}x${MODE_TYPES[MODES.HARD].grid.row} grid</li>
+				<li>Perkataan terbalik banyak</li>
+				<li>Perkataan condong banyak</li>
+			</ul>
+			`,
+			url: '/game?mode=hard',
+			cta_label: 'MAIN'
+		},
+		{
+			title: MODE_TYPES[MODES.IMPOSSIBLE].title,
+			description: `
+			<ul class="list-disc desc-list"> 
+				<li>13x15 grid</li>
+				<li>Sebahagian huruf disembunyikan</li>
+				<li>Segala daripada Sukar</li>
+			</ul>
+			`,
+			url: '/game?mode=impossible',
+			cta_label: 'MAIN'
+		}
+	];
 </script>
 
 <Meta title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
@@ -25,36 +75,20 @@
 	lg:grid-cols-3
 	"
 		>
-			<ModeCard ctaHref="/game?mode=easy">
-				<div class="title" slot="title">Mudah</div>
-				<div slot="description">
-					<ul class="list-disc ml-5">
-						<li>8x9 grid</li>
-						<li>Perkataan terbalik kurang</li>
-						<li>Perkataan condong kurang</li>
-					</ul>
-				</div>
-			</ModeCard>
-			<ModeCard ctaHref="/game?mode=normal">
-				<div class="title" slot="title">Sederhana</div>
-				<div slot="description">
-					<ul class="list-disc ml-5">
-						<li>8x9 grid</li>
-						<li>Perkataan terbalik kurang</li>
-						<li>Perkataan condong kurang</li>
-					</ul>
-				</div>
-			</ModeCard>
-			<ModeCard ctaHref="/game?mode=hard">
-				<div class="title" slot="title">Sukar</div>
-				<div slot="description">
-					<ul class="list-disc ml-5">
-						<li>8x9 grid</li>
-						<li>Perkataan terbalik kurang</li>
-						<li>Perkataan condong kurang</li>
-					</ul>
-				</div>
-			</ModeCard>
+			{#each cards as card}
+				<ModeCard ctaHref={card.url} ctaLabel={card.cta_label}>
+					<div slot="title">{card.title}</div>
+					<div slot="description">
+						{@html card.description}
+					</div>
+				</ModeCard>
+			{/each}
 		</div>
 	</div>
+
+	<style>
+		ul.desc-list {
+			@apply ml-5;
+		}
+	</style>
 </main>

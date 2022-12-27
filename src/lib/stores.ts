@@ -4,6 +4,7 @@ import { calculateHighlightWidth, colors } from './util';
 
 export const grid = writable<string[][]>([]);
 export const words = writable<string[]>([]);
+export const displayTexts = writable<string[]>();
 
 export const CELL_WIDTH = writable(0);
 export const HIGHLIGHT = derived(CELL_WIDTH, ($CELL_WIDTH) => calculateHighlightWidth($CELL_WIDTH));
