@@ -1,22 +1,20 @@
 <script lang="ts">
 	import Modal from '$lib/Modal.svelte';
-	import { MODES } from '$lib/modes';
+	import { MODES, MODE_TYPES } from '$lib/modes';
 	import { finishTime, startTime, type } from '$lib/stores';
 	import { onDestroy } from 'svelte';
 
 	export let showModal = true;
 
-	const MODES_STRING = {
-		[MODES.EASY]: 'Mudah',
-		[MODES.HARD]: 'SUKAR',
-		[MODES.NORMAL]: 'SEDERHANA'
-	};
-
 	onDestroy(() => {
 		showModal = false;
 	});
 
-	const modeColor = ['text-cyan-500', 'text-blue-500', 'text-red-500'];
+	const colors = ['text-cyan-500', 'text-blue-500', 'text-red-500', 'text-rose-700'];
+	const modeColors = Object.entries(MODE_TYPES).reduce(
+		(acc, mode, i) => ({ ...acc, [mode[0]]: colors[i] }),
+		{}
+	);
 
 	const distance = ($finishTime as Date).getTime() - ($startTime as Date).getTime();
 	const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -41,9 +39,7 @@
 				<p class="finish-message text-slate-800 text-center text-md">
 					Anda telah menyelesaikan cabaran
 					<br />
-					<span class="{modeColor[$type?.type - 1]} text-xl uppercase"
-						>{MODES_STRING[$type?.type]}</span
-					>
+					<span class="{modeColors[$type.type]} text-xl uppercase">{$type.title}</span>
 					<br />
 					dalam masa
 					<br />
