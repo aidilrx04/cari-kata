@@ -143,10 +143,10 @@
 		</div>
 	</div>
 
-	<button on:click={() => ($hideFiller = !$hideFiller)}
+	<!-- <button on:click={() => ($hideFiller = !$hideFiller)}
 		>{$hideFiller ? 'Show' : 'Hide'} filler</button
 	>
-	<button on:click={() => ($game.hasEnded = !$game.hasEnded)}> toggle finish </button>
+	<button on:click={() => ($game.hasEnded = !$game.hasEnded)}> toggle finish </button> -->
 </header>
 
 <main class="bg-gray-50 p-3 relative my-5">
