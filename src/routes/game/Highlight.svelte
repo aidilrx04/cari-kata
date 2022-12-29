@@ -1,9 +1,16 @@
 <script lang="ts">
-	import { CELL_WIDTH, HIGHLIGHT } from '$lib/stores';
-	import { calcDistance } from '$lib/util';
+	import { CELL_WIDTH } from '$lib/stores/game';
+	import { calcDistance, calculateHighlightWidth } from '$lib/util';
+	import { onDestroy } from 'svelte';
 
 	export let highlight: { start: number[]; end: number[]; rotation: number; color: string };
 	export let mouseHighlight = false;
+
+	$: HIGHLIGHT_WIDTH = calculateHighlightWidth($CELL_WIDTH);
+
+	onDestroy(() => {
+		HIGHLIGHT_WIDTH = 0;
+	});
 </script>
 
 <!-- svelte-ignore missing-declaration -->
@@ -17,8 +24,8 @@
 				z-index:1;
 				"
 	style:background-color={highlight.color}
-	style:height="{$HIGHLIGHT}px"
-	style:border-radius="{$HIGHLIGHT / 2}px {$HIGHLIGHT / 2}px"
+	style:height="{HIGHLIGHT_WIDTH}px"
+	style:border-radius="{HIGHLIGHT_WIDTH / 2}px {HIGHLIGHT_WIDTH / 2}px"
 	style:width="{calcDistance(
 		{
 			x:
@@ -34,9 +41,9 @@
 			x: !mouseHighlight ? highlight.end[0] * $CELL_WIDTH + $CELL_WIDTH / 2 : highlight.end[0],
 			y: !mouseHighlight ? highlight.end[1] * $CELL_WIDTH + $CELL_WIDTH / 2 : highlight.end[1]
 		}
-	) + $HIGHLIGHT}px"
-	style:transform-origin="{$HIGHLIGHT / 2}px 50%"
+	) + HIGHLIGHT_WIDTH}px"
+	style:transform-origin="{HIGHLIGHT_WIDTH / 2}px 50%"
 	style:top="{highlight.start[1] * $CELL_WIDTH + $CELL_WIDTH / 2}px"
 	style:left="{highlight.start[0] * $CELL_WIDTH + $CELL_WIDTH / 2}px"
-	style:transform="translate(-{$HIGHLIGHT / 2}px, -{$HIGHLIGHT / 2}px) rotate({highlight.rotation}deg)"
+	style:transform="translate(-{HIGHLIGHT_WIDTH / 2}px, -{HIGHLIGHT_WIDTH / 2}px) rotate({highlight.rotation}deg)"
 />
