@@ -20,6 +20,8 @@
 	} from '$lib/stores/game';
 	import { onDestroy } from 'svelte';
 	import { colors } from '$lib/util';
+	import WinSfx from '$lib/audio/win.mp3';
+	import BackgroundMusic from '$lib/audio/background.mp3';
 
 	export let data: PageData;
 	let showModal = true;
@@ -28,6 +30,9 @@
 	};
 
 	$mode = data.type;
+
+	let winAudio: HTMLAudioElement;
+	let backgroundAudio: HTMLAudioElement;
 
 	// stats
 	$: if ($game.hasStarted && $mode) {
@@ -61,6 +66,18 @@
 		};
 	}
 
+	// check is game is finished
+	$: $checkGameFinish;
+
+	$: if ($game.hasStarted) {
+		backgroundAudio.loop = true;
+		backgroundAudio.play();
+	}
+
+	$: if ($game.hasEnded) {
+		winAudio.play();
+	}
+
 	onDestroy(() => {
 		showModal = true;
 		$game = {
@@ -74,10 +91,10 @@
 		$CELL_WIDTH = 0;
 		$foundWords = [];
 		$currentColor = colors[Math.floor(Math.random() * colors.length)];
-	});
 
-	// check is game is finished
-	$: $checkGameFinish;
+		winAudio.pause();
+		backgroundAudio.pause();
+	});
 </script>
 
 <Meta
@@ -85,6 +102,13 @@
 	description="Main {data.words.map((n) => 'kata ' + n.word)}"
 />
 <Ogp title="Tahap {data.type.title} | Cari Kata" />
+
+<audio src={WinSfx} class="absolute -left-100 -top-100 win" bind:this={winAudio} />
+<audio
+	src={BackgroundMusic}
+	class="background absolute -left-100 -top-100"
+	bind:this={backgroundAudio}
+/>
 
 <header class="lg:hidden">
 	<div class="content-header flex items-center justify-between my-4 px-3">
@@ -119,10 +143,10 @@
 		</div>
 	</div>
 
-	<!-- <button on:click={() => ($hideFiller = !$hideFiller)}
+	<button on:click={() => ($hideFiller = !$hideFiller)}
 		>{$hideFiller ? 'Show' : 'Hide'} filler</button
 	>
-	<button on:click={() => ($game.hasEnded = !$game.hasEnded)}> toggle finish </button> -->
+	<button on:click={() => ($game.hasEnded = !$game.hasEnded)}> toggle finish </button>
 </header>
 
 <main class="bg-gray-50 p-3 relative my-5">

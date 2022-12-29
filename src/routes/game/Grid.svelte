@@ -17,6 +17,10 @@
 	import { onDestroy } from 'svelte';
 	import { colors, getDirection, validatePath } from '$lib/util';
 
+	import DingSound from '$lib/audio/ding-smol.mp3';
+
+	let ding: HTMLAudioElement;
+
 	export let words: Word[];
 	export let type: Mode;
 
@@ -98,6 +102,7 @@
 		$wordsStore = [];
 		$CELL_WIDTH = 0;
 		$gridStore = [];
+		ding.pause();
 	});
 
 	const setGridRect = () => {
@@ -116,6 +121,7 @@
 		validateAnswer = false;
 		resetCells();
 		if (answer) {
+			ding.play();
 			let { word, coords, ...highlight } = answer;
 			highlights = [...highlights, { ...highlight, color: $currentColor }];
 			$foundWords = [
@@ -209,6 +215,8 @@
 
 <svelte:window on:resize={handleGridRectChange} on:scroll={handleGridRectChange} />
 
+<!-- Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=40142">Pixabay</a> -->
+<audio src={DingSound} class="absolute -left-full -top-full" bind:this={ding} />
 <div
 	id="grid-container"
 	bind:this={gridContainer}
