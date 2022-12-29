@@ -3,7 +3,7 @@
 	import { addPrefix } from './util';
 
 	export let startAt: Date;
-	export let finishAt: Date | undefined = undefined;
+	export let finishAt: Date | null = null;
 	export let startCounting: boolean = false;
 	export let _class: string = '';
 

@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { game, mode } from '$lib/stores/game';
 	import Modal from '$lib/Modal.svelte';
-	import { MODES, MODE_TYPES } from '$lib/modes';
-	import { finishTime, startTime, type } from '$lib/stores';
+	import { MODE_TYPES } from '$lib/modes';
 	import { onDestroy } from 'svelte';
 
 	export let showModal = true;
@@ -16,7 +16,7 @@
 		{}
 	);
 
-	const distance = ($finishTime as Date).getTime() - ($startTime as Date).getTime();
+	const distance = ($game.finishTime as Date).getTime() - ($game.startTime as Date).getTime();
 	const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 </script>
@@ -39,7 +39,7 @@
 				<p class="finish-message text-slate-800 text-center text-md">
 					Anda telah menyelesaikan cabaran
 					<br />
-					<span class="{modeColors[$type.type]} text-xl uppercase">{$type.title}</span>
+					<span class="{modeColors[$mode.type]} text-xl uppercase">{$mode.title}</span>
 					<br />
 					dalam masa
 					<br />

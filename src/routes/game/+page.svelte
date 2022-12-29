@@ -1,32 +1,25 @@
 <script lang="ts">
 	import Modal from '$lib/Modal.svelte';
-	import {
-		cells,
-		CELL_WIDTH,
-		currentColor,
-		finishTime,
-		foundWords,
-		grid,
-		hideFiller,
-		highlights,
-		isGameFinished,
-		isGameStarted,
-		isMouseDown,
-		startTime,
-		type,
-		validateAnswer,
-		words
-	} from '$lib/stores';
 	import Timer from '$lib/Timer.svelte';
-	import { colors, getDirection, validatePath } from '$lib/util';
 	import type { PageData } from './$types';
 	import Grid from './Grid.svelte';
 	import Words from './Words.svelte';
-	import { onDestroy } from 'svelte';
 	import FinishModal from './FinishModal.svelte';
 	import Meta from '$lib/Meta.svelte';
 	import Ogp from '$lib/OGP.svelte';
 	import stats from '$lib/stores/stats';
+	import {
+		game,
+		mode,
+		hideFiller,
+		checkGameFinish,
+		words,
+		CELL_WIDTH,
+		foundWords,
+		currentColor
+	} from '$lib/stores/game';
+	import { onDestroy } from 'svelte';
+	import { colors } from '$lib/util';
 
 	export let data: PageData;
 	let showModal = true;
@@ -34,34 +27,11 @@
 		grid: data.type.grid
 	};
 
-	$type = data.type;
-
-	onDestroy(() => {
-		resetStates();
-	});
-
-	// effects
-	$: if ($validateAnswer) {
-		// wait for direction to set up first
-		const answer = validatePoints($cells);
-		// reset back answer chcking
-		$validateAnswer = false;
-		resetCells();
-		if (answer) {
-			let { word, coords, ...highlight } = answer;
-			$highlights = [...$highlights, { ...highlight, color: $currentColor }];
-			$foundWords = {
-				words: [...$foundWords.words, word],
-				coords: [...$foundWords.coords, ...coords],
-				colors: [...$foundWords.colors, $currentColor]
-			};
-			$currentColor = colors[Math.floor(Math.random() * colors.length)];
-		}
-	}
+	$mode = data.type;
 
 	// stats
-	$: if ($isGameStarted && $type) {
-		const _type = $type.type;
+	$: if ($game.hasStarted && $mode) {
+		const _type = $mode.type;
 		$stats = {
 			...$stats,
 			total: $stats.total + 1,
@@ -75,12 +45,12 @@
 		};
 	}
 
-	$: if ($isGameFinished && $type && $finishTime !== undefined && $startTime !== false) {
-		const _type = $type.type;
+	$: if ($game.hasEnded && $mode && $game.finishTime && $game.startTime) {
+		const _type = $mode.type;
 		$stats = {
 			...$stats,
 			win: $stats.win + 1,
-			total_time: $stats.total_time + ($finishTime?.getTime() - $startTime.getTime()),
+			total_time: $stats.total_time + ($game.finishTime?.getTime() - $game.startTime?.getTime()),
 			mode: {
 				...$stats.mode,
 				[_type]: {
@@ -91,95 +61,23 @@
 		};
 	}
 
-	// helper fns
-
-	/** validate points in cellcoord*/
-	const validatePoints = (points: { start: number[]; end: number[] }) => {
-		const validPath = validatePath(points.start, points.end);
-		if (validPath === false) return;
-		const angle = validPath;
-
-		const chars: string[] = [];
-		const coords: number[][] = [];
-		const direction = getDirection($cells.start[0], $cells.start[1], $cells.end[0], $cells.end[1]);
-
-		// up and down
-		const specialAngle = [90, -90];
-
-		let totalSteps = Math.abs($cells.end[0] - $cells.start[0]);
-		if (specialAngle.includes(angle)) totalSteps = Math.abs($cells.end[1] - $cells.start[1]);
-
-		// get each character in path from grid
-		for (let i = 0; i <= totalSteps; i++) {
-			const nextStepX = direction.x * i;
-			const nextStepY = direction.y * i;
-
-			const xCoord = $cells.start[0] + nextStepX;
-			const yCoord = $cells.start[1] + nextStepY;
-
-			// start coord as the base
-			const charInGrid = $grid[yCoord][xCoord];
-
-			coords.push([xCoord, yCoord]);
-			chars.push(charInGrid);
-		}
-
-		// validate each cell
-		let combinedChars = chars.join('');
-		let combinedBackwordChars = chars.reverse().join('');
-		const wordIndex = $words.indexOf(combinedChars);
-		const backwordIndex = $words.indexOf(combinedBackwordChars);
-		let isBackword = false;
-		// invalid word
-		if (wordIndex < 0 && backwordIndex < 0) {
-			console.info(`[vp]invalid word => ${combinedChars} | ${combinedBackwordChars}`);
-			return;
-		}
-
-		if (wordIndex < 0) {
-			isBackword = true;
-		}
-
-		let word = isBackword ? combinedBackwordChars : combinedChars;
-
-		if ($foundWords.words.includes(word)) {
-			return;
-		}
-
-		console.info(`[vp]found  ${word}`);
-
-		const result = {
-			word: word,
-			coords: coords,
-			rotation: angle,
-			start: $cells.start,
-			end: $cells.end
+	onDestroy(() => {
+		showModal = true;
+		$game = {
+			hasEnded: false,
+			hasStarted: false,
+			startTime: null,
+			finishTime: null
 		};
-
-		return result;
-	};
-
-	const resetCells = () => {
-		$cells = { start: [], end: [] };
-	};
-
-	const resetStates = () => {
-		$grid = [];
+		$hideFiller = false;
 		$words = [];
 		$CELL_WIDTH = 0;
-		$validateAnswer = false;
-		$cells = { start: [], end: [] };
-		$isMouseDown = false;
-		$highlights = [];
-		$foundWords = {
-			words: [],
-			coords: [],
-			colors: []
-		};
+		$foundWords = [];
+		$currentColor = colors[Math.floor(Math.random() * colors.length)];
+	});
 
-		$hideFiller = false;
-		$isGameStarted = false;
-	};
+	// check is game is finished
+	$: $checkGameFinish;
 </script>
 
 <Meta
@@ -196,24 +94,23 @@
 				{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 			</small>
 		</div>
-		{#if $isGameFinished}
+		{#if $game.hasEnded}
 			<div>
 				<button
 					class="block m-1 py-2 px-3 text-gray-50 bg-violet-600 rounded uppercase hover:bg-violet-700 transition-colors"
 					on:click={() => {
 						showModal = true;
-						console.log('balls');
 					}}>SELESAI</button
 				>
 			</div>
 		{/if}
 		<div class="timer flex flex-col items-end justify-center">
 			<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
-			{#if $startTime}
+			{#if $game.hasStarted && $game.startTime}
 				<Timer
-					startAt={$startTime}
-					finishAt={$finishTime}
-					startCounting={$isGameStarted && !$isGameFinished}
+					startAt={$game.startTime}
+					finishAt={$game.finishTime}
+					startCounting={$game.hasStarted && !$game.hasEnded}
 					_class="block text-slate-800 text-3xl"
 				/>
 			{:else}
@@ -225,16 +122,16 @@
 	<!-- <button on:click={() => ($hideFiller = !$hideFiller)}
 		>{$hideFiller ? 'Show' : 'Hide'} filler</button
 	>
-	<button on:click={() => ($isGameFinished = !$isGameFinished)}> toggle finish </button> -->
+	<button on:click={() => ($game.hasEnded = !$game.hasEnded)}> toggle finish </button> -->
 </header>
 
 <main class="bg-gray-50 p-3 relative my-5">
-	{#if !$isGameStarted}
+	{#if !$game.hasStarted}
 		<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
 			<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
 			<div class="content">
 				<button
-					on:click={() => ($isGameStarted = true)}
+					on:click={() => ($game.hasStarted = true)}
 					class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
 					>Main</button
 				>
@@ -242,7 +139,7 @@
 			<div slot="footer" />
 		</Modal>
 	{/if}
-	{#if $isGameFinished}
+	{#if $game.hasEnded}
 		<FinishModal
 			bind:showModal
 			on:close={() => {
@@ -258,7 +155,7 @@ med: md:
 lar: lg:grid-cols-2 lg:gap-3
 	"
 	>
-		{#if $isGameStarted}
+		{#if $game.hasStarted}
 			<Grid
 				words={data.type.preprocess ? data.type.preprocess(data.words) : data.words}
 				type={data.type}
@@ -272,24 +169,23 @@ lar: lg:grid-cols-2 lg:gap-3
 								{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 							</small>
 						</div>
-						{#if $isGameFinished}
+						{#if $game.hasEnded}
 							<div>
 								<button
 									class="block m-1 py-2 px-3 text-gray-50 bg-violet-600 rounded uppercase hover:bg-violet-700 transition-colors"
 									on:click={() => {
 										showModal = true;
-										console.log('balls');
 									}}>SELESAI</button
 								>
 							</div>
 						{/if}
 						<div class="timer flex flex-col items-end justify-center">
 							<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
-							{#if $startTime}
+							{#if $game && $game.startTime}
 								<Timer
-									startAt={$startTime}
-									finishAt={$finishTime}
-									startCounting={$isGameStarted && !$isGameFinished}
+									startAt={$game.startTime}
+									finishAt={$game.finishTime}
+									startCounting={$game.hasStarted && !$game.hasEnded}
 									_class="block text-slate-800 text-3xl"
 								/>
 							{:else}
