@@ -71,11 +71,11 @@
 
 	$: if ($game.hasStarted) {
 		backgroundAudio.loop = true;
-		backgroundAudio.play();
+		backgroundAudio?.play();
 	}
 
 	$: if ($game.hasEnded) {
-		winAudio.play();
+		winAudio?.play();
 	}
 
 	onDestroy(() => {
@@ -92,8 +92,8 @@
 		$foundWords = [];
 		$currentColor = colors[Math.floor(Math.random() * colors.length)];
 
-		winAudio.pause();
-		backgroundAudio.pause();
+		winAudio?.pause();
+		backgroundAudio?.pause();
 	});
 </script>
 

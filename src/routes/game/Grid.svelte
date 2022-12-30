@@ -102,7 +102,7 @@
 		$wordsStore = [];
 		$CELL_WIDTH = 0;
 		$gridStore = [];
-		ding.pause();
+		ding?.pause();
 	});
 
 	const setGridRect = () => {
@@ -121,7 +121,7 @@
 		validateAnswer = false;
 		resetCells();
 		if (answer) {
-			ding.play();
+			ding?.play();
 			let { word, coords, ...highlight } = answer;
 			highlights = [...highlights, { ...highlight, color: $currentColor }];
 			$foundWords = [
