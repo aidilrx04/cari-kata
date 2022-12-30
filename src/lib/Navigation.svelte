@@ -18,6 +18,11 @@
 			url: '/stats'
 		},
 		{
+			label: 'Tutorial',
+			icon: 'fa-question',
+			url: '/tutorial'
+		},
+		{
 			label: 'Tentang',
 			icon: 'fa-circle-info',
 			url: '/about'
@@ -29,7 +34,7 @@
 	};
 </script>
 
-<div class="bg-violet-800">
+<div class="bg-violet-800 z-50 relative">
 	<div class="max-w-screen-xl mx-auto">
 		<nav class="flex justify-between items-center relative  text-gray-50 px-3 py-2">
 			<div class="brand ">

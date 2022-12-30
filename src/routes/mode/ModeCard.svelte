@@ -1,6 +1,15 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+
 	export let ctaHref = '#';
 	export let ctaLabel = 'MAIN';
+	export let disabled = false;
+
+	let isLoading = false;
+
+	onDestroy(() => {
+		isLoading = false;
+	});
 </script>
 
 <div
@@ -14,9 +23,19 @@
 	</div>
 	<div class="call-to-action my-3 mt-5">
 		<a
+			on:click={() => {
+				isLoading = true;
+				disabled = true;
+			}}
 			href={ctaHref}
-			class="bg-violet-600 text-gray-50 block mx-5 px-2 py-1 text-lg text-center rounded shadow-md hover:bg-violet-700"
-			>{ctaLabel}</a
+			class="bg-violet-600 text-gray-50 block mx-5 px-2 py-1 text-lg text-center rounded shadow-md hover:bg-violet-700 {disabled
+				? 'pointer-events-none bg-violet-400 hover:bg-violet-400'
+				: ''}"
 		>
+			{#if isLoading}
+				<i class="fas fa-spinner fa-spin mr-1" />
+			{/if}
+			{ctaLabel}
+		</a>
 	</div>
 </div>

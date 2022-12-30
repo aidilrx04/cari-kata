@@ -3,6 +3,7 @@
 	import Meta from '$lib/Meta.svelte';
 	import ModeCard from './ModeCard.svelte';
 	import { MODES, MODE_TYPES } from '$lib/modes';
+	import { onDestroy } from 'svelte';
 
 	const cards = [
 		{
@@ -54,6 +55,12 @@
 			cta_label: 'MAIN'
 		}
 	];
+
+	let disabled = false;
+
+	onDestroy(() => {
+		disabled = false;
+	});
 </script>
 
 <Meta title="Pilih Mode | Cari Kata" description="Pilih mode untuk bermain cari kata sekarang" />
@@ -76,7 +83,7 @@
 	"
 		>
 			{#each cards as card}
-				<ModeCard ctaHref={card.url} ctaLabel={card.cta_label}>
+				<ModeCard ctaHref={card.url} ctaLabel={card.cta_label} bind:disabled>
 					<div slot="title">{card.title}</div>
 					<div slot="description">
 						{@html card.description}
