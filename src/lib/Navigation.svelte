@@ -18,6 +18,11 @@
 			url: '/stats'
 		},
 		{
+			label: 'Tutorial',
+			icon: 'fa-question',
+			url: '/tutorial'
+		},
+		{
 			label: 'Tentang',
 			icon: 'fa-circle-info',
 			url: '/about'
