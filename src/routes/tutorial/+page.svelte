@@ -10,7 +10,7 @@
 </header>
 <main class="my-3 bg-gray-50 p-3 rounded-lg" id="tutorial">
 	<Accordion>
-		<AccordionItem isOpen>
+		<AccordionItem>
 			<span slot="title">Cara bermain</span>
 			<div slot="content">
 				<section>
