@@ -69,10 +69,10 @@
 	// check is game is finished
 	$: $checkGameFinish;
 
-	$: if ($game.hasStarted) {
-		backgroundAudio.loop = true;
-		backgroundAudio?.play();
-	}
+	// $: if ($game.hasStarted) {
+	// 	backgroundAudio.loop = true;
+	// 	backgroundAudio?.play();
+	// }
 
 	$: if ($game.hasEnded) {
 		winAudio?.play();
@@ -110,55 +110,19 @@
 	bind:this={backgroundAudio}
 />
 
-<header class="lg:hidden">
-	<div class="content-header flex items-center justify-between my-4 px-3">
-		<div class="title">
-			<h2 class="text-2xl text-slate-900 font-semibold">{data.type.title}</h2>
-			<small class="text-xs font-semibold text-slate-600 tracking-wider">
-				{gameInfo.grid.column}x{gameInfo.grid.row} GRID
-			</small>
-		</div>
-		{#if $game.hasEnded}
-			<div>
-				<button
-					class="block m-1 py-2 px-3 text-gray-50 bg-violet-600 rounded uppercase hover:bg-violet-700 transition-colors"
-					on:click={() => {
-						showModal = true;
-					}}>SELESAI</button
-				>
-			</div>
-		{/if}
-		<div class="timer flex flex-col items-end justify-center">
-			<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
-			{#if $game.hasStarted && $game.startTime}
-				<Timer
-					startAt={$game.startTime}
-					finishAt={$game.finishTime}
-					startCounting={$game.hasStarted && !$game.hasEnded}
-					_class="block text-slate-800 text-3xl"
-				/>
-			{:else}
-				<span class="placeholder block text-slate-800 text-3xl">00:00</span>
-			{/if}
-		</div>
-	</div>
-
-	<!-- <button on:click={() => ($hideFiller = !$hideFiller)}
-		>{$hideFiller ? 'Show' : 'Hide'} filler</button
-	>
-	<button on:click={() => ($game.hasEnded = !$game.hasEnded)}> toggle finish </button> -->
-</header>
-
-<main class="bg-gray-50 p-3 relative my-5">
+<main class="p-3 relative my-5">
 	{#if !$game.hasStarted}
-		<Modal _class="bg-gray-50 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded">
+		<Modal
+			_class="bg-slate-50 dark:bg-slate-700 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded"
+		>
 			<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
 			<div class="content">
 				<button
 					on:click={() => ($game.hasStarted = true)}
 					class="px-6 py-2 block mx-auto bg-violet-600 text-gray-50 text-xl mt-2 mb-3 rounded shadow-sm hover:bg-violet-700 transition-colors"
-					>Main</button
 				>
+					Main
+				</button>
 			</div>
 			<div slot="footer" />
 		</Modal>
@@ -174,9 +138,9 @@
 	<div
 		class="
 default: game grid grid-cols-1 relative min-h-[400px]
-sma: 
+sma: mt-28
 med: md:
-lar: lg:grid-cols-2 lg:gap-3
+lar: lg:grid-cols-2 lg:gap-3 lg:mt-0
 	"
 	>
 		{#if $game.hasStarted}
@@ -184,12 +148,16 @@ lar: lg:grid-cols-2 lg:gap-3
 				words={data.type.preprocess ? data.type.preprocess(data.words) : data.words}
 				type={data.type}
 			/>
-			<div>
-				<header class="hidden lg:block">
+			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
+				<header class="absolute bottom-[104%] left-0 w-full lg:static">
 					<div class="content-header flex items-center justify-between my-4 px-3">
 						<div class="title">
-							<h2 class="text-2xl text-slate-900 font-semibold">{data.type.title}</h2>
-							<small class="text-xs font-semibold text-slate-600 tracking-wider">
+							<h2 class="text-2xl text-slate-800 dark:text-slate-100 font-semibold">
+								{data.type.title}
+							</h2>
+							<small
+								class="text-xs font-semibold text-slate-600 dark:text-slate-300 tracking-wider"
+							>
 								{gameInfo.grid.column}x{gameInfo.grid.row} GRID
 							</small>
 						</div>
@@ -199,26 +167,34 @@ lar: lg:grid-cols-2 lg:gap-3
 									class="block m-1 py-2 px-3 text-gray-50 bg-violet-600 rounded uppercase hover:bg-violet-700 transition-colors"
 									on:click={() => {
 										showModal = true;
-									}}>SELESAI</button
+									}}
 								>
+									SELESAI
+								</button>
 							</div>
 						{/if}
 						<div class="timer flex flex-col items-end justify-center">
-							<small class="label text-xs font-bold text-slate-600 uppercase">MASA</small>
+							<small class="label text-xs font-bold text-slate-600 dark:text-slate-300 uppercase">
+								MASA
+							</small>
 							{#if $game && $game.startTime}
 								<Timer
 									startAt={$game.startTime}
 									finishAt={$game.finishTime}
 									startCounting={$game.hasStarted && !$game.hasEnded}
-									_class="block text-slate-800 text-3xl"
+									_class="block text-slate-800 dark:text-slate-100 text-3xl"
 								/>
 							{:else}
-								<span class="placeholder block text-slate-800 text-3xl">00:00</span>
+								<span class="placeholder block text-slate-800 dark:text-slate-100 text-3xl"
+									>00:00</span
+								>
 							{/if}
 						</div>
 					</div>
 				</header>
-				<Words />
+				<div class="px-3">
+					<Words />
+				</div>
 			</div>
 		{/if}
 	</div>

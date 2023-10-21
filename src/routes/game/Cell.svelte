@@ -74,6 +74,8 @@
 		validateAnswer = true;
 		isTouchDown = false;
 	};
+
+	$: found = coords.filter((n) => n[0] === coord[0] && n[1] === coord[1]).length > 0;
 </script>
 
 <span
@@ -84,10 +86,9 @@
 	on:touchstart={onTouchStart}
 	on:touchend|nonpassive={onTouchEnd}
 	data-coord={coord}
-	style:color={coords.filter((n) => n[0] === coord[0] && n[1] === coord[1]).length > 0
-		? 'white'
-		: 'black'}
-	class="flex items-center justify-center z-10 box-border select-none uppercase font-normal"
+	class="flex items-center justify-center z-10 box-border select-none uppercase font-normal
+	{found ? 'text-slate-50' : 'text-slate-800 dark:text-slate-300'}
+	"
 >
 	<slot />
 </span>

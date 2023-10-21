@@ -29,3 +29,5 @@ export type Found = {
 	coord: number[][];
 	color: string;
 };
+
+export type Theme = 'light' | 'dark' | 'system';

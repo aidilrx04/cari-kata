@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a {
+	@apply text-violet-700;
+}
+
+.dark a {
+	@apply text-violet-300;
+}

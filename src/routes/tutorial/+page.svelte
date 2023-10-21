@@ -8,7 +8,7 @@
 		<h1 class="uppercase text-2xl text-slate-800 tracking-wide">Tutorial</h1>
 	</div>
 </header>
-<main class="my-3 bg-gray-50 p-3 rounded-lg" id="tutorial">
+<main class="my-3 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg" id="tutorial">
 	<Accordion>
 		<AccordionItem>
 			<span slot="title">Cara bermain</span>
