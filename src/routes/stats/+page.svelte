@@ -23,11 +23,13 @@
 <div id="stats">
 	<header>
 		<div class="titles my-3">
-			<h1 class="text-2xl text-slate-800 uppercase tracking-wider">Statistik</h1>
-			<small class="uppercase text-slate-600 text-xs">Anda sepanjang bermain</small>
+			<h1 class="text-2xl text-slate-800 dark:text-slate-50 uppercase tracking-wider">Statistik</h1>
+			<small class="uppercase text-slate-600 dark:text-slate-200 text-xs">
+				Anda sepanjang bermain
+			</small>
 		</div>
 	</header>
-	<main class=" p-3 bg-gray-50 rounded-lg">
+	<main class=" p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
 		<div
 			class="
 default: stats-cards grid gap-3 mt-3 mb-5 grid-cols-2
@@ -72,16 +74,16 @@ lar: lg:grid-cols-4
 		</div>
 		<hr />
 		<div class="game-charts my-3">
-			<h2 class="text-xl uppercase tracking-wide mb-2 text-slate-800">Carta</h2>
+			<h2 class="text-xl uppercase tracking-wide mb-2 text-slate-800 dark:text-slate-100">Carta</h2>
 
 			<div class="h-[250px] relative">
 				{#if $stats.total > 0}
 					<ModeChart stats={$stats} />
 				{:else}
 					<div
-						class="w-full h-full bg-gray-100 flex items-center justify-center text-center rounded"
+						class="w-full h-full bg-gray-100 dark:bg-slate-600 flex items-center justify-center text-center rounded"
 					>
-						<p class="text-slate-700">
+						<p class="text-slate-700 dark:text-slate-200">
 							Tiada statistik untuk carta.
 							<br />
 							Sila main beberapa permainan
@@ -95,7 +97,7 @@ lar: lg:grid-cols-4
 
 <style>
 	.stat-card {
-		@apply rounded-3xl w-full py-2 px-3 text-center text-gray-50;
+		@apply rounded-3xl w-full py-2 px-3 text-center text-slate-50;
 	}
 
 	.stat-card > span:not(.inline) {

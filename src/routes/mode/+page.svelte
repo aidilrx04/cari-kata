@@ -9,7 +9,7 @@
 		{
 			title: MODE_TYPES[MODES.EASY].title,
 			description: `
-			<ul class="list-disc desc-list">
+			<ul class="list-disc desc-list dark:text-slate-200">
 				<li>${MODE_TYPES[MODES.EASY].grid.column}x${MODE_TYPES[MODES.EASY].grid.row} grid</li>
 				<li>Perkataan terbalik kurang</li>
 				<li>Perkataan condong kurang</li>
@@ -21,7 +21,7 @@
 		{
 			title: MODE_TYPES[MODES.NORMAL].title,
 			description: `
-			<ul class="list-disc desc-list">
+			<ul class="list-disc desc-list dark:text-slate-200">
 				<li>${MODE_TYPES[MODES.NORMAL].grid.column}x${MODE_TYPES[MODES.HARD].grid.row} grid</li>
 				<li>Perkataan terbalik biasa</li>
 				<li>Perkataan condong biasa</li>
@@ -33,7 +33,7 @@
 		{
 			title: MODE_TYPES[MODES.HARD].title,
 			description: `
-			<ul class="list-disc desc-list">
+			<ul class="list-disc desc-list dark:text-slate-200">
 				<li>${MODE_TYPES[MODES.HARD].grid.column}x${MODE_TYPES[MODES.HARD].grid.row} grid</li>
 				<li>Perkataan terbalik banyak</li>
 				<li>Perkataan condong banyak</li>
@@ -45,7 +45,7 @@
 		{
 			title: MODE_TYPES[MODES.IMPOSSIBLE].title,
 			description: `
-			<ul class="list-disc desc-list"> 
+			<ul class="list-disc desc-list dark:text-slate-200"> 
 				<li>13x15 grid</li>
 				<li>Sebahagian huruf disembunyikan</li>
 				<li>Segala daripada Sukar</li>
@@ -72,12 +72,12 @@
 	</div>
 </header>
 
-<main id="mode-selection" class="p-3 bg-gray-50 rounded-lg max-w-full">
+<main id="mode-selection" class="p-3 bg-slate-50 dark:bg-transparent rounded-lg max-w-full">
 	<div class="max-w-screen-lg mx-auto">
 		<div
 			class="
 		w-full
-	modes-cards flex justify-center items-center flex-col 
+	modes-cards flex justify-center items-center flex-col
 	md:inline-grid md:grid-cols-2 md:gap-5 sm:place-content-center
 	lg:grid-cols-3
 	"

@@ -1,3 +1,5 @@
-<div class="ck-accordion rounded-lg border border-gray-200 overflow-hidden bg-gray-100">
+<div
+	class="ck-accordion rounded-lg border border-slate-200 dark:border-slate-500 overflow-hidden bg-slate-100 dark:bg-slate-600"
+>
 	<slot />
 </div>

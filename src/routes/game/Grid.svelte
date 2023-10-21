@@ -223,13 +223,13 @@
 	class="
 default: mb-3 mx-auto
 sma: sm:w-full sm:max-w-[360px]
-med: 
-lar: lg:
+med:
+lar: lg:mb-0
 w-full
 "
 >
 	<Highlights {...{ gridRect, isMouseDown, highlights, cells, isTouchDown }} />
-	<div id="grid" class="bg-gray-50 rounded-md shadow-md">
+	<div id="grid" class="bg-slate-50 dark:bg-slate-600 rounded-md">
 		{#each $gridStore as row, r}
 			<Row>
 				{#each row as cell, c}

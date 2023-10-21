@@ -1,7 +1,29 @@
 <script lang="ts">
 	import Footer from '$lib/Footer.svelte';
 	import Navigation from '$lib/Navigation.svelte';
+	import { onMount } from 'svelte';
 	import '../app.css';
+	import { currentTheme, theme } from '$lib/theme';
+
+	let htmlElement: HTMLHtmlElement;
+	let systemPreference: 'light' | 'dark';
+
+	onMount(() => {
+		htmlElement = document.body.parentElement as HTMLHtmlElement;
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+			if (e.matches) {
+				systemPreference = 'dark';
+			} else {
+				systemPreference = 'light';
+			}
+		});
+	});
+
+	$: if ($theme === 'system' && systemPreference !== undefined) $currentTheme = systemPreference;
+
+	$: if (htmlElement && $currentTheme) {
+		htmlElement.classList.toggle('dark', $currentTheme === 'dark');
+	}
 </script>
 
 <Navigation />
@@ -15,5 +37,9 @@
 <style global>
 	body {
 		@apply bg-slate-100 text-slate-800;
+	}
+
+	.dark body {
+		@apply bg-slate-800 text-slate-100;
 	}
 </style>

@@ -25,8 +25,9 @@ lar: lg:place-content-start lg:place-items-starts
 	{#each $words as word, i (word)}
 		<div
 			style:background-color={colors[found_words_string.indexOf(word.word)]}
-			style:color={found_words_string.indexOf(word.word) >= 0 ? '#f9fafb' : '#1e293b'}
-			class="word px-3 py-1 mx-2 mb-1 uppercase bg-slate-200 rounded-full text-sm w-full text-center text-ellipsis tabular-nums"
+			class="word px-3 py-1 mx-2 mb-1 uppercase {found_words_string.indexOf(word.word) >= 0
+				? '!text-slate-50'
+				: '!text-slate-700 dark:!text-slate-800'} bg-slate-200 dark:bg-slate-400 rounded-full text-sm w-full text-center text-ellipsis tabular-nums"
 		>
 			<span>
 				{#if word.displayText}
