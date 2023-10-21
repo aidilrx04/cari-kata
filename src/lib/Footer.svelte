@@ -17,4 +17,8 @@
 	a {
 		@apply underline text-violet-700;
 	}
+
+	:global(.dark) a {
+		@apply text-violet-400;
+	}
 </style>
