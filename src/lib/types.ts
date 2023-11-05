@@ -31,3 +31,10 @@ export type Found = {
 };
 
 export type Theme = 'light' | 'dark' | 'system';
+export type Solved = {
+	word: string;
+	coords: Coord[];
+	angle: number;
+	color?: string;
+};
+
