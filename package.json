@@ -39,6 +39,7 @@
 	"type": "module",
 	"license": "MIT",
 	"dependencies": {
+		"@juggle/resize-observer": "^3.4.0",
 		"chart.js": "^4.4.0"
 	}
 }
