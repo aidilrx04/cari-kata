@@ -17,13 +17,6 @@ export type Highlight = {
 	color: string;
 };
 
-export type Game = {
-	hasStarted: boolean;
-	hasEnded: boolean;
-	startTime: Date | null;
-	finishTime: Date | null;
-};
-
 export type Found = {
 	word: Word;
 	coord: number[][];
@@ -31,10 +24,12 @@ export type Found = {
 };
 
 export type Theme = 'light' | 'dark' | 'system';
+
 export type Coord = {
 	x: number;
 	y: number;
 };
+
 export type Solved = {
 	word: string;
 	coords: Coord[];
@@ -42,3 +37,18 @@ export type Solved = {
 	color?: string;
 };
 
+export type Game = {
+	title: string;
+
+	words: string[];
+	timeStartedAt?: number;
+	timeFinishedAt?: number;
+
+	grid: {
+		row: number;
+		column: number;
+
+		backwardProbability: number;
+		diagonalProbability: number;
+	};
+};
