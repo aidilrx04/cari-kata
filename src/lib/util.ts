@@ -1,4 +1,4 @@
-import type { Coord, Direction, Point } from './types';
+import type { Coord } from './types';
 
 export const getDirection = (ox: number, oy: number, x: number, y: number) => {
 	const steps = {
@@ -56,17 +56,10 @@ export const calcDistance = (p1: Point, p2: Point): number => {
 	return hipotenus;
 };
 
-export const setCoord = (x: number | string, y: number | string): Coord => [
-	parseInt(x as string),
-	parseInt(y as string)
-];
-
-export const strCoordToArray = (coord: string) => coord.split(',');
-
-export const validatePath = (p1: number[], p2: number[]) => {
+export const validatePath = (start: Coord, end: Coord) => {
 	const validAngles = [0, 45, 90, 135, 180, -45, -90, -135];
 
-	const angle = getAngle(p1[0], p1[1], p2[0], p2[1]);
+	const angle = getAngle(start.x, start.y, end.x, end.y);
 
 	if (!validAngles.includes(angle)) return false;
 	return angle;
