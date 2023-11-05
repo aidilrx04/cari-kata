@@ -1,24 +1,59 @@
 import { MODE_TYPES, type Mode } from '$lib/modes';
-import type { Word } from '$lib/types';
+import type { Game, Word } from '$lib/types';
 import { redirect } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
 // const apiUrl = 'http://bahasa-api.coolpage.biz/api/word/';
 const apiUrl = 'https://bahasa-api.vercel.app/api/word';
 
 export const prerender = false;
 
-export const load: PageLoad = async (req) => {
+const preconfigGames: { [key: string]: Game } = {
+	EASY: {
+		title: 'Mudah',
+		words: [],
+		grid: {
+			row: 9,
+			column: 7,
+			backwardProbability: 0.25,
+			diagonalProbability: 0.25
+		}
+	},
+	NORMAL: {
+		title: 'Sederhana',
+		words: [],
+		grid: {
+			row: 11,
+			column: 9,
+			backwardProbability: 0.5,
+			diagonalProbability: 0.5
+		}
+	},
+	HARD: {
+		title: 'Sukar',
+		words: [],
+		grid: {
+			row: 13,
+			column: 13,
+			backwardProbability: 0.75,
+			diagonalProbability: 0.75
+		}
+	}
+};
+
+export const load: PageServerLoad = async (req) => {
 	const { url } = req;
 
 	const modeStr = url.searchParams.get('mode');
-	const mode = getModeFromStr(modeStr ?? '') as Mode;
-	const shouldRedirect = !modeStr && !mode;
 
-	if (shouldRedirect) throw redirect(307, '/mode');
+	if (!modeStr) throw redirect(307, '/mode');
+
+	const game = preconfigGames[modeStr.toUpperCase()];
+
+	if (!game) throw redirect(307, '/mode');
 
 	const totalWords = 30;
-	const wordLength = mode.grid.column - 2;
+	const wordLength = game.grid.column;
 
 	const queryString = new URLSearchParams({
 		amount: totalWords.toString(),
@@ -31,15 +66,16 @@ export const load: PageLoad = async (req) => {
 	try {
 		response = await req.fetch(dataURL);
 	} catch (e) {
-		console.log('error');
+		console.error('error', e);
 		throw redirect(302, '/mode');
 	}
 
 	const responseData = await response.json();
 
+	game.words = responseData;
+
 	return {
-		words: responseData as Word[],
-		type: mode
+		game
 	};
 };
 
