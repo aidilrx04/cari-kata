@@ -15,7 +15,6 @@
 
 	let modal: HTMLDivElement;
 	export let props: any = {};
-	export let _class: string = '';
 	export let transitionProps: {
 		in?: {
 			duration: number;
@@ -68,7 +67,7 @@
 
 <div
 	{...props}
-	class="modal z-30 w-auto min-w-[250px] max-w-[360px] {_class}"
+	class="modal z-30 w-auto min-w-[250px] max-w-[360px] {$$props.class}"
 	role="dialog"
 	aria-modal="true"
 	bind:this={modal}
