@@ -70,22 +70,6 @@ export const calculateHighlightWidth = (base: number) => {
 	return base - base * percentage;
 };
 
-export const colors = [
-	'#ef4444',
-	'#fb923c',
-	'#84cc16',
-	'#4ade80',
-	'#059669',
-	'#5eead4',
-	'#22d3ee',
-	'#0369a1',
-	'#2563eb',
-	'#3730a3',
-	'#a855f7',
-	'#f43f5e',
-	'#be185d'
-];
-
 export function shuffle(array: unknown[]) {
 	let currentIndex = array.length,
 		randomIndex: number;
