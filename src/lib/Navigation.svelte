@@ -3,8 +3,6 @@
 
 	export let showDropdown = false;
 
-	$: console.log(showDropdown);
-
 	const links = [
 		{
 			label: 'Utama',
