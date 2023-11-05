@@ -1,33 +1,22 @@
 import type { Coord, Direction, Point } from './types';
 
-export const getDirection = (ox: number, oy: number, x: number, y: number): Direction => {
-	const directions = {
-		0: 'up',
-		1: 'top-right',
-		2: 'right',
-		3: 'bottom-right',
-		4: 'bottom',
-		5: 'bottom-left',
-		6: 'left',
-		7: 'top-left'
-	};
+export const getDirection = (ox: number, oy: number, x: number, y: number) => {
 	const steps = {
-		0: { x: 0, y: -1, name: directions[0] },
-		1: { x: 1, y: -1, name: directions[1] },
-		2: { x: 1, y: 0, name: directions[2] },
-		3: { x: 1, y: 1, name: directions[3] },
-		4: { x: 0, y: 1, name: directions[4] },
-		5: { x: -1, y: 1, name: directions[5] },
-		6: { x: -1, y: 0, name: directions[6] },
-		7: { x: -1, y: -1, name: directions[7] }
+		0: { x: 0, y: -1 },
+		1: { x: 1, y: -1 },
+		2: { x: 1, y: 0 },
+		3: { x: 1, y: 1 },
+		4: { x: 0, y: 1 },
+		5: { x: -1, y: 1 },
+		6: { x: -1, y: 0 },
+		7: { x: -1, y: -1 }
 	};
 
 	const mx = x - ox;
 	const my = y - oy;
 	let direction = {
 		x: 0,
-		y: 0,
-		name: 'default'
+		y: 0
 	};
 
 	if (mx === 0 && my < 0) {
