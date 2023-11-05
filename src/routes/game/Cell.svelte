@@ -1,94 +1,41 @@
 <script lang="ts">
-	import type { Cells } from '$lib/types';
-	import { CELL_WIDTH, game } from '$lib/stores/game';
-	import { strCoordToArray } from '$lib/util';
+	import type { Coord } from '$lib/types';
+	import { createEventDispatcher } from 'svelte';
 
-	export let coord: [number, number];
-	export let validateAnswer = false;
-	export let cells: Cells;
-	export let isMouseDown: boolean;
-	export let isTouchDown: boolean;
-	export let coords: number[][];
+	// coord of the cell on the grid
+	export let coord: Coord;
 
-	// Mouse events
-	const onMouseDown = (event: MouseEvent & { currentTarget: HTMLSpanElement }) => {
-		if ($game.hasEnded) return;
+	// cell dimension
+	export let width: number;
+	export let height: number;
 
-		const targetElement = event.currentTarget;
+	const dispatcher = createEventDispatcher<{
+		pressedOn: { coord: typeof coord };
+		releasedOn: { coord: typeof coord };
+		size: { height: number };
+	}>();
 
-		cells.start = strCoordToArray(targetElement?.dataset?.coord as string).map((coord) =>
-			Number(coord)
-		);
-
-		isMouseDown = true;
+	const handleMouseDown = () => {
+		dispatcher('pressedOn', {
+			coord
+		});
 	};
 
-	const onMouseUp = (event: MouseEvent & { currentTarget: HTMLSpanElement }) => {
-		if ($game.hasEnded) return;
-
-		const targetElement = event.currentTarget;
-
-		cells.end = strCoordToArray(targetElement?.dataset.coord as string).map((coord) =>
-			Number(coord)
-		);
-
-		// check user answer
-		validateAnswer = true;
-
-		isMouseDown = false;
+	const handleMouseUp = () => {
+		dispatcher('releasedOn', { coord });
 	};
-
-	// for touch screens
-	const onTouchStart = (e: TouchEvent & { currentTarget: HTMLSpanElement }) => {
-		if ($game.hasEnded) return;
-
-		const targetElement = e.currentTarget;
-
-		cells.start = strCoordToArray(targetElement?.dataset?.coord as string).map((coord) =>
-			Number(coord)
-		);
-
-		isTouchDown = true;
-	};
-
-	const onTouchEnd = (e: TouchEvent & { currentTarget: HTMLSpanElement }) => {
-		if ($game.hasEnded) return;
-
-		const VALID_TOUCH_ELEMENT = 'SPAN';
-		const lastTouched = e.changedTouches[e.changedTouches.length - 1];
-		const position = {
-			x: lastTouched.pageX,
-			y: lastTouched.pageY - document.documentElement.scrollTop
-		};
-		const targetElement = document.elementFromPoint(position.x, position.y) as HTMLSpanElement;
-
-		if (targetElement.tagName !== VALID_TOUCH_ELEMENT) {
-			// reset cells
-			cells = { start: [], end: [] };
-			return;
-		}
-		cells.end = strCoordToArray(targetElement?.dataset?.coord as string).map((coord) =>
-			Number(coord)
-		);
-
-		validateAnswer = true;
-		isTouchDown = false;
-	};
-
-	$: found = coords.filter((n) => n[0] === coord[0] && n[1] === coord[1]).length > 0;
 </script>
 
+<!-- 
+	cant use the grid auto width property because of clunky adjustment on window resize and weird bugs
+	on certain dimension 
+-->
 <span
-	style:height="{$CELL_WIDTH}px"
-	style:width="{$CELL_WIDTH}px"
-	on:mousedown={onMouseDown}
-	on:mouseup={onMouseUp}
-	on:touchstart={onTouchStart}
-	on:touchend|nonpassive={onTouchEnd}
-	data-coord={coord}
-	class="flex items-center justify-center z-10 box-border select-none uppercase font-normal
-	{found ? 'text-slate-50' : 'text-slate-800 dark:text-slate-300'}
-	"
+	class="flex items-center justify-center select-none border border-collapse uppercase"
+	style:width="{width}px"
+	style:height="{height}px"
+	on:mousedown={handleMouseDown}
+	on:mouseup={handleMouseUp}
 >
 	<slot />
 </span>
