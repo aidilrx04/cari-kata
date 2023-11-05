@@ -31,6 +31,10 @@ export type Found = {
 };
 
 export type Theme = 'light' | 'dark' | 'system';
+export type Coord = {
+	x: number;
+	y: number;
+};
 export type Solved = {
 	word: string;
 	coords: Coord[];
