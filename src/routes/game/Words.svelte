@@ -1,16 +1,19 @@
 <script lang="ts">
-	import { foundWords, words } from '$lib/stores/game';
-	import { onDestroy } from 'svelte';
+	import type { Solved } from '$lib/types';
 
-	let found_words_string: string[] = [];
-	$: found_words_string = $foundWords.map((found) => found.word.word);
-	let colors: string[] = [];
-	$: colors = $foundWords.map((found) => found.color);
+	export let words: string[]; // words in grid
+	export let solvedWords: Solved[];
 
-	onDestroy(() => {
-		found_words_string = [];
-		colors = [];
-	});
+	const getBackgroundColor = (word: string, solvedWords: Solved[]) => {
+		const color = solvedWords.find((solved) => solved.word === word)?.color ?? '';
+
+		return color;
+	};
+
+	const isSolved = (word: string, solvedWords: Solved[]) => {
+		const index = solvedWords.findIndex((solved) => solved.word === word);
+		return index >= 0;
+	};
 </script>
 
 <div
@@ -22,45 +25,15 @@ med: md:grid-cols-3
 lar: lg:place-content-start lg:place-items-starts
 "
 >
-	{#each $words as word, i (word)}
+	{#each words as word, i (word)}
 		<div
-			style:background-color={colors[found_words_string.indexOf(word.word)]}
-			class="word px-3 py-1 mx-2 mb-1 uppercase {found_words_string.indexOf(word.word) >= 0
+			style:background-color={getBackgroundColor(word, solvedWords)}
+			class="word px-3 py-1 mx-2 mb-1 uppercase {isSolved(word, solvedWords)
 				? '!text-slate-50'
 				: '!text-slate-700 dark:!text-slate-800'} bg-slate-200 dark:bg-slate-400 rounded-full text-sm w-full text-center text-ellipsis tabular-nums"
 		>
 			<span>
-				{#if word.displayText}
-					{#each word.displayText as char, j}
-						{#if found_words_string.indexOf(word.word) >= 0}
-							<span class="mr-[1px] text-center" class:underline={char === '_'}>
-								{word.word[j]}
-							</span>
-						{:else}
-							<span class="mr-[1px] text-center">
-								{char}
-							</span>
-						{/if}
-					{/each}
-				{:else}
-					{#each word.word as char}
-						<span class="mr-[1px] text-center">
-							{char}
-						</span>
-					{/each}
-				{/if}
-
-				<!-- {#each $displayTexts[i].split('') as char, j}
-					{#if $foundWords.words.indexOf(word) >= 0}
-						<span class:underline={char === '_'} class="mr-[1px]">
-							{word[j]}
-						</span>
-					{:else}
-						<span class="mr-[1px]">
-							{char}
-						</span>
-					{/if}
-				{/each} -->
+				{word}
 			</span>
 		</div>
 	{/each}
