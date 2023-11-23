@@ -39,16 +39,21 @@ export type Solved = {
 
 export type Game = {
 	title: string;
-
 	words: string[];
 	timeStartedAt?: number;
 	timeFinishedAt?: number;
 
-	grid: {
-		row: number;
-		column: number;
+	grid: GridOptions;
 
-		backwardProbability: number;
-		diagonalProbability: number;
-	};
+	backwardProbability: number;
+
+	functions?: string[];
+};
+
+export type GridOptions = {
+	rows: number;
+	columns: number;
+
+	grid: string[][];
+	solved: string[][];
 };

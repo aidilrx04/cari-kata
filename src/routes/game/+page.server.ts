@@ -1,7 +1,7 @@
-import { MODE_TYPES, type Mode } from '$lib/modes';
 import type { Game, Word } from '$lib/types';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { wordsearch } from '$lib/wordsearch';
 
 // const apiUrl = 'http://bahasa-api.coolpage.biz/api/word/';
 const apiUrl = 'https://bahasa-api.vercel.app/api/word';
@@ -13,31 +13,46 @@ const preconfigGames: { [key: string]: Game } = {
 		title: 'Mudah',
 		words: [],
 		grid: {
-			row: 9,
-			column: 7,
-			backwardProbability: 0.25,
-			diagonalProbability: 0.25
-		}
+			rows: 9,
+			columns: 7,
+			grid: [],
+			solved: []
+		},
+		backwardProbability: 0.25
 	},
 	NORMAL: {
 		title: 'Sederhana',
 		words: [],
 		grid: {
-			row: 11,
-			column: 9,
-			backwardProbability: 0.5,
-			diagonalProbability: 0.5
-		}
+			rows: 11,
+			columns: 9,
+			grid: [],
+			solved: []
+		},
+		backwardProbability: 0.5
 	},
 	HARD: {
 		title: 'Sukar',
 		words: [],
 		grid: {
-			row: 13,
-			column: 13,
-			backwardProbability: 0.75,
-			diagonalProbability: 0.75
-		}
+			rows: 13,
+			columns: 13,
+			grid: [],
+			solved: []
+		},
+		backwardProbability: 0.75
+	},
+	IMPOSSIBLE: {
+		title: 'Mustahil',
+		words: [],
+		grid: {
+			rows: 15,
+			columns: 13,
+			grid: [],
+			solved: []
+		},
+		backwardProbability: 0.75,
+		functions: ['IMPOSSIBLE']
 	}
 };
 
@@ -53,7 +68,7 @@ export const load: PageServerLoad = async (req) => {
 	if (!game) throw redirect(307, '/mode');
 
 	const totalWords = 30;
-	const wordLength = game.grid.column;
+	const wordLength = game.grid.columns;
 
 	const queryString = new URLSearchParams({
 		amount: totalWords.toString(),
@@ -70,19 +85,22 @@ export const load: PageServerLoad = async (req) => {
 		throw redirect(302, '/mode');
 	}
 
-	const responseData = await response.json();
+	const responseData = (await response.json()) as Word[];
 
-	game.words = responseData;
+	// create grid
+
+	const wordString = responseData.map((word) => word.word);
+
+	const result = wordsearch(wordString, game.grid.columns, game.grid.rows, {
+		backwards: game.backwardProbability,
+		totalWordsInGrid: 16
+	});
+
+	game.words = result.words;
+	game.grid.grid = result.grid;
+	game.grid.solved = result.solved;
 
 	return {
 		game
 	};
-};
-
-const getModeFromStr = (modeStr: string): Mode | false => {
-	const validModes = Object.entries(MODE_TYPES).map((n) => n[1].type.toString());
-	const modeIndex = validModes.indexOf(modeStr);
-	if (modeIndex < 0) return false;
-
-	return MODE_TYPES[validModes[modeIndex]];
 };
