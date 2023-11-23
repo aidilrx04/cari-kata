@@ -5,29 +5,25 @@
 	import Modal from '$lib/Modal.svelte';
 	import FinishModal from './FinishModal.svelte';
 	import type { Solved } from '$lib/types';
+	import type { PageServerData } from './$types';
+
+	export let data: PageServerData;
+
+	$: game = data.game;
 
 	let hasStarted = false;
 	let hasFinished = false;
 
-	const raw = [
-		{ id: 12563, word: 'langkat', length: 7 },
-		{ id: 1546, word: 'bacak', length: 5 }
-	];
-
-	$: words = raw.map((word) => word.word);
-
-	let wordsInGrid: string[] = []; // placed words in grid
+	let wordsInGrid: string[] = data.game.words; // placed words in grid
 	let solvedWords: Solved[] = [];
-
-	let gridDimension = {
-		row: 15,
-		col: 15
-	};
 
 	let showFinishedModal = false;
 
 	let timeStartedAt: Date;
 	let timeFinishedAt: Date;
+
+	$: game.timeStartedAt = timeStartedAt?.getTime();
+	$: game.timeFinishedAt = timeFinishedAt?.getTime();
 
 	// check if user solved all the word
 	// and valid grid that has more than or equal to 1 word
@@ -69,16 +65,25 @@
 	{/if}
 	{#if hasStarted}
 		<div id="ck-game" class="grid grid-cols-2 gap-3 mt28">
-			<Grid {words} options={gridDimension} bind:wordsInGrid bind:solvedWords />
+			<Grid
+				options={{
+					...game.grid,
+					grid: game.grid.solved
+				}}
+				words={game.words}
+				bind:solvedWords
+			/>
 			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
 				<header>
 					<div class="content-header flex items-center justify-between my-4 px-4">
 						<div class="title">
-							<h2 class="text-2xl text-slate-800 dark:text-slate-100 font-semibold">TITLE</h2>
+							<h2 class="text-2xl text-slate-800 dark:text-slate-100 font-semibold">
+								{game.title}
+							</h2>
 							<small
 								class="text-xs font-semibold text-slate-600 dark:text-slate-300 tracking-wider"
 							>
-								15 x 15 GRID
+								{game.grid.columns} x {game.grid.rows} GRID
 							</small>
 						</div>
 						{#if hasFinished}

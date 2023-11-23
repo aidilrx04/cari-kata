@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { wordsearch } from '$lib/wordsearch';
 	import { onMount } from 'svelte';
-	import type { Solved } from '$lib/types';
+	import type { Solved, GridOptions } from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
@@ -9,17 +9,13 @@
 	// words used to placed in the grid
 	export let words: string[];
 
-	export let wordsInGrid: string[] = [];
 	export let solvedWords: Solved[] = []; // populate by cellsmanager
 
 	// grid options
-	export let options = {
-		row: 15,
-		col: 15
-	};
+	export let options: GridOptions;
 
 	// grid containers scambled letters
-	let grid: string[][] = [];
+	let grid: string[][] = options.grid;
 
 	let container: HTMLDivElement;
 
@@ -44,11 +40,6 @@
 	}
 
 	onMount(() => {
-		// create new grid
-		const ws = wordsearch(words, options.col, options.row);
-		grid = ws.solved;
-		wordsInGrid = ws.words;
-
 		setContainerRect();
 	});
 
@@ -68,11 +59,11 @@
 	<div
 		id="ck-grid"
 		class=" grid relative"
-		style:grid-template-rows="repeat({options.row}, minmax(0, 1fr))"
-		style:grid-template-columns="repeat({options.col}, minmax(0, 1fr))"
+		style:grid-template-rows="repeat({options.rows}, minmax(0, 1fr))"
+		style:grid-template-columns="repeat({options.columns}, minmax(0, 1fr))"
 	>
 		{#if containerRect}
-			<CellsManager {grid} {words} bind:solvedWords {containerRect} column={options.col} />
+			<CellsManager {grid} {words} bind:solvedWords {containerRect} column={options.columns} />
 		{/if}
 	</div>
 </div>
