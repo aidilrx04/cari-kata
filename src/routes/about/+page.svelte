@@ -6,7 +6,7 @@
 <main id="about" class="p-3 bg-slate-50 dark:bg-slate-700 rounded-xl">
 	<p class="text-md text-slate-700 dark:text-slate-100 my-3">
 		Cari Kata adalah sebuah aplikasi laman web permainan cari kata dalam talian. Permainan cari kata
-		ialah permainan perkataan yang terdiri daripada huruf perkataan yang diletakkan dalam gird.
+		ialah permainan perkataan yang terdiri daripada huruf perkataan yang diletakkan dalam grid.
 		Objektif permainan ini adalah untuk mencari dan menandakan semua perkataan yang tersembunyi di
 		dalam grid. [<a
 			class="underline text-violet-700"
