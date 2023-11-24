@@ -7,6 +7,8 @@
 	import type { Solved } from '$lib/types';
 	import type { PageServerData } from './$types';
 	import { functions } from '$lib/functions';
+	import Meta from '$lib/Meta.svelte';
+	import Ogp from '$lib/OGP.svelte';
 
 	export let data: PageServerData;
 
@@ -51,6 +53,9 @@
 		showFinishedModal = status;
 	};
 </script>
+
+<Meta title="Permainan | Cari Kata" description="Main sekarang!" />
+<Ogp title="Permainan | Cari Kata" />
 
 <main class="p-3 relative my-5 min-h-[400px]">
 	{#if !hasStarted}
