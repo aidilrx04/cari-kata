@@ -8,7 +8,7 @@ export const functions: { [key: string]: WordFunction } = {
 
 		const MIN_CHARS = 3;
 
-		const newWords = words.map((word) => {
+		const newWords = words.map(({ value: word }) => {
 			const amount = Math.floor(Math.random() * (word.length - 2 - MIN_CHARS + 1)) + MIN_CHARS;
 
 			let hiddenIndexes: number[] = [];
@@ -29,10 +29,13 @@ export const functions: { [key: string]: WordFunction } = {
 			hiddenIndexes.forEach((index) => {
 				newWord[index] = ' ';
 			});
-			return newWord.join('');
+			return {
+				value: word,
+				display: newWord.join('')
+			};
 		});
 
-		console.log(newWords);
+		game.words = newWords;
 
 		return game;
 	}

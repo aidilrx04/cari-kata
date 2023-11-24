@@ -6,15 +6,21 @@
 	import FinishModal from './FinishModal.svelte';
 	import type { Solved } from '$lib/types';
 	import type { PageServerData } from './$types';
+	import { functions } from '$lib/functions';
 
 	export let data: PageServerData;
 
 	$: game = data.game;
 
+	$: if (game.functions && game.functions.length > 0) {
+		game.functions.forEach((fn) => {
+			game = functions[fn](game);
+		});
+	}
+
 	let hasStarted = false;
 	let hasFinished = false;
 
-	let wordsInGrid: string[] = data.game.words; // placed words in grid
 	let solvedWords: Solved[] = [];
 
 	let showFinishedModal = false;
@@ -27,8 +33,8 @@
 
 	// check if user solved all the word
 	// and valid grid that has more than or equal to 1 word
-	$: if (wordsInGrid.length > 0 && wordsInGrid.length === solvedWords.length) {
-		if (wordsInGrid.length === solvedWords.length) stopGame();
+	$: if (game.words.length > 0 && game.words.length === solvedWords.length) {
+		if (game.words.length === solvedWords.length) stopGame();
 	}
 
 	const startGame = () => {
@@ -65,14 +71,7 @@
 	{/if}
 	{#if hasStarted}
 		<div id="ck-game" class="grid grid-cols-2 gap-3 mt28">
-			<Grid
-				options={{
-					...game.grid,
-					grid: game.grid.solved
-				}}
-				words={game.words}
-				bind:solvedWords
-			/>
+			<Grid options={game.grid} words={game.words} bind:solvedWords />
 			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
 				<header>
 					<div class="content-header flex items-center justify-between my-4 px-4">
@@ -110,7 +109,7 @@
 					</div>
 				</header>
 				<div class="px-3">
-					<Words {solvedWords} words={wordsInGrid} />
+					<Words {solvedWords} words={game.words} />
 				</div>
 			</div>
 		</div>
