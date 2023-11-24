@@ -51,7 +51,7 @@
 <svelte:window on:resize={setContainerRect} on:scroll={setContainerRect} />
 
 <div
-	class="ck-grid-container relative w-full mx-auto"
+	class="ck-grid-container relative w-full mx-auto mb-3 lg:mb-0"
 	style:max-width="{containerWidth}px"
 	bind:this={container}
 >
