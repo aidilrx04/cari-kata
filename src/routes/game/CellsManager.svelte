@@ -20,6 +20,11 @@
 	export let words: Word[];
 	export let solvedWords: Solved[];
 
+	let solvedWordsCoords: Coord[];
+	$: solvedWordsCoords = solvedWords
+		.map((solved) => solved.coords)
+		.reduce((acc, coords) => [...acc, ...coords], []);
+
 	// container rect
 	export let containerRect: DOMRect;
 	// grid column
@@ -134,6 +139,14 @@
 		// set isPressing to false
 		$isPressing = false;
 	};
+
+	const isCellFound = (coord: Coord, searchCoords: Coord[]) => {
+		return (
+			searchCoords.findIndex(
+				(searchCoord) => searchCoord.x === coord.x && searchCoord.y === coord.y
+			) >= 0
+		);
+	};
 </script>
 
 <svelte:document on:mouseup={handleInvalidRelease} />
@@ -146,6 +159,7 @@
 			height={$cellHeight}
 			on:pressedOn={handleCellPress}
 			on:releasedOn={handleCellRelease}
+			found={isCellFound({ x: j, y: i }, solvedWordsCoords)}
 		>
 			{letter}
 		</Cell>

@@ -5,6 +5,9 @@
 	// coord of the cell on the grid
 	export let coord: Coord;
 
+	// indicate whether the cell has been found
+	export let found: boolean = false;
+
 	// cell dimension
 	export let width: number;
 	export let height: number;
@@ -31,9 +34,10 @@
 	on certain dimension 
 -->
 <span
-	class="flex items-center justify-center select-none border border-collapse uppercase"
+	class="flex items-center justify-center select-none uppercase z-20"
 	style:width="{width}px"
 	style:height="{height}px"
+	class:text-slate-50={found}
 	on:mousedown={handleMouseDown}
 	on:mouseup={handleMouseUp}
 >
