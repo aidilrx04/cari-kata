@@ -70,10 +70,15 @@
 		</Modal>
 	{/if}
 	{#if hasStarted}
-		<div id="ck-game" class="grid grid-cols-2 gap-3 mt28">
+		<div
+			id="ck-game"
+			class="
+grid grid-cols-1 mt-28 relative min-h-[400px]
+lg:grid-cols-2 lg:gap-3 lg:mt-0"
+		>
 			<Grid options={game.grid} words={game.words} bind:solvedWords />
 			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
-				<header>
+				<header class="absolute bottom-[104%] left-0 w-full lg:static">
 					<div class="content-header flex items-center justify-between my-4 px-4">
 						<div class="title">
 							<h2 class="text-2xl text-slate-800 dark:text-slate-100 font-semibold">
