@@ -10,14 +10,14 @@
 <script lang="ts">
 	import type { ComponentEvents } from 'svelte';
 	import Cell from './Cell.svelte';
-	import type { Coord, Solved } from '$lib/types';
+	import type { Coord, Solved, Word } from '$lib/types';
 	import { writable } from 'svelte/store';
 	import { getDirection, validatePath } from '$lib/util';
 	import { currentColor } from '$lib/colors';
 	import { updateCurrentColor } from '$lib/colors';
 
 	export let grid: string[][];
-	export let words: string[];
+	export let words: Word[];
 	export let solvedWords: Solved[];
 
 	// container rect
@@ -115,10 +115,11 @@
 		};
 	};
 
-	export const validateWord = (word: string, words: string[]) => {
-		const reversedWords = words.map((word) => [...word].reverse().join(''));
+	export const validateWord = (word: string, words: Word[]) => {
+		const wordValues = words.map((word) => word.value);
+		const reversedWords = wordValues.map((word) => [...word].reverse().join(''));
 
-		const index = words.indexOf(word);
+		const index = wordValues.indexOf(word);
 		if (index >= 0) return { backword: false, valid: true };
 
 		const backwordIndex = reversedWords.indexOf(word);

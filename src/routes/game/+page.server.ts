@@ -85,22 +85,28 @@ export const load: PageServerLoad = async (req) => {
 		throw redirect(302, '/mode');
 	}
 
-	const responseData = (await response.json()) as Word[];
+	const responseData = await response.json();
 
 	// create grid
-
-	const wordString = responseData.map((word) => word.word);
+	const words = wordsResponseToWords(responseData);
+	const wordString = words.map((word) => word.value);
 
 	const result = wordsearch(wordString, game.grid.columns, game.grid.rows, {
 		backwards: game.backwardProbability,
 		totalWordsInGrid: 16
 	});
 
-	game.words = result.words;
+	game.words = result.words.map((word) => ({ value: word, display: word }));
 	game.grid.grid = result.grid;
 	game.grid.solved = result.solved;
 
 	return {
 		game
 	};
+};
+
+const wordsResponseToWords = (response): Word[] => {
+	const words = response.map((word) => ({ value: word.word, display: word.word }));
+
+	return words;
 };

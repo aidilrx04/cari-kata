@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { wordsearch } from '$lib/wordsearch';
 	import { onMount } from 'svelte';
-	import type { Solved, GridOptions } from '$lib/types';
+	import type { Solved, GridOptions, Word } from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
 
 	// words used to placed in the grid
-	export let words: string[];
+	export let words: Word[];
 
 	export let solvedWords: Solved[] = []; // populate by cellsmanager
 
