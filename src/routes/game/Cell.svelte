@@ -27,6 +27,10 @@
 	const handleMouseUp = () => {
 		dispatcher('releasedOn', { coord });
 	};
+
+	const handleTouchStart = () => {
+		dispatcher('pressedOn', { coord });
+	};
 </script>
 
 <!-- 
@@ -34,12 +38,14 @@
 	on certain dimension 
 -->
 <span
-	class="flex items-center justify-center select-none uppercase z-20"
+	class="cell flex items-center justify-center select-none uppercase z-20"
 	style:width="{width}px"
 	style:height="{height}px"
 	class:text-slate-50={found}
+	data-coord={[coord.x, coord.y]}
 	on:mousedown={handleMouseDown}
 	on:mouseup={handleMouseUp}
+	on:touchstart={handleTouchStart}
 >
 	<slot />
 </span>

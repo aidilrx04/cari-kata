@@ -41,8 +41,13 @@
 		$isPressing = true;
 	};
 
+	// handle cell now split for touch end call
 	const handleCellRelease = (e: ComponentEvents<Cell>['releasedOn']) => {
-		$endCoord = e.detail.coord;
+		onCellRelease(e.detail.coord);
+	};
+
+	const onCellRelease = (coord: Coord) => {
+		$endCoord = coord;
 		$isPressing = false;
 		calculateAnswer();
 	};
@@ -149,9 +154,48 @@
 			) >= 0
 		);
 	};
+
+	const handleTouchEnd = (e: TouchEvent) => {
+		const lastTouchedElement = e.changedTouches[e.changedTouches.length - 1];
+		// get touch coord
+		const position = {
+			x: lastTouchedElement.pageX,
+			y: lastTouchedElement.pageY - document.documentElement.scrollTop
+		};
+		// get element
+		const element = document.elementFromPoint(position.x, position.y) as HTMLElement;
+
+		// check if element is valid tag and class
+		if (!isValidTouchElement(element) || element?.dataset?.coord === undefined) {
+			console.log('Invalid endtouch target');
+			handleInvalidRelease(); // reset press
+			return;
+		}
+
+		const coordString = element.dataset?.coord;
+		const coordNumbers = coordString.split(',');
+		const cellCoord: Coord = { x: Number(coordNumbers[0]), y: Number(coordNumbers[1]) };
+
+		onCellRelease(cellCoord);
+	};
+
+	const isValidTouchElement = (element: HTMLElement) => {
+		const targetElement = 'span';
+		const targetContainClass = 'cell';
+
+		if (
+			element?.tagName.toLowerCase() !== targetElement ||
+			!element.classList.contains(targetContainClass)
+		) {
+			return false;
+		}
+
+		return true;
+	};
 </script>
 
 <svelte:document on:mouseup={handleInvalidRelease} />
+<svelte:body on:touchend={handleTouchEnd} />
 
 {#each grid as row, i}
 	{#each row as letter, j}

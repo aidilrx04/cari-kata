@@ -47,9 +47,18 @@
 			y: event.pageY
 		};
 	};
+
+	const handleTouchInput = (e: TouchEvent) => {
+		const touchEl = e.touches[0];
+		mouse = {
+			x: touchEl.pageX,
+			y: touchEl.pageY
+		};
+	};
 </script>
 
 <svelte:window on:mousemove={getMouseLocation} />
+<svelte:body on:touchmove={handleTouchInput} on:touchstart={handleTouchInput} />
 
 <div class="highlights-container absolute w-full h-full">
 	{#each solvedWords as solvedWord}
