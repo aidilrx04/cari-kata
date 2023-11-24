@@ -60,7 +60,7 @@
 </script>
 
 <div
-	class="w-full absolute rounded-full"
+	class="w-full absolute rounded-full z-10"
 	style:background-color={color}
 	style:width="{absoluteWidth + height}px"
 	style:height="{height}px"
