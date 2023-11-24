@@ -58,7 +58,7 @@
 	<HighlightManager {solvedWords} {containerRect} />
 	<div
 		id="ck-grid"
-		class=" grid relative"
+		class="grid relative bg-slate-50 dark:bg-slate-600 rounded-md"
 		style:grid-template-rows="repeat({options.rows}, minmax(0, 1fr))"
 		style:grid-template-columns="repeat({options.columns}, minmax(0, 1fr))"
 	>
