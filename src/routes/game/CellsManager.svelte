@@ -140,6 +140,8 @@
 		$isPressing = false;
 	};
 
+	// WARN: this function will be called on every cell when solvedWordsCoords change
+	// TODO: optimize the call
 	const isCellFound = (coord: Coord, searchCoords: Coord[]) => {
 		return (
 			searchCoords.findIndex(
