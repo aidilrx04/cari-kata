@@ -11,24 +11,24 @@ export const functions: { [key: string]: WordFunction } = {
 		const newWords = words.map(({ value: word }) => {
 			const amount = Math.floor(Math.random() * (word.length - 2 - MIN_CHARS + 1)) + MIN_CHARS;
 
-			let hiddenIndexes: number[] = [];
+			let visibleIndexes: number[] = [];
 
-			while (hiddenIndexes.length < amount) {
+			while (visibleIndexes.length < amount) {
 				if (amount > word.length) {
-					hiddenIndexes = [...word].map((_, i) => i);
+					visibleIndexes = [...word].map((_, i) => i);
 					break;
 				}
 
 				const randomIndex = Math.floor(Math.random() * word.length);
-				if (hiddenIndexes.includes(randomIndex)) continue;
-				hiddenIndexes.push(randomIndex);
+				if (visibleIndexes.includes(randomIndex)) continue;
+				visibleIndexes.push(randomIndex);
 			}
 
-			const newWord = [...word];
+			// make the letter invisible if not included in visibleIndexes
+			const newWord = [...word].map((letter, index) =>
+				visibleIndexes.indexOf(index) >= 0 ? letter : ' '
+			);
 
-			hiddenIndexes.forEach((index) => {
-				newWord[index] = ' ';
-			});
 			return {
 				value: word,
 				display: newWord.join('')
