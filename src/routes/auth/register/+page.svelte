@@ -56,10 +56,13 @@
 			<div class="input-group">
 				<button
 					type="submit"
-					class="block w-full bg-violet-600 px-4 py-3 rounded text-slate-50 hover:bg-violet-700 active:focus:bg-violet-800"
+					class="block mb-2 w-full bg-violet-600 px-4 py-3 rounded text-slate-50 hover:bg-violet-700 active:focus:bg-violet-800"
 				>
 					Register
 				</button>
+				<a href="/auth/login" class="text-center mb-2 underline text-sm text-slate-500">
+					Log Masuk
+				</a>
 			</div>
 		</form>
 
