@@ -45,7 +45,7 @@
 				/>
 			</label>
 			<label for="password" class="input-group">
-				<span>Password</span>
+				<span>Katalaluan</span>
 				<input
 					bind:value={userData.password}
 					class="block w-full rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 py-3 px-2"
@@ -58,7 +58,7 @@
 					type="submit"
 					class="block mb-2 w-full bg-violet-600 px-4 py-3 rounded text-slate-50 hover:bg-violet-700 active:focus:bg-violet-800"
 				>
-					Register
+					Daftar
 				</button>
 				<a href="/auth/login" class="text-center mb-2 underline text-sm text-slate-500">
 					Log Masuk
