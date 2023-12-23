@@ -36,7 +36,7 @@
 	<main class="p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
 		<form on:submit|preventDefault={handleSubmit}>
 			<label for="username" class="input-group">
-				<span>Name</span>
+				<span>Nama</span>
 				<input
 					bind:value={userData.username}
 					class="block w-full rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 py-3 px-2"
@@ -58,7 +58,7 @@
 					type="submit"
 					class="block mb-2 w-full bg-violet-600 py-3 px-4 rounded text-slate-50 hover:bg-violet-700 active:focus:bg-violet-800"
 				>
-					Login
+					Log Masuk
 				</button>
 				<a href="/auth/register" class="mb-2 text-sm underline text-slate-500 text-center">
 					Daftar Akaun
