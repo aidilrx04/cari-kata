@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import type { Game } from '$lib/types';
+	import Grid from '../game/Grid.svelte';
 
 	const game: Game = {
 		title: 'Mudah',
@@ -37,9 +38,11 @@
 	};
 </script>
 
-<main>
-	<h1>Cipta permainan</h1>
+<header>
+	<h1 class="uppercase text-2xl text-center mt-6 mb-3 tracking-wider">Cipta permainan</h1>
+</header>
 
+<main class="p-3 max-w-full bg-slate-50 dark:bg-slate-700 rounded-lg">
 	<form on:submit={handleSubmit}>
 		<label class="input-group" for="title">
 			<span>Tajuk</span>
@@ -50,22 +53,44 @@
 			<input bind:value={totalWords} type="number" id="words" />
 		</label>
 
-		<hr />
-		<span>Grid</span>
+		<div class="relative my-4 text-center">
+			<hr class="z-10 absolute top-1/2 left-0 w-full" />
+			<span class="relative px-4 bg-slate-50 z-20">Grid</span>
+		</div>
 
-		<div class="input-group">
-			<label for="rows">
+		<div class="flex w-full gap-5">
+			<label for="rows" class="input-group w-full">
 				<span>Baris</span>
 				<input bind:value={game.grid.rows} type="number" id="rows" />
 			</label>
-			<label for="columns">
+			<label for="columns" class="input-group w-full">
 				<span>Lajur</span>
 				<input bind:value={game.grid.columns} type="number" id="columns" />
 			</label>
 		</div>
 
 		<div class="input-group">
-			<button type="submit">Cipta</button>
+			<button
+				type="submit"
+				class="block w-full py-3 px-2 rounded text-slate-50 bg-violet-600 hover:bg-violet-700 active:focus:bg-violet-800"
+			>
+				Cipta
+			</button>
 		</div>
 	</form>
 </main>
+
+<style>
+	.input-group {
+		@apply block mb-4;
+	}
+
+	.input-group span {
+		@apply block mb-2;
+	}
+
+	.input-group input,
+	.input-group select {
+		@apply block w-full py-3 px-2 bg-slate-50 rounded border  border-slate-200;
+	}
+</style>
