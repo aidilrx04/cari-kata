@@ -1,5 +1,3 @@
-import type { HighlightData } from '../routes/game/HighlightManager.svelte';
-
 export type Word = {
 	value: string;
 	display: string;
@@ -81,6 +79,15 @@ export type OnCellReleaseFunction = (
 		updateGrid: (grid: string[][]) => void;
 	}
 ) => void;
+
+export type HighlightData = {
+	id: number;
+	angle: number;
+	start: Coord;
+	end: Coord;
+	width: number;
+	color: string;
+};
 
 export type HighlightUpdate<T> = (data: Partial<T>) => void;
 export type CalcHighlightWidth = (start: Coord, end: Coord) => number;

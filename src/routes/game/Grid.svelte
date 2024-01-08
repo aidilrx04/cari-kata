@@ -7,10 +7,11 @@
 		Word,
 		OnCellPressFunction,
 		OnCellReleaseFunction,
-		OnCellMoveFunction
+		OnCellMoveFunction,
+		HighlightData
 	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
-	import HighlightManager, { type HighlightData } from './HighlightManager.svelte';
+	import HighlightManager from './HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
 
 	// words used to placed in the grid

@@ -3,13 +3,13 @@
 	import type {
 		Coord,
 		GridOptions,
+		HighlightData,
 		OnCellMoveFunction,
 		OnCellPressFunction,
 		OnCellReleaseFunction
 	} from '$lib/types';
 	import { getDirection, getSteps, validateAngle } from '$lib/util';
 	import Grid from '../game/Grid.svelte';
-	import type { HighlightData } from '../game/HighlightManager.svelte';
 
 	export let rows: number;
 	export let columns: number;
