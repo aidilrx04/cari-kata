@@ -5,6 +5,21 @@
 		const hipotenus = Math.sqrt(Math.pow(xLength, 2) + Math.pow(yLength, 2));
 		return hipotenus;
 	};
+
+	export const calculateHighlightWidth = (start: Coord, end: Coord, cellWidth: number) => {
+		// calculate the distance from the center of the start coord to the center of end coord
+		const scaledStartCoord = {
+			x: start.x * cellWidth + cellWidth / 2,
+			y: start.y * cellWidth + cellWidth / 2
+		};
+		const scaledEndCoord = {
+			x: end.x * cellWidth + cellWidth / 2,
+			y: end.y * cellWidth + cellWidth / 2
+		};
+		const distance = calculateDistance(scaledStartCoord, scaledEndCoord);
+
+		return distance;
+	};
 </script>
 
 <script lang="ts">
@@ -41,21 +56,6 @@
 			x: left,
 			y: top
 		};
-	};
-
-	export const calculateHighlightWidth = (start: Coord, end: Coord, cellWidth: number) => {
-		// calculate the distance from the center of the start coord to the center of end coord
-		const scaledStartCoord = {
-			x: start.x * cellWidth + cellWidth / 2,
-			y: start.y * cellWidth + cellWidth / 2
-		};
-		const scaledEndCoord = {
-			x: end.x * cellWidth + cellWidth / 2,
-			y: end.y * cellWidth + cellWidth / 2
-		};
-		const distance = calculateDistance(scaledStartCoord, scaledEndCoord);
-
-		return distance;
 	};
 </script>
 
