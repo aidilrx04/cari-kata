@@ -89,14 +89,14 @@ export type HighlightData = {
 	color: string;
 };
 
-export type HighlightUpdate<T> = (data: Partial<T>) => void;
+export type HighlightUpdate = (data: Partial<HighlightData>) => void;
 export type CalcHighlightWidth = (start: Coord, end: Coord) => number;
 
-export type OnCellMoveFunction<T = object> = (
+export type OnCellMoveFunction = (
 	start: Coord,
 	current: Coord | null,
-	highlight: T & {
-		update: HighlightUpdate<T>;
+	highlight: HighlightData & {
+		update: HighlightUpdate;
 		calcHighlightWidth: CalcHighlightWidth;
 	},
 	options: {

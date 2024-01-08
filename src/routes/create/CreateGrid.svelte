@@ -194,12 +194,7 @@
 		return filled;
 	};
 
-	const handleCellMove: OnCellMoveFunction<HighlightData> = (
-		start,
-		current,
-		highlight,
-		options
-	) => {
+	const handleCellMove: OnCellMoveFunction = (start, current, highlight, options) => {
 		if (!updateHighlight) updateHighlight = options.updateHighlight;
 		if (!removeHighlight) removeHighlight = options.removeHighlight;
 

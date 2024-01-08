@@ -40,7 +40,7 @@
 	let highlights: HighlightData[] = [];
 	let id = 1;
 
-	export let onCellMove: OnCellMoveFunction<HighlightData> = () => {};
+	export let onCellMove: OnCellMoveFunction = () => {};
 
 	$: if ($isPressing && mouse && $startCoord !== undefined && $cellWidth) {
 		const { scrollLeft, scrollTop } = document.documentElement;
@@ -154,7 +154,7 @@
 	const calcHighlightWidth: CalcHighlightWidth = (start, end) => {
 		return calculateHighlightWidth(start, end, $cellWidth);
 	};
-	const updateCurrentHighlight: HighlightUpdate<typeof highlight> = (data) => {
+	const updateCurrentHighlight: HighlightUpdate = (data) => {
 		highlight = { ...highlight, ...data };
 	};
 </script>

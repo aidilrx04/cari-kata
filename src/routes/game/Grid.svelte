@@ -7,8 +7,7 @@
 		Word,
 		OnCellPressFunction,
 		OnCellReleaseFunction,
-		OnCellMoveFunction,
-		HighlightData
+		OnCellMoveFunction
 	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
@@ -24,7 +23,7 @@
 
 	export let handleCellPress: OnCellPressFunction | undefined = undefined;
 	export let handleCellRelease: OnCellReleaseFunction | undefined = undefined;
-	export let handleCellMove: OnCellMoveFunction<HighlightData> | undefined = undefined;
+	export let handleCellMove: OnCellMoveFunction | undefined = undefined;
 
 	// grid containers scambled letters
 	let grid: string[][];
