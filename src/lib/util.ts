@@ -42,6 +42,18 @@ export const getDirection = (ox: number, oy: number, x: number, y: number) => {
 	return direction;
 };
 
+export const getSteps = (a: Coord, b: Coord) => {
+	if (a.x === b.x && a.y === b.y) return 0;
+
+	let steps = 0;
+	if (a.x === b.x) {
+		steps = Math.abs(a.y - b.y);
+	} else {
+		steps = Math.abs(a.x - b.x);
+	}
+	return steps;
+};
+
 export const getAngle = (x1, y1, x2, y2) => {
 	// calc dot product
 	const rad = Math.atan2(y2 - y1, x2 - x1);
