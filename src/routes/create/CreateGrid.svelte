@@ -235,7 +235,7 @@
 		}
 
 		// wordLength - 1 is to count for 0 based grid
-		const validLength = getMaxValidLength(selected, start, direction, grid);
+		const validLength = getMaxValidLength(selected, start, direction, solved);
 		const maxCoord: Coord = {
 			x: direction.x * (validLength - 1) + start.x,
 			y: direction.y * (validLength - 1) + start.y
