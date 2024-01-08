@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { wordsearch } from '$lib/wordsearch';
 	import { onMount } from 'svelte';
-	import type { Solved, GridOptions, Word } from '$lib/types';
+	import type {
+		Solved,
+		GridOptions,
+		Word,
+		OnCellPressFunction,
+		OnCellReleaseFunction,
+	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
@@ -14,8 +20,12 @@
 	// grid options
 	export let options: GridOptions;
 
+	export let handleCellPress: OnCellPressFunction | undefined = undefined;
+	export let handleCellRelease: OnCellReleaseFunction | undefined = undefined;
+
 	// grid containers scambled letters
-	let grid: string[][] = options.grid;
+	let grid: string[][];
+	$: grid = options.grid;
 
 	let container: HTMLDivElement;
 
@@ -63,7 +73,15 @@
 		style:grid-template-columns="repeat({options.columns}, minmax(0, 1fr))"
 	>
 		{#if containerRect}
-			<CellsManager {grid} {words} bind:solvedWords {containerRect} column={options.columns} />
+			<CellsManager
+				onCellPress={handleCellPress}
+				onCellRelease={handleCellRelease}
+				{grid}
+				{words}
+				bind:solvedWords
+				{containerRect}
+				column={options.columns}
+			/>
 		{/if}
 	</div>
 </div>

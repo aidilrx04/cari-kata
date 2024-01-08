@@ -10,9 +10,9 @@
 <script lang="ts">
 	import type { ComponentEvents } from 'svelte';
 	import Cell from './Cell.svelte';
-	import type { Coord, Solved, Word } from '$lib/types';
+	import type { Coord, OnCellPressFunction, OnCellReleaseFunction, Solved, Word } from '$lib/types';
 	import { writable } from 'svelte/store';
-	import { getDirection, validatePath } from '$lib/util';
+	import { getDirection, isValidCellElement, validateAngle } from '$lib/util';
 	import { currentColor } from '$lib/colors';
 	import { updateCurrentColor } from '$lib/colors';
 
@@ -30,6 +30,22 @@
 	// grid column
 	export let column: number;
 
+	const updateCellFunction = (coord: Coord) => {
+		return function (cell: { value: string }) {
+			grid[coord.y][coord.x] = cell.value;
+			grid = grid;
+		};
+	};
+
+	const updateGridFunction = (newGrid: string[][]) => {
+		grid = newGrid;
+	};
+
+	export let onCellPress: OnCellPressFunction = () => {};
+	export let onCellRelease: OnCellReleaseFunction = () => {
+		calculateAnswer();
+	};
+
 	// set the cellWidth and cellHeight based on containerRect
 	$: {
 		$cellWidth = containerRect?.width / column;
@@ -37,19 +53,28 @@
 	}
 
 	const handleCellPress = (e: ComponentEvents<Cell>['pressedOn']) => {
-		$startCoord = e.detail.coord;
+		const coord = e.detail.coord;
+		$startCoord = coord;
 		$isPressing = true;
+		onCellPress(
+			{ coord, update: updateCellFunction(coord) },
+			{
+				grid: grid
+			}
+		);
 	};
 
 	// handle cell now split for touch end call
 	const handleCellRelease = (e: ComponentEvents<Cell>['releasedOn']) => {
-		onCellRelease(e.detail.coord);
-	};
-
-	const onCellRelease = (coord: Coord) => {
-		$endCoord = coord;
+		$endCoord = e.detail.coord;
 		$isPressing = false;
-		calculateAnswer();
+		onCellRelease(
+			{ coord: e.detail.coord },
+			{
+				grid: grid,
+				updateGrid: updateGridFunction
+			}
+		);
 	};
 
 	const calculateAnswer = () => {
@@ -60,7 +85,7 @@
 
 		// validate the path between start and end
 		// only accept <degree> % 45 == 0
-		const angleOrInvalid = validatePath($startCoord, $endCoord);
+		const angleOrInvalid = validateAngle($startCoord, $endCoord);
 		if (angleOrInvalid === false) return;
 
 		const { word, coords } = getWordFromCoord($startCoord, $endCoord, angleOrInvalid, grid);
@@ -166,7 +191,7 @@
 		const element = document.elementFromPoint(position.x, position.y) as HTMLElement;
 
 		// check if element is valid tag and class
-		if (!isValidTouchElement(element) || element?.dataset?.coord === undefined) {
+		if (!isValidCellElement(element) || element?.dataset?.coord === undefined) {
 			console.log('Invalid endtouch target');
 			handleInvalidRelease(); // reset press
 			return;
@@ -176,21 +201,15 @@
 		const coordNumbers = coordString.split(',');
 		const cellCoord: Coord = { x: Number(coordNumbers[0]), y: Number(coordNumbers[1]) };
 
-		onCellRelease(cellCoord);
-	};
-
-	const isValidTouchElement = (element: HTMLElement) => {
-		const targetElement = 'span';
-		const targetContainClass = 'cell';
-
-		if (
-			element?.tagName.toLowerCase() !== targetElement ||
-			!element.classList.contains(targetContainClass)
-		) {
-			return false;
-		}
-
-		return true;
+		onCellRelease(
+			{
+				coord: cellCoord
+			},
+			{
+				grid: grid,
+				updateGrid: updateGridFunction
+			}
+		);
 	};
 </script>
 
