@@ -56,7 +56,7 @@ export const calcDistance = (p1: Point, p2: Point): number => {
 	return hipotenus;
 };
 
-export const validatePath = (start: Coord, end: Coord) => {
+export const validateAngle = (start: Coord, end: Coord) => {
 	const validAngles = [0, 45, 90, 135, 180, -45, -90, -135];
 
 	const angle = getAngle(start.x, start.y, end.x, end.y);
