@@ -117,7 +117,7 @@
 			$startCoord,
 			currentCoord,
 			{
-				...highlight,
+				highlight,
 				updateCurrentHighlight: updateCurrentHighlight,
 				calcHighlightWidth: calcHighlightWidth
 			},

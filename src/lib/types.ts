@@ -92,7 +92,8 @@ export type CalcHighlightWidth = (start: Coord, end: Coord) => number;
 export type OnCellMoveFunction = (
 	start: Coord,
 	current: Coord | null,
-	highlight: HighlightData & {
+	highlight: {
+		highlight: HighlightData;
 		updateCurrentHighlight: HighlightUpdate;
 		calcHighlightWidth: CalcHighlightWidth;
 	},
