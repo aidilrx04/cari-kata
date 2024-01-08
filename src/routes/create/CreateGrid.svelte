@@ -113,13 +113,13 @@
 		startCoord = cell.coord;
 	};
 
-	const handleCellRelease: OnCellReleaseFunction = (cell, _grid) => {
+	const handleCellRelease: OnCellReleaseFunction = (cell, currentGrid) => {
 		endCoord = cell.coord;
 
 		let validPlacement = isValidPlacement(
 			{ start: startCoord, end: endCoord },
 			selected,
-			_grid.grid,
+			currentGrid.grid,
 			true
 		);
 
@@ -145,13 +145,12 @@
 			const y = startCoord.y + direction.y * i;
 			const char = selected[i];
 
-			if (char !== undefined) _grid.grid[y][x] = char;
+			if (char !== undefined) solved[y][x] = char;
 		}
 
 		onSuccessPlacement(selected);
 
-		solved = _grid.grid;
-		_grid.updateGrid(_grid.grid);
+		currentGrid.updateGrid(solved);
 		previousSolved = solved;
 		updateCurrentColor();
 	};
