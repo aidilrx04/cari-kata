@@ -57,7 +57,7 @@
 		$startCoord = coord;
 		$isPressing = true;
 		onCellPress(
-			{ coord, update: updateCellFunction(coord) },
+			{ coord },
 			{
 				grid: grid
 			}

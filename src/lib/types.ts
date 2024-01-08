@@ -58,12 +58,9 @@ export type GridOptions = {
 
 export type DisplayWordFunction = (word: Word, solvedWords: Solved[]) => string;
 
-export type CellUpdateFunction = (cell: { value: string }) => void;
-
 export type OnCellPressFunction = (
 	cell: {
 		coord: Coord;
-		update: CellUpdateFunction;
 	},
 	grid: {
 		grid: string[][];
