@@ -2,20 +2,37 @@
 	import { goto } from '$app/navigation';
 	import type { Game } from '$lib/types';
 	import Grid from '../game/Grid.svelte';
+	import CreateGrid from './CreateGrid.svelte';
+	import CreateWords from './CreateWords.svelte';
+
+	const gridData = {
+		rows: 9,
+		columns: 7,
+		grid: [],
+		solved: []
+	};
 
 	const game: Game = {
 		title: 'Mudah',
 		words: [],
-		grid: {
-			rows: 9,
-			columns: 7,
-			grid: [],
-			solved: []
-		},
+		grid: gridData,
 		backwardProbability: 0.25
 	};
 
+	let solved: string[][];
+	let grid: string[][];
+
+	let filledWords: string[] = [];
 	let totalWords = 9;
+	let words: string[] = ['asd'];
+	let selected: string = words[0];
+	let isFilled = false;
+	$: console.log(filledWords);
+
+	$: if (isFilled) {
+		filledWords = [...filledWords, selected];
+		isFilled = false;
+	}
 
 	const handleSubmit = () => {
 		fetch('/create', {
@@ -24,7 +41,15 @@
 			},
 			method: 'post',
 			body: JSON.stringify({
-				core: game,
+				core: {
+					...game,
+					words: filledWords,
+					grid: {
+						...gridData,
+						solved,
+						grid
+					}
+				},
 				totalWords
 			})
 		})
@@ -61,13 +86,31 @@
 		<div class="flex w-full gap-5">
 			<label for="rows" class="input-group w-full">
 				<span>Baris</span>
-				<input bind:value={game.grid.rows} type="number" id="rows" />
+				<input bind:value={gridData.rows} type="number" id="rows" />
 			</label>
 			<label for="columns" class="input-group w-full">
 				<span>Lajur</span>
-				<input bind:value={game.grid.columns} type="number" id="columns" />
+				<input bind:value={gridData.columns} type="number" id="columns" />
 			</label>
 		</div>
+
+		<label for="grid-generation" class="input-group">
+			<span>Generasi</span>
+			<select id="grid-generation">
+				<option value="automatic">Automatik</option>
+				<option value="manual">Manual</option>
+			</select>
+		</label>
+
+		<CreateWords bind:words bind:selected />
+		<CreateGrid
+			bind:rows={gridData.rows}
+			bind:columns={gridData.columns}
+			bind:grid
+			bind:solved
+			bind:selected
+			bind:filled={isFilled}
+		/>
 
 		<div class="input-group">
 			<button

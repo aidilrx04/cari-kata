@@ -9,18 +9,34 @@ export const POST: RequestHandler = async ({ request, fetch, cookies }) => {
 	if (!token) throw error(401, { message: 'Unauthenticated' });
 
 	const { core, totalWords } = data;
+	let words: string[];
+	let grid: string[][];
+	let solved: string[][];
 
-	const maxLength = Math.min(core.grid.rows, core.grid.columns);
+	console.log(core.words);
 
-	const wordsBefore = (
-		await (
-			await fetch(`https://bahasa-api.vercel.app/api/word?amount=${totalWords}&length=${maxLength}`)
-		).json()
-	)
-		.map((word) => word.word)
-		.reduce((acc, curr) => [...acc, curr], []);
+	if (core.words.length === 0) {
+		const maxLength = Math.min(core.grid.rows, core.grid.columns);
 
-	const { grid, words, solved } = wordsearch(wordsBefore, core.grid.columns, core.grid.rows);
+		const wordsBefore = (
+			await (
+				await fetch(
+					`https://bahasa-api.vercel.app/api/word?amount=${totalWords}&length=${maxLength}`
+				)
+			).json()
+		)
+			.map((word) => word.word)
+			.reduce((acc, curr) => [...acc, curr], []);
+
+		const ws = wordsearch(wordsBefore, core.grid.columns, core.grid.rows);
+		words = ws.words;
+		grid = ws.grid;
+		solved = ws.solved;
+	} else {
+		words = core.words;
+		grid = core.grid.grid;
+		solved = core.grid.solved;
+	}
 
 	// create game
 
