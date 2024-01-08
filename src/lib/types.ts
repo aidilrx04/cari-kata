@@ -104,3 +104,5 @@ export type OnCellMoveFunction = (
 		removeHighlight: (id: number) => void;
 	}
 ) => void;
+
+export type OnSuccessPlacement = (word: string) => void;

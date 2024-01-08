@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { Game } from '$lib/types';
+	import type { Game, OnSuccessPlacement } from '$lib/types';
 	import Grid from '../game/Grid.svelte';
 	import CreateGrid from './CreateGrid.svelte';
 	import CreateWords from './CreateWords.svelte';
@@ -26,13 +26,6 @@
 	let totalWords = 9;
 	let words: string[] = ['asd'];
 	let selected: string = words[0];
-	let isFilled = false;
-	$: console.log(filledWords);
-
-	$: if (isFilled) {
-		filledWords = [...filledWords, selected];
-		isFilled = false;
-	}
 
 	const handleSubmit = () => {
 		fetch('/create', {
@@ -60,6 +53,10 @@
 				console.log(res);
 				goto(`/game/${res.game.id}`);
 			});
+	};
+
+	const handleSuccessPlacement: OnSuccessPlacement = (word) => {
+		filledWords = [...filledWords, word];
 	};
 </script>
 
@@ -109,7 +106,7 @@
 			bind:grid
 			bind:solved
 			bind:selected
-			bind:filled={isFilled}
+			onSuccessPlacement={handleSuccessPlacement}
 		/>
 
 		<div class="input-group">

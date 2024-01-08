@@ -6,7 +6,8 @@
 		HighlightData,
 		OnCellMoveFunction,
 		OnCellPressFunction,
-		OnCellReleaseFunction
+		OnCellReleaseFunction,
+		OnSuccessPlacement
 	} from '$lib/types';
 	import { getDirection, getSteps, validateAngle } from '$lib/util';
 	import Grid from '../game/Grid.svelte';
@@ -14,7 +15,8 @@
 	export let rows: number;
 	export let columns: number;
 	export let selected = '';
-	export let filled = false;
+
+	export let onSuccessPlacement: OnSuccessPlacement = () => {};
 
 	let previousRows: number = rows;
 	let previousColumns: number = columns;
@@ -145,7 +147,9 @@
 
 			if (char !== undefined) _grid.grid[y][x] = char;
 		}
-		filled = true;
+
+		onSuccessPlacement(selected);
+
 		solved = _grid.grid;
 		_grid.updateGrid(_grid.grid);
 		previousSolved = solved;
