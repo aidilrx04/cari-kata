@@ -5,7 +5,7 @@
 		Coord,
 		HighlightData,
 		HighlightUpdate,
-		OnCellMoveFunction,
+		OnCellMove,
 		Solved
 	} from '$lib/types';
 	import { getAngle, getCoordFromString, isValidCellElement } from '$lib/util';
@@ -40,7 +40,7 @@
 	let highlights: HighlightData[] = [];
 	let id = 1;
 
-	export let onCellMove: OnCellMoveFunction = () => {};
+	export let onCellMove: OnCellMove = () => {};
 
 	$: if ($isPressing && mouse && $startCoord !== undefined && $cellWidth) {
 		const { scrollLeft, scrollTop } = document.documentElement;

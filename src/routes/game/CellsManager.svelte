@@ -10,7 +10,7 @@
 <script lang="ts">
 	import type { ComponentEvents } from 'svelte';
 	import Cell from './Cell.svelte';
-	import type { Coord, OnCellPressFunction, OnCellReleaseFunction, Solved, Word } from '$lib/types';
+	import type { Coord, OnCellPress, OnCellRelease, Solved, Word } from '$lib/types';
 	import { writable } from 'svelte/store';
 	import { getDirection, isValidCellElement, validateAngle } from '$lib/util';
 	import { currentColor } from '$lib/colors';
@@ -41,8 +41,8 @@
 		grid = newGrid;
 	};
 
-	export let onCellPress: OnCellPressFunction = () => {};
-	export let onCellRelease: OnCellReleaseFunction = () => {
+	export let onCellPress: OnCellPress = () => {};
+	export let onCellRelease: OnCellRelease = () => {
 		calculateAnswer();
 	};
 

@@ -4,9 +4,9 @@
 		Coord,
 		GridOptions,
 		HighlightData,
-		OnCellMoveFunction,
-		OnCellPressFunction,
-		OnCellReleaseFunction,
+		OnCellMove,
+		OnCellPress,
+		OnCellRelease,
 		OnSuccessPlacement
 	} from '$lib/types';
 	import { getDirection, getSteps, validateAngle } from '$lib/util';
@@ -107,13 +107,13 @@
 		return result;
 	}
 
-	const handleCellPress: OnCellPressFunction = (cell, grid) => {
+	const handleCellPress: OnCellPress = (cell, grid) => {
 		// save grid state
 		previousSolved = [...grid.grid.map((i) => i.slice())];
 		startCoord = cell.coord;
 	};
 
-	const handleCellRelease: OnCellReleaseFunction = (cell, currentGrid) => {
+	const handleCellRelease: OnCellRelease = (cell, currentGrid) => {
 		endCoord = cell.coord;
 
 		let validPlacement = isValidPlacement(
@@ -197,7 +197,7 @@
 		return filled;
 	};
 
-	const handleCellMove: OnCellMoveFunction = (start, current, highlight, options) => {
+	const handleCellMove: OnCellMove = (start, current, highlight, options) => {
 		if (!updateHighlight) updateHighlight = options.updateHighlight;
 		if (!removeHighlight) removeHighlight = options.removeHighlight;
 

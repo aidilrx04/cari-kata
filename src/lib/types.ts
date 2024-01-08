@@ -58,7 +58,7 @@ export type GridOptions = {
 
 export type DisplayWordFunction = (word: Word, solvedWords: Solved[]) => string;
 
-export type OnCellPressFunction = (
+export type OnCellPress = (
 	cell: {
 		coord: Coord;
 	},
@@ -67,7 +67,7 @@ export type OnCellPressFunction = (
 	}
 ) => void;
 
-export type OnCellReleaseFunction = (
+export type OnCellRelease = (
 	cell: {
 		coord: Coord;
 	},
@@ -89,7 +89,7 @@ export type HighlightData = {
 export type HighlightUpdate = (data: Partial<HighlightData>) => void;
 export type CalcHighlightWidth = (start: Coord, end: Coord) => number;
 
-export type OnCellMoveFunction = (
+export type OnCellMove = (
 	start: Coord,
 	current: Coord | null,
 	highlight: {

@@ -5,9 +5,9 @@
 		Solved,
 		GridOptions,
 		Word,
-		OnCellPressFunction,
-		OnCellReleaseFunction,
-		OnCellMoveFunction
+		OnCellPress,
+		OnCellRelease,
+		OnCellMove
 	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
@@ -21,9 +21,9 @@
 	// grid options
 	export let options: GridOptions;
 
-	export let handleCellPress: OnCellPressFunction | undefined = undefined;
-	export let handleCellRelease: OnCellReleaseFunction | undefined = undefined;
-	export let handleCellMove: OnCellMoveFunction | undefined = undefined;
+	export let handleCellPress: OnCellPress | undefined = undefined;
+	export let handleCellRelease: OnCellRelease | undefined = undefined;
+	export let handleCellMove: OnCellMove | undefined = undefined;
 
 	// grid containers scambled letters
 	let grid: string[][];
