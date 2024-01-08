@@ -1,3 +1,14 @@
+<script context="module" lang="ts">
+	export type HighlightData = {
+		id: number;
+		angle: number;
+		start: Coord;
+		end: Coord;
+		width: number;
+		color: string;
+	};
+</script>
+
 <script lang="ts">
 	import { currentColor } from '$lib/colors';
 	import type { Coord, Solved } from '$lib/types';
