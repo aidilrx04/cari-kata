@@ -7,9 +7,10 @@
 		Word,
 		OnCellPressFunction,
 		OnCellReleaseFunction,
+		OnCellMoveFunction
 	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
-	import HighlightManager from './HighlightManager.svelte';
+	import HighlightManager, { type HighlightData } from './HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
 
 	// words used to placed in the grid
@@ -22,6 +23,7 @@
 
 	export let handleCellPress: OnCellPressFunction | undefined = undefined;
 	export let handleCellRelease: OnCellReleaseFunction | undefined = undefined;
+	export let handleCellMove: OnCellMoveFunction<HighlightData> | undefined = undefined;
 
 	// grid containers scambled letters
 	let grid: string[][];
@@ -65,7 +67,7 @@
 	style:max-width="{containerWidth}px"
 	bind:this={container}
 >
-	<HighlightManager {solvedWords} {containerRect} />
+	<HighlightManager {solvedWords} {containerRect} onCellMove={handleCellMove} />
 	<div
 		id="ck-grid"
 		class="grid relative bg-slate-50 dark:bg-slate-600 rounded-md"
