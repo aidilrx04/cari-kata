@@ -118,7 +118,7 @@
 			currentCoord,
 			{
 				...highlight,
-				update: updateCurrentHighlight,
+				updateCurrentHighlight: updateCurrentHighlight,
 				calcHighlightWidth: calcHighlightWidth
 			},
 			{

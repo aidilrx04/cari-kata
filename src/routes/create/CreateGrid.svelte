@@ -201,7 +201,7 @@
 		// skip on invalid current
 		if (!current) return;
 
-		const { update, calcHighlightWidth, ...data } = highlight;
+		const { updateCurrentHighlight: update, calcHighlightWidth, ...data } = highlight;
 
 		// get angle
 		const currAngle = validateAngle(start, current);

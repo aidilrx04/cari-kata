@@ -93,7 +93,7 @@ export type OnCellMoveFunction = (
 	start: Coord,
 	current: Coord | null,
 	highlight: HighlightData & {
-		update: HighlightUpdate;
+		updateCurrentHighlight: HighlightUpdate;
 		calcHighlightWidth: CalcHighlightWidth;
 	},
 	options: {
