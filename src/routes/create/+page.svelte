@@ -22,7 +22,7 @@
 	let solved: string[][];
 	let grid: string[][];
 
-	let filledWords: string[] = [];
+	let placedWords: string[] = [];
 	let totalWords = 9;
 	let words: string[] = ['asd'];
 	let selected: string = words[0];
@@ -36,7 +36,7 @@
 			body: JSON.stringify({
 				core: {
 					...game,
-					words: filledWords,
+					words: placedWords,
 					grid: {
 						...gridData,
 						solved,
@@ -56,7 +56,7 @@
 	};
 
 	const handleSuccessPlacement: OnSuccessPlacement = (word) => {
-		filledWords = [...filledWords, word];
+		placedWords = [...placedWords, word];
 	};
 </script>
 
