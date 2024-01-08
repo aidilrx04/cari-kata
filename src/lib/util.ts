@@ -106,3 +106,34 @@ export const addPrefix = (number: number, prefix: string, length = 2): string =>
 	const totalToAdd = length - numberStr.length;
 	return prefix.toString().repeat(totalToAdd).concat(numberStr);
 };
+
+export const isValidCellElement = (element: HTMLElement) => {
+	const targetElement = 'span';
+	const targetContainClass = 'cell';
+
+	if (
+		element?.tagName.toLowerCase() !== targetElement ||
+		!element.classList.contains(targetContainClass)
+	) {
+		return false;
+	}
+
+	return true;
+};
+
+export const getCoordFromString = (str: string): Coord => {
+	const arr = str.split(',');
+
+	if (arr.length !== 2) throw Error('Invalid Coord');
+	const x = Number(arr[0]);
+	const y = Number(arr[1]);
+
+	if (Number.isNaN(x) || Number.isNaN(y)) {
+		throw Error('Invalid coord numbers');
+	}
+
+	return {
+		x,
+		y
+	};
+};
