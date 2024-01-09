@@ -299,6 +299,6 @@
 	};
 </script>
 
-<div id="interactive-word-placement">
+<div id="interactive-word-placement" class="w-full">
 	<Grid words={[]} options={gridOptions} {handleCellPress} {handleCellRelease} {handleCellMove} />
 </div>

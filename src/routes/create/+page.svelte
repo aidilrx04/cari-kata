@@ -24,7 +24,7 @@
 
 	let placedWords: string[] = [];
 	let totalWords = 9;
-	let words: string[] = ['asd'];
+	let words: string[] = ['hei', 'whatsup', 'gais', 'harini', 'kita', 'makan', 'sayur', 'berapi'];
 	let selected: string = words[0];
 
 	const handleSubmit = () => {
@@ -57,6 +57,7 @@
 
 	const handleSuccessPlacement: OnSuccessPlacement = (word) => {
 		placedWords = [...placedWords, word];
+		selected = '';
 	};
 </script>
 
@@ -99,15 +100,17 @@
 			</select>
 		</label>
 
-		<CreateWords bind:words bind:selected />
-		<CreateGrid
-			bind:rows={gridData.rows}
-			bind:columns={gridData.columns}
-			bind:grid
-			bind:solved
-			bind:selected
-			onSuccessPlacement={handleSuccessPlacement}
-		/>
+		<div class="flex">
+			<CreateWords bind:words bind:selected />
+			<CreateGrid
+				bind:rows={gridData.rows}
+				bind:columns={gridData.columns}
+				bind:grid
+				bind:solved
+				bind:selected
+				onSuccessPlacement={handleSuccessPlacement}
+			/>
+		</div>
 
 		<div class="input-group">
 			<button
