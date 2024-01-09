@@ -49,6 +49,15 @@
 						<span class="uppercase">{char}</span>
 					{/each}
 				</div>
+			{:else}
+				<div
+					class="selected font-semibold uppercase flex gap-4 absolute top-0 left-1/2 -translate-x-1/2 py-2 px-6 rounded-full text-slate-400 bg-slate-200 z-50"
+				>
+					<span>W</span>
+					<span>O</span>
+					<span>R</span>
+					<span>D</span>
+				</div>
 			{/if}
 		</div>
 		<ul class="grid grid-cols-2 gap-1">

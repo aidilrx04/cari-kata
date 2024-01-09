@@ -25,7 +25,7 @@
 	let placedWords: string[] = [];
 	let totalWords = 9;
 	let words: string[] = ['hei', 'whatsup', 'gais', 'harini', 'kita', 'makan', 'sayur', 'berapi'];
-	let selected: string = words[0];
+	let selected: string = '';
 
 	const handleSubmit = () => {
 		fetch('/create', {
