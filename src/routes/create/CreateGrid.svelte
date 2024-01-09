@@ -14,7 +14,9 @@
 
 	export let rows: number;
 	export let columns: number;
-	export let selected = '';
+	export let selected: string = '';
+
+	$: console.log(selected);
 
 	export let onSuccessPlacement: OnSuccessPlacement = () => {};
 
@@ -108,12 +110,16 @@
 	}
 
 	const handleCellPress: OnCellPress = (cell, grid) => {
+		if (selected.length < 1) return;
+
 		// save grid state
 		previousSolved = [...grid.grid.map((i) => i.slice())];
 		startCoord = cell.coord;
 	};
 
 	const handleCellRelease: OnCellRelease = (cell, currentGrid) => {
+		if (selected.length < 1) return;
+
 		endCoord = cell.coord;
 
 		let validPlacement = isValidPlacement(
@@ -200,6 +206,8 @@
 	const handleCellMove: OnCellMove = (start, current, highlight, options) => {
 		if (!updateHighlight) updateHighlight = options.updateHighlight;
 		if (!removeHighlight) removeHighlight = options.removeHighlight;
+
+		if (selected.length < 1) return;
 
 		// skip on invalid current
 		if (!current) return;
