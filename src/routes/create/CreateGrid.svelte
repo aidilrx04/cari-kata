@@ -23,7 +23,7 @@
 	let previousRows: number = rows;
 	let previousColumns: number = columns;
 
-	let emptyChar = '*';
+	const EMPTY_CHAR = ' ';
 	export let solved: string[][] = [];
 	$: solved = solved.length === 0 ? createEmptyGrid(rows, columns) : solved;
 
@@ -76,7 +76,7 @@
 			let totalRows = rows - currentRows;
 			console.log('Expanding rows by: ', totalRows);
 			for (let i = 0; i < totalRows; i++) {
-				result.push(Array(currentCols).fill(emptyChar));
+				result.push(Array(currentCols).fill(EMPTY_CHAR));
 			}
 		} else if (rows < currentRows) {
 			// shrink rows
@@ -89,7 +89,7 @@
 			// expand all rows
 			const totalCols = columns - currentCols;
 			for (let i = 0; i < result.length; i++) {
-				result[i] = [...result[i], ...Array(totalCols).fill(emptyChar)];
+				result[i] = [...result[i], ...Array(totalCols).fill(EMPTY_CHAR)];
 			}
 		} else if (columns < currentCols) {
 			for (let i = 0; i < result.length; i++) {
@@ -105,7 +105,7 @@
 
 		result = Array(rows)
 			.fill(null)
-			.map(() => Array(columns).fill(emptyChar));
+			.map(() => Array(columns).fill(EMPTY_CHAR));
 		return result;
 	}
 
@@ -185,7 +185,7 @@
 			let charInCell = grid[y][x];
 
 			// skip if cell is considered 'empty'
-			if (charInCell === emptyChar) continue;
+			if (charInCell === EMPTY_CHAR) continue;
 
 			if (charInCell !== char) return false;
 		}
@@ -196,7 +196,7 @@
 		const CHARACTERS = 'abcdefghijklmnopqrstuvwxyz';
 		const filled = grid.map((row) =>
 			row.map((cell) =>
-				cell === emptyChar ? CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)] : cell
+				cell === EMPTY_CHAR ? CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)] : cell
 			)
 		);
 
@@ -265,7 +265,7 @@
 
 			const charInCell = solved[y][x];
 
-			if (charInCell !== emptyChar && charInCell !== char) return;
+			if (charInCell !== EMPTY_CHAR && charInCell !== char) return;
 
 			solved[y][x] = char;
 		}
@@ -300,7 +300,7 @@
 			let char = word[i];
 			let cell = grid[y][x];
 
-			if (cell === char || cell === emptyChar) count++;
+			if (cell === char || cell === EMPTY_CHAR) count++;
 		}
 
 		return count;
