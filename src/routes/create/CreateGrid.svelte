@@ -307,6 +307,18 @@
 	};
 </script>
 
-<div id="interactive-word-placement" class="w-full">
+<div id="interactive-word-placement" class="w-full p-4">
 	<Grid words={[]} options={gridOptions} {handleCellPress} {handleCellRelease} {handleCellMove} />
 </div>
+
+<style lang="scss">
+	#interactive-word-placement {
+		:global(.cell) {
+			@apply outline outline-1 outline-slate-400;
+		}
+
+		:global(#ck-grid) {
+			@apply rounded-lg overflow-hidden outline outline-1 outline-slate-400;
+		}
+	}
+</style>
