@@ -70,6 +70,7 @@ export type OnCellPress = (
 export type OnCellRelease = (
 	cell: {
 		coord: Coord;
+		valid: boolean;
 	},
 	grid: {
 		grid: string[][];

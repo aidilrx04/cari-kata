@@ -120,6 +120,16 @@
 	const handleCellRelease: OnCellRelease = (cell, currentGrid) => {
 		if (selected.length < 1) return;
 
+		if (!cell.valid) {
+			console.log('Invalid release target');
+			restoreSolved();
+			if (selectedHighlight !== null) {
+				removeHighlight(selectedHighlight.id);
+				selectedHighlight = null;
+			}
+			return;
+		}
+
 		endCoord = cell.coord;
 
 		let validPlacement = isValidPlacement(
@@ -304,6 +314,10 @@
 		}
 
 		return count;
+	};
+
+	const restoreSolved = () => {
+		solved = [...previousSolved.map((i) => i.slice())];
 	};
 </script>
 

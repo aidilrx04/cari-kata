@@ -64,12 +64,34 @@
 		);
 	};
 
+	const handleInvalidRelease = (e: MouseEvent) => {
+		// if( !)
+		const element = e.target as HTMLElement;
+		if ($isPressing && (!isValidCellElement(element) || element?.dataset?.coord === undefined)) {
+			onCellRelease(
+				{
+					coord: { x: 0, y: 0 },
+					valid: false
+				},
+				{
+					grid: grid,
+					updateGrid: updateGridFunction
+				}
+			);
+
+			releasePress();
+		}
+	};
+
 	// handle cell now split for touch end call
 	const handleCellRelease = (e: ComponentEvents<Cell>['releasedOn']) => {
 		$endCoord = e.detail.coord;
 		$isPressing = false;
 		onCellRelease(
-			{ coord: e.detail.coord },
+			{
+				coord: e.detail.coord,
+				valid: true
+			},
 			{
 				grid: grid,
 				updateGrid: updateGridFunction
@@ -163,7 +185,7 @@
 		return { backword: false, valid: false };
 	};
 
-	const handleInvalidRelease = () => {
+	const releasePress = () => {
 		// and dont set endCoord because the mouseup element is invalid
 
 		// set isPressing to false
@@ -193,7 +215,17 @@
 		// check if element is valid tag and class
 		if (!isValidCellElement(element) || element?.dataset?.coord === undefined) {
 			console.log('Invalid endtouch target');
-			handleInvalidRelease(); // reset press
+			onCellRelease(
+				{
+					coord: { x: 0, y: 0 },
+					valid: false
+				},
+				{
+					grid: grid,
+					updateGrid: updateGridFunction
+				}
+			);
+			releasePress(); // reset press
 			return;
 		}
 
@@ -203,7 +235,8 @@
 
 		onCellRelease(
 			{
-				coord: cellCoord
+				coord: cellCoord,
+				valid: true
 			},
 			{
 				grid: grid,
