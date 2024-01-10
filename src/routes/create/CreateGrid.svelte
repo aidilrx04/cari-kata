@@ -313,12 +313,12 @@
 
 <style lang="scss">
 	#interactive-word-placement {
-		:global(.cell) {
+		:global(.cell-container) {
 			@apply outline outline-1 outline-slate-400;
 		}
 
 		:global(#ck-grid) {
-			@apply rounded-lg overflow-hidden outline outline-1 outline-slate-400;
+			@apply rounded-lg overflow-hidden outline outline-2 outline-slate-400;
 		}
 	}
 </style>

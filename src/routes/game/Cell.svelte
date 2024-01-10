@@ -33,21 +33,24 @@
 	};
 </script>
 
-<!-- 
-	cant use the grid auto width property because of clunky adjustment on window resize and weird bugs
-	on certain dimension 
--->
-<span
-	class="cell flex items-center justify-center select-none uppercase z-20"
-	style:width="{width}px"
-	style:height="{height}px"
-	class:text-slate-50={found}
-	data-coord={[coord.x, coord.y]}
-	on:mousedown={handleMouseDown}
-	on:mouseup={handleMouseUp}
-	on:touchstart={handleTouchStart}
->
-	<slot />
+<!-- Add ability to add outline/border to cell without overlaying the highlight -->
+<span class="cell-container">
+	<!-- 
+		cant use the grid auto width property because of clunky adjustment on window resize and weird bugs
+		on certain dimension 
+	-->
+	<span
+		class="cell relative flex items-center justify-center select-none uppercase z-20"
+		style:width="{width}px"
+		style:height="{height}px"
+		class:text-slate-50={found}
+		data-coord={[coord.x, coord.y]}
+		on:mousedown={handleMouseDown}
+		on:mouseup={handleMouseUp}
+		on:touchstart={handleTouchStart}
+	>
+		<slot />
+	</span>
 </span>
 
 <style>
