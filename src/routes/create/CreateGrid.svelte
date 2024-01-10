@@ -143,7 +143,7 @@
 
 		if (!validPlacement || selected.length > steps + 1) {
 			console.log('wordlength / invalid angle!');
-			solved = [...previousSolved.map((i) => i.slice())];
+			restoreSolved();
 			if (selectedHighlight !== null) {
 				removeHighlight(selectedHighlight.id);
 				selectedHighlight = null;
@@ -232,7 +232,7 @@
 
 		if (currAngle !== angle) {
 			angle = currAngle;
-			solved = [...previousSolved.map((i) => i.slice())];
+			restoreSolved();
 		}
 
 		const pathLength = getSteps(start, current) + 1;
