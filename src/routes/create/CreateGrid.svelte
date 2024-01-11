@@ -217,7 +217,13 @@
 		if (!updateHighlight) updateHighlight = options.updateHighlight;
 		if (!removeHighlight) removeHighlight = options.removeHighlight;
 
-		if (selected.length < 1) return;
+		if (selected.length < 1) {
+			// trick to make highlight dissapear
+			highlight.updateCurrentHighlight({
+				color: 'transparent'
+			});
+			return;
+		}
 
 		// skip on invalid current
 		if (!current) return;
