@@ -61,13 +61,6 @@ export const getAngle = (x1, y1, x2, y2) => {
 	return degree;
 };
 
-export const calcDistance = (p1: Point, p2: Point): number => {
-	const xLength = p2.x - p1.x;
-	const yLength = p2.y - p1.y;
-	const hipotenus = Math.sqrt(Math.pow(xLength, 2) + Math.pow(yLength, 2));
-	return hipotenus;
-};
-
 export const validateAngle = (start: Coord, end: Coord) => {
 	const validAngles = [0, 45, 90, 135, 180, -45, -90, -135];
 
