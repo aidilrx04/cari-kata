@@ -325,6 +325,29 @@
 	const restoreSolved = () => {
 		solved = [...previousSolved.map((i) => i.slice())];
 	};
+	const getIntersects = (start: Coord, end: Coord, items: { start: Coord; end: Coord }[]) => {
+		let intersects = items.map((i) => {
+			const intersect = line_intersect(
+				start.x,
+				start.y,
+				end.x,
+				end.y,
+				i.start.x,
+				i.start.y,
+				i.end.x,
+				i.end.y
+			);
+			if (!intersect) return false;
+
+			return {
+				item: i,
+				coord: intersect
+			};
+		});
+		intersects = intersects.filter((i) => i !== false);
+
+		return intersects;
+	};
 </script>
 
 <div id="interactive-word-placement" class="w-full p-4">
