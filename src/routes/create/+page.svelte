@@ -115,6 +115,7 @@
 				bind:grid
 				bind:solved
 				bind:selected
+				bind:placedWords
 				onSuccessPlacement={handleSuccessPlacement}
 			/>
 		</div>

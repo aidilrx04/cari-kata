@@ -7,7 +7,8 @@
 		OnCellMove,
 		OnCellPress,
 		OnCellRelease,
-		OnSuccessPlacement
+		OnSuccessPlacement,
+		WordInGrid
 	} from '$lib/types';
 	import {
 		getDirection,
@@ -67,6 +68,37 @@
 	let selectedHighlight: HighlightData | null;
 	let updateHighlight: (id: number, data: Partial<Omit<HighlightData, 'id'>>) => void;
 	let removeHighlight: (id: number) => void;
+
+	export let placedWords: WordInGrid[];
+	let wordAndHighlight: { word: string; highlight: HighlightData }[] = [];
+
+	let intersections: { [id: number]: Coord } = {};
+	let wordIntersects: { [word: string]: number[] } = {};
+
+	$: if (placedWords.length !== wordAndHighlight.length) {
+		const words = placedWords.map((i) => i.value);
+		const removed = wordAndHighlight.filter((i) => !words.includes(i.word));
+		wordAndHighlight = wordAndHighlight.filter((i) => words.includes(i.word));
+		removed.forEach(({ word, highlight }) => {
+			// find intersections of word
+			const intersects = wordIntersects[word] ?? [];
+			const coords = intersects
+				.map((i) => intersections[i])
+				// remove deleted intersections
+				.filter((i) => i !== undefined);
+
+			// clear word from grid
+			solved = clearCells(highlight.start, highlight.end, solved, coords);
+
+			// remove connected intersection
+			intersects.forEach((intersect) => {
+				delete intersections[intersect];
+			});
+			intersections = { ...intersections };
+
+			removeHighlight(highlight.id);
+		});
+	}
 
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
 		let result: string[][];
@@ -176,6 +208,25 @@
 		};
 
 		onSuccessPlacement(selected, startCoord, endWordCoord);
+
+		getIntersects(startCoord, endWordCoord, placedWords).forEach((item) => {
+			item.coord.forEach((coord) => {
+				const intersect = addIntersect(coord);
+				wordIntersects[selected] = [...(wordIntersects[selected] ?? []), intersect];
+				wordIntersects[item.item.value] = [...(wordIntersects[item.item.value] ?? []), intersect];
+			});
+		});
+
+		if (selectedHighlight)
+			wordAndHighlight = [
+				...wordAndHighlight,
+				{
+					word: selected,
+					highlight: selectedHighlight
+				}
+			];
+
+		selectedHighlight = null;
 
 		currentGrid.updateGrid(solved);
 		previousSolved = solved;
@@ -346,6 +397,24 @@
 	const restoreSolved = () => {
 		solved = [...previousSolved.map((i) => i.slice())];
 	};
+
+	const clearCells = (start: Coord, end: Coord, grid: string[][], excepts?: Coord[]) => {
+		const steps = getSteps(start, end);
+		const direction = getDirection(start.x, start.y, end.x, end.y);
+		for (let i = 0; i <= steps; i++) {
+			const x = start.x + direction.x * i;
+			const y = start.y + direction.y * i;
+
+			console.log(excepts);
+
+			if (excepts !== undefined && excepts.findIndex((i) => i.x === x && i.y === y) >= 0) continue;
+
+			grid[y][x] = EMPTY_CHAR;
+		}
+
+		return grid;
+	};
+
 	const getIntersects = (start: Coord, end: Coord, items: WordInGrid[]) => {
 		let intersects: { item: WordInGrid; coord: Coord[] }[] = [];
 
@@ -391,6 +460,13 @@
 			});
 		}
 		return intersects;
+	};
+
+	let intersectId = 0;
+	const addIntersect = (coord: Coord) => {
+		intersectId++;
+		intersections[intersectId] = coord;
+		return intersectId;
 	};
 </script>
 
