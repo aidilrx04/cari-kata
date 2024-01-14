@@ -9,7 +9,13 @@
 		OnCellRelease,
 		OnSuccessPlacement
 	} from '$lib/types';
-	import { getDirection, getSteps, validateAngle } from '$lib/util';
+	import {
+		getDirection,
+		getSteps,
+		parallelLineOverlap,
+		line_intersect,
+		validateAngle
+	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
 
 	export let rows: number;
@@ -326,24 +332,50 @@
 		solved = [...previousSolved.map((i) => i.slice())];
 	};
 	const getIntersects = (start: Coord, end: Coord, items: { start: Coord; end: Coord }[]) => {
-		let intersects = items.map((i) => {
-			const intersect = line_intersect(
-				start.x,
-				start.y,
-				end.x,
-				end.y,
-				i.start.x,
-				i.start.y,
-				i.end.x,
-				i.end.y
-			);
-			if (!intersect) return false;
+		let intersects: (false | { item: (typeof items)[number]; coord: Coord | Coord[] })[] =
+			items.map((i) => {
+				const intersect = line_intersect(
+					start.x,
+					start.y,
+					end.x,
+					end.y,
+					i.start.x,
+					i.start.y,
+					i.end.x,
+					i.end.y
+				);
 
-			return {
-				item: i,
-				coord: intersect
-			};
-		});
+				let parallelOverlaps: ReturnType<typeof parallelLineOverlap> = false;
+
+				if (!intersect) {
+					parallelOverlaps = parallelLineOverlap(
+						{
+							start,
+							end
+						},
+						{
+							start: i.start,
+							end: i.end
+						}
+					);
+				}
+
+				if (!intersect && !parallelOverlaps) {
+					return false;
+				}
+
+				if (parallelOverlaps) {
+					return {
+						item: i,
+						coord: parallelOverlaps
+					};
+				}
+
+				return {
+					item: i,
+					coord: intersect
+				};
+			});
 		intersects = intersects.filter((i) => i !== false);
 
 		return intersects;

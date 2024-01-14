@@ -161,3 +161,70 @@ export function line_intersect(x1, y1, x2, y2, x3, y3, x4, y4): Coord | false {
 
 	return { x, y };
 }
+
+export function parallelLineOverlap(
+	line1: { start: Coord; end: Coord },
+	line2: { start: Coord; end: Coord }
+): Coord[] | false {
+	// Function to swap coordinates if start is greater than end
+	const swapCoordinates = (line: { start: Coord; end: Coord }) => {
+		if (line.start.x > line.end.x || (line.start.x === line.end.x && line.start.y > line.end.y)) {
+			return { start: line.end, end: line.start };
+		}
+		return line;
+	};
+
+	// Swap coordinates if needed
+	line1 = swapCoordinates(line1);
+	line2 = swapCoordinates(line2);
+
+	// Check if the lines are parallel
+	if (
+		(line1.start.x - line1.end.x) * (line2.start.y - line2.end.y) ===
+		(line2.start.x - line2.end.x) * (line1.start.y - line1.end.y)
+	) {
+		// Lines are parallel, check if they are overlapping on the x-axis
+		if (
+			Math.max(line1.start.x, line1.end.x) < Math.min(line2.start.x, line2.end.x) ||
+			Math.min(line1.start.x, line1.end.x) > Math.max(line2.start.x, line2.end.x)
+		) {
+			return false; // No overlap on x-axis
+		}
+
+		// Check if they are overlapping on the y-axis
+		if (
+			Math.max(line1.start.y, line1.end.y) < Math.min(line2.start.y, line2.end.y) ||
+			Math.min(line1.start.y, line1.end.y) > Math.max(line2.start.y, line2.end.y)
+		) {
+			return false; // No overlap on y-axis
+		}
+
+		const overlapCoords: Coord[] = [];
+
+		// debugger;
+
+		// Calculate overlap coordinates
+		const overlapStartX = Math.max(line1.start.x, line2.start.x);
+		const overlapStartY = Math.max(line1.start.y, line2.start.y);
+		const overlapEndX = Math.min(line1.end.x, line2.end.x);
+		const overlapEndY = Math.min(line1.end.y, line2.end.y);
+
+		const direction = getDirection(overlapStartX, overlapStartY, overlapEndX, overlapEndY);
+		const steps = getSteps(
+			{ x: overlapStartX, y: overlapStartY },
+			{ x: overlapEndX, y: overlapEndY }
+		);
+
+		for (let i = 0; i <= steps; i++) {
+			const coord = {
+				x: overlapStartX + direction.x * i,
+				y: overlapStartY + direction.y * i
+			};
+			overlapCoords.push(coord);
+		}
+
+		return overlapCoords;
+	}
+
+	return false; // Lines are not parallel
+}
