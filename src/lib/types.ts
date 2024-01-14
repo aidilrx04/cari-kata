@@ -106,4 +106,9 @@ export type OnCellMove = (
 	}
 ) => void;
 
-export type OnSuccessPlacement = (word: string) => void;
+export type OnSuccessPlacement = (word: string, start: Coord, end: Coord) => void;
+
+export type WordInGrid = Word & {
+	start: Coord;
+	end: Coord;
+};

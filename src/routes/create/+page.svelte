@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { Game, OnSuccessPlacement } from '$lib/types';
-	import Grid from '../game/Grid.svelte';
+	import type { Game, OnSuccessPlacement, WordInGrid } from '$lib/types';
 	import CreateGrid from './CreateGrid.svelte';
 	import CreateWords from './CreateWords.svelte';
 
@@ -22,7 +21,7 @@
 	let solved: string[][];
 	let grid: string[][];
 
-	let placedWords: string[] = [];
+	let placedWords: WordInGrid[] = [];
 	let totalWords = 9;
 	let words: string[] = ['hei', 'whatsup', 'gais', 'harini', 'kita', 'makan', 'sayur', 'berapi'];
 	let selected: string = '';
@@ -55,8 +54,16 @@
 			});
 	};
 
-	const handleSuccessPlacement: OnSuccessPlacement = (word) => {
-		placedWords = [...placedWords, word];
+	const handleSuccessPlacement: OnSuccessPlacement = (word, start, end) => {
+		placedWords = [
+			...placedWords,
+			{
+				value: word,
+				display: word,
+				start: start,
+				end: end
+			}
+		];
 		selected = '';
 	};
 </script>

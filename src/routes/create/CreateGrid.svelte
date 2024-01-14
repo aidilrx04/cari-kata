@@ -170,7 +170,12 @@
 			if (char !== undefined) solved[y][x] = char;
 		}
 
-		onSuccessPlacement(selected);
+		const endWordCoord = {
+			x: startCoord.x + direction.x * (selected.length - 1),
+			y: startCoord.y + direction.y * (selected.length - 1)
+		};
+
+		onSuccessPlacement(selected, startCoord, endWordCoord);
 
 		currentGrid.updateGrid(solved);
 		previousSolved = solved;
