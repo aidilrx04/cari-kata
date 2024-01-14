@@ -85,6 +85,7 @@ export type HighlightData = {
 	end: Coord;
 	width: number;
 	color: string;
+	outline?: string;
 };
 
 export type HighlightUpdate = (data: Partial<HighlightData>) => void;

@@ -32,6 +32,8 @@
 	export let end: Coord;
 	export let color: string = '#8b5cf6';
 
+	export let outline: string | undefined = undefined;
+
 	// overwrite the default calculateHighlightWidth result if provided
 	export let width: number | undefined = undefined;
 
@@ -68,4 +70,5 @@
 	style:left="{position.x}px"
 	style:transform="translate({-halfHeight}px, {-halfHeight}px) rotate({angle}deg)"
 	style:transform-origin="{halfHeight}px 50%"
+	style:outline
 />

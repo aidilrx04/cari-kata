@@ -178,6 +178,7 @@
 			end={highlight.end}
 			color={highlight.color}
 			width={highlight.width}
+			outline={highlight.outline}
 		/>
 	{/each}
 	{#if $isPressing && $startCoord !== undefined}

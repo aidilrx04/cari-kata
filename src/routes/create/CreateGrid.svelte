@@ -18,6 +18,7 @@
 		validateAngle
 	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
+	import rgba from 'color-rgba';
 
 	export let rows: number;
 	export let columns: number;
@@ -98,6 +99,32 @@
 
 			removeHighlight(highlight.id);
 		});
+	}
+
+	let hasSelectedPlaced: boolean = false;
+	let activeHighlight: (typeof wordAndHighlight)[0] | undefined;
+
+	$: if (selected) {
+		// check if word is placed
+		hasSelectedPlaced = placedWords.findIndex((i) => i.value === selected) >= 0;
+		if (activeHighlight) {
+			updateHighlight(activeHighlight.highlight.id, { outline: 'none' });
+			activeHighlight = undefined;
+		}
+	}
+
+	$: if (hasSelectedPlaced) {
+		// highlight selected highlight
+		// console.log(wordAndHighlight);
+		const highlight = wordAndHighlight.find((i) => i.word === selected);
+		if (highlight) {
+			activeHighlight = highlight;
+			let colors = rgba(highlight.highlight.color);
+			colors[3] = 0.3;
+			updateHighlight(highlight.highlight.id, {
+				outline: `8px solid rgba(${colors})`
+			});
+		}
 	}
 
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
@@ -313,7 +340,8 @@
 				color: $currentColor,
 				start: start,
 				end: current,
-				width: calcHighlightWidth(start, current)
+				width: calcHighlightWidth(start, current),
+				outline: 'none'
 			});
 		}
 
