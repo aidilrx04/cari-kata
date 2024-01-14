@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { currentColor } from '$lib/colors';
+	import type { WordInGrid } from '$lib/types';
 	import { fly } from 'svelte/transition';
 
 	export let words: string[] = [];
 	let word = '';
 	export let selected: string;
+
+	export let placedWords: WordInGrid[];
 
 	let isAddWord = false;
 
@@ -27,6 +30,23 @@
 	const addWord = () => {
 		words = [...words, word];
 		word = '';
+	};
+
+	const hasPlaced = (word: string, placed: WordInGrid[]): boolean => {
+		return placed.findIndex((i) => i.value === word) >= 0;
+	};
+
+	const deleteWord = (word: string) => {
+		if (hasPlaced(word, placedWords)) {
+			const y = confirm(
+				'This word has already placed in the grid. Deleting this will result deleting the word placed in grid to be removed as well'
+			);
+
+			if (!y) return;
+		}
+
+		placedWords = placedWords.filter((i) => i.value !== word);
+		words = words.filter((w) => w !== word);
 	};
 </script>
 
@@ -67,9 +87,31 @@
 						selected = word;
 					}}
 					type="button"
-					class="word-btn"
+					class="word-btn group relative
+					{hasPlaced(word, placedWords) ? '!border-violet-600 !border-2' : 'shadow-sm'}"
 				>
-					{word}
+					<span>{word}</span>
+					<div class="actions group-hover:block hidden absolute top-1/2 right-2 -translate-y-1/2">
+						{#if hasPlaced(word, placedWords)}
+							<button
+								on:click={() => {
+									deleteWord(word);
+								}}
+								class="p-2"
+								type="button"
+							>
+								<i class="ph ph-link-break" />
+							</button>
+						{/if}
+						<button
+							type="button"
+							on:click|preventDefault={(e) => {
+								deleteWord(word);
+							}}
+						>
+							<i class="ph ph-trash" />
+						</button>
+					</div>
 				</button>
 			{/each}
 			{#if !isAddWord}

@@ -108,7 +108,7 @@
 		</label>
 
 		<div class="flex">
-			<CreateWords bind:words bind:selected />
+			<CreateWords bind:words bind:selected bind:placedWords />
 			<CreateGrid
 				bind:rows={gridData.rows}
 				bind:columns={gridData.columns}
