@@ -43,10 +43,16 @@
 			);
 
 			if (!y) return;
+
+			deletePlacedWord(word);
 		}
 
-		placedWords = placedWords.filter((i) => i.value !== word);
 		words = words.filter((w) => w !== word);
+	};
+
+	const deletePlacedWord = (word: string) => {
+		// remove placed word
+		placedWords = placedWords.filter((i) => i.value !== word);
 	};
 </script>
 
@@ -95,7 +101,7 @@
 						{#if hasPlaced(word, placedWords)}
 							<button
 								on:click={() => {
-									deleteWord(word);
+									deletePlacedWord(word);
 								}}
 								class="p-2"
 								type="button"
