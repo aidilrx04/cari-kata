@@ -346,53 +346,50 @@
 	const restoreSolved = () => {
 		solved = [...previousSolved.map((i) => i.slice())];
 	};
-	const getIntersects = (start: Coord, end: Coord, items: { start: Coord; end: Coord }[]) => {
-		let intersects: (false | { item: (typeof items)[number]; coord: Coord | Coord[] })[] =
-			items.map((i) => {
-				const intersect = line_intersect(
-					start.x,
-					start.y,
-					end.x,
-					end.y,
-					i.start.x,
-					i.start.y,
-					i.end.x,
-					i.end.y
-				);
+	const getIntersects = (start: Coord, end: Coord, items: WordInGrid[]) => {
+		let intersects: { item: WordInGrid; coord: Coord[] }[] = [];
 
-				let parallelOverlaps: ReturnType<typeof parallelLineOverlap> = false;
+		for (let i = 0; i < items.length; i++) {
+			const item = items[i];
 
-				if (!intersect) {
-					parallelOverlaps = parallelLineOverlap(
+			let parallelOverlaps = parallelLineOverlap(
 						{
 							start,
 							end
 						},
 						{
-							start: i.start,
-							end: i.end
+					start: item.start,
+					end: item.end
 						}
 					);
-				}
-
-				if (!intersect && !parallelOverlaps) {
-					return false;
-				}
 
 				if (parallelOverlaps) {
-					return {
-						item: i,
+				intersects.push({
+					item: item,
 						coord: parallelOverlaps
-					};
+				});
 				}
 
-				return {
-					item: i,
-					coord: intersect
-				};
-			});
-		intersects = intersects.filter((i) => i !== false);
+			const intersect = line_intersect(
+				start.x,
+				start.y,
+				end.x,
+				end.y,
+				item.start.x,
+				item.start.y,
+				item.end.x,
+				item.end.y
+			);
 
+			if (!intersect) {
+				continue;
+			}
+
+			intersects.push({
+				item: item,
+				coord: [intersect]
+			});
+		}
 		return intersects;
 	};
 </script>
