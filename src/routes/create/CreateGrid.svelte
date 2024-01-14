@@ -405,8 +405,6 @@
 			const x = start.x + direction.x * i;
 			const y = start.y + direction.y * i;
 
-			console.log(excepts);
-
 			if (excepts !== undefined && excepts.findIndex((i) => i.x === x && i.y === y) >= 0) continue;
 
 			grid[y][x] = EMPTY_CHAR;
