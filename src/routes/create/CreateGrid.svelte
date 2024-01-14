@@ -282,6 +282,16 @@
 			end: current,
 			width: calcHighlightWidth(start, pathLength > validLength ? maxCoord : current)
 		});
+		selectedHighlight = {
+			...selectedHighlight,
+			...{
+				angle: currAngle,
+				color: $currentColor,
+				start,
+				end: current,
+				width: calcHighlightWidth(start, pathLength > validLength ? maxCoord : current)
+			}
+		};
 
 		for (let i = 0; i < pathLength; i++) {
 			const x = start.x + direction.x * i;
