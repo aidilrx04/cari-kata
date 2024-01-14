@@ -94,7 +94,8 @@
 					}}
 					type="button"
 					class="word-btn group relative
-					{hasPlaced(word, placedWords) ? '!border-violet-600 !border-2' : 'shadow-sm'}"
+					{hasPlaced(word, placedWords) ? '!border-violet-600 !border-2' : 'shadow-sm'}
+					{word === selected ? 'outline-violet-200 outline-4 outline' : ''}"
 				>
 					<span>{word}</span>
 					<div class="actions group-hover:block hidden absolute top-1/2 right-2 -translate-y-1/2">
