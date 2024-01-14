@@ -189,8 +189,6 @@
 			return;
 		}
 
-		selectedHighlight = null;
-
 		// placeword
 		const direction = getDirection(startCoord.x, startCoord.y, endCoord.x, endCoord.y);
 
