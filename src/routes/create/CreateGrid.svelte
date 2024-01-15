@@ -15,7 +15,8 @@
 		getSteps,
 		parallelLineOverlap,
 		line_intersect,
-		validateAngle
+		validateAngle,
+		isCoordOnLine
 	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
 	import rgba from 'color-rgba';
@@ -175,7 +176,17 @@
 	}
 
 	const handleCellPress: OnCellPress = (cell, grid) => {
-		if (selected.length < 1) return;
+		if (selected.length < 1) {
+			// find cell to look for any placedword
+			const word = getPlacedWord(cell.coord, placedWords);
+			if (word) {
+				selected = word.value;
+				hasSelectedPlaced = true;
+			}
+			return;
+		}
+
+		if (hasSelectedPlaced) return;
 
 		// save grid state
 		previousSolved = [...grid.grid.map((i) => i.slice())];
@@ -184,6 +195,8 @@
 
 	const handleCellRelease: OnCellRelease = (cell, currentGrid) => {
 		if (selected.length < 1) return;
+
+		if (hasSelectedPlaced) return;
 
 		if (!cell.valid) {
 			console.log('Invalid release target');
@@ -304,10 +317,11 @@
 		if (!updateHighlight) updateHighlight = options.updateHighlight;
 		if (!removeHighlight) removeHighlight = options.removeHighlight;
 
-		if (selected.length < 1) {
+		if (selected.length < 1 || hasSelectedPlaced) {
 			// trick to make highlight dissapear
 			highlight.updateCurrentHighlight({
-				color: 'transparent'
+				color: 'transparent',
+				width: 0
 			});
 			return;
 		}
@@ -446,22 +460,22 @@
 			const item = items[i];
 
 			let parallelOverlaps = parallelLineOverlap(
-						{
-							start,
-							end
-						},
-						{
+				{
+					start,
+					end
+				},
+				{
 					start: item.start,
 					end: item.end
-						}
-					);
+				}
+			);
 
-				if (parallelOverlaps) {
+			if (parallelOverlaps) {
 				intersects.push({
 					item: item,
-						coord: parallelOverlaps
+					coord: parallelOverlaps
 				});
-				}
+			}
 
 			const intersect = line_intersect(
 				start.x,
@@ -491,6 +505,15 @@
 		intersectId++;
 		intersections[intersectId] = coord;
 		return intersectId;
+	};
+
+	const getPlacedWord = (coord: Coord, placedWords: WordInGrid[]) => {
+		for (let i = 0; i < placedWords.length; i++) {
+			const placed = placedWords[i];
+			if (isCoordOnLine(coord, placed)) return placed;
+		}
+
+		return null;
 	};
 </script>
 

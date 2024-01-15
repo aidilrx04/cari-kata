@@ -228,3 +228,36 @@ export function parallelLineOverlap(
 
 	return false; // Lines are not parallel
 }
+export function isCoordOnLine(
+	coord: Coord,
+	line: { start: Coord; end: Coord },
+	threshold: number = Number.EPSILON
+): boolean {
+	// Calculate the vector from start to end
+	const lineVector = {
+		x: line.end.x - line.start.x,
+		y: line.end.y - line.start.y
+	};
+
+	// Calculate the vector from start to the given coordinate
+	const coordVector = {
+		x: coord.x - line.start.x,
+		y: coord.y - line.start.y
+	};
+
+	// Calculate the cross product of the two vectors
+	const crossProduct = lineVector.x * coordVector.y - lineVector.y * coordVector.x;
+
+	// Check if the cross product is within the specified threshold
+	if (Math.abs(crossProduct) >= threshold) {
+		return false; // Point is not on the infinite line
+	}
+
+	// Check if the point is within the bounding box of the line segment
+	const minX = Math.min(line.start.x, line.end.x);
+	const maxX = Math.max(line.start.x, line.end.x);
+	const minY = Math.min(line.start.y, line.end.y);
+	const maxY = Math.max(line.start.y, line.end.y);
+
+	return coord.x >= minX && coord.x <= maxX && coord.y >= minY && coord.y <= maxY;
+}
