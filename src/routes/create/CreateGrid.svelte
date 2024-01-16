@@ -128,6 +128,19 @@
 		}
 	}
 
+	let placedCoords: Coord[] = [];
+	$: if (placedWords) {
+		const coords = placedWords.map((i) => getRangeCoords(i.start, i.end)).flat();
+
+		const changed = placedCoords.filter(
+			(i) => coords.findIndex((j) => j.x === i.x && j.y === i.y) < 0
+		);
+
+		placedCoords = coords;
+		deactivateCells(changed);
+		activateCells(placedCoords);
+	}
+
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
 		let result: string[][];
 
@@ -515,6 +528,37 @@
 
 		return null;
 	};
+
+	const getRangeCoords = (start: Coord, end: Coord) => {
+		const steps = getSteps(start, end);
+		const direction = getDirection(start.x, start.y, end.x, end.y);
+		const coords: Coord[] = [];
+		for (let i = 0; i <= steps; i++) {
+			const x = start.x + direction.x * i;
+			const y = start.y + direction.y * i;
+			coords.push({ x, y });
+		}
+
+		return coords;
+	};
+
+	const getCell = (coord: Coord) => {
+		const cell = document.querySelector(`[data-coord="${coord.x},${coord.y}"]`);
+		return cell;
+	};
+	const activateCells = (coords: Coord[]) => {
+		coords.forEach((coord) => {
+			const cell = getCell(coord);
+			cell?.classList.add('active');
+		});
+	};
+
+	const deactivateCells = (coords: Coord[]) => {
+		coords.forEach((coord) => {
+			const cell = getCell(coord);
+			cell?.classList.remove('active');
+		});
+	};
 </script>
 
 <div id="interactive-word-placement" class="w-full p-4">
@@ -529,6 +573,10 @@
 
 		:global(#ck-grid) {
 			@apply rounded-lg overflow-hidden outline outline-2 outline-slate-400;
+		}
+
+		:global(.cell.active) {
+			@apply text-slate-50;
 		}
 	}
 </style>
