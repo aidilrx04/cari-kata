@@ -409,6 +409,7 @@
 			if (charInCell !== EMPTY_CHAR && charInCell !== char) return;
 
 			solved[y][x] = char;
+			activateCells([{ x, y }]);
 		}
 	};
 
