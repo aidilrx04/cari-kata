@@ -389,13 +389,6 @@
 				outline: 'none'
 			});
 		}
-
-		options.updateHighlight(selectedHighlight.id, {
-			angle: angle,
-			color: $currentColor,
-			start,
-			end: endValidCoord
-		});
 		selectedHighlight = {
 			...selectedHighlight,
 			...{
@@ -405,6 +398,7 @@
 				end: endValidCoord
 			}
 		};
+		options.updateHighlight(selectedHighlight.id, selectedHighlight);
 
 		restoreSolved();
 		for (let i = 0; i <= validLength; i++) {
