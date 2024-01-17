@@ -15,8 +15,12 @@
 		getSteps,
 		parallelLineOverlap,
 		line_intersect,
-		validateAngle,
-		isCoordOnLine
+		isCoordOnLine,
+		getAngle,
+		binarySearch,
+		getDirectionByAngle,
+		getLineLength,
+		getCoordIntersectPerpendicularOnAngle
 	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
 	import rgba from 'color-rgba';
@@ -342,62 +346,68 @@
 		// skip on invalid current
 		if (!current) return;
 
-		const { calcHighlightWidth } = highlight;
-
 		// get angle
-		const currAngle = validateAngle(start, current);
+		const angles = [0, 45, 90, 135, 180, -45, -90, -135];
+		const currAngle = getAngle(start.x, start.y, current.x, current.y);
+		// snap currAngle to valid one
+		const nearestValidAngle = getNearestAngle(currAngle, angles);
 
-		// skip invalid angle
-		if (currAngle === false) return;
-
-		if (currAngle !== angle) {
-			angle = currAngle;
+		if (nearestValidAngle !== angle) {
+			angle = nearestValidAngle;
 			restoreSolved();
 		}
 
-		const pathLength = getSteps(start, current) + 1;
+		const coordCurrentOnValidAngle = getCoordIntersectPerpendicularOnAngle(angle, start, current);
 
-		const direction = getDirection(start.x, start.y, current.x, current.y);
+		// get x length of start to current if angle is diagonal
+		const currentHighlightLength = [45, 135, -45, -135].includes(angle)
+			? getSteps(start, coordCurrentOnValidAngle)
+			: getLineLength(start, current);
 
-		const wordLength = selected.length;
+		const direction = getDirectionByAngle(angle);
+
+		// wordLength - 1 is to count for 0 based grid
+		const maxValidLength = getMaxValidLength(selected, start, direction, solved);
+
+		const validLength = Math.min(
+			maxValidLength - 1,
+			selected.length - 1,
+			Math.floor(currentHighlightLength)
+		);
+
+		const endValidCoord = {
+			x: direction.x * validLength + start.x,
+			y: direction.y * validLength + start.y
+		};
 
 		if (!selectedHighlight) {
 			selectedHighlight = options.addHighlight({
-				angle: currAngle,
+				angle: angle,
 				color: $currentColor,
 				start: start,
-				end: current,
-				width: calcHighlightWidth(start, current),
+				end: endValidCoord,
 				outline: 'none'
 			});
 		}
 
-		// wordLength - 1 is to count for 0 based grid
-		const validLength = getMaxValidLength(selected, start, direction, solved);
-		const maxCoord: Coord = {
-			x: direction.x * (validLength - 1) + start.x,
-			y: direction.y * (validLength - 1) + start.y
-		};
-
 		options.updateHighlight(selectedHighlight.id, {
-			angle: currAngle,
+			angle: angle,
 			color: $currentColor,
 			start,
-			end: current,
-			width: calcHighlightWidth(start, pathLength > validLength ? maxCoord : current)
+			end: endValidCoord
 		});
 		selectedHighlight = {
 			...selectedHighlight,
 			...{
-				angle: currAngle,
+				angle: angle,
 				color: $currentColor,
 				start,
-				end: current,
-				width: calcHighlightWidth(start, pathLength > validLength ? maxCoord : current)
+				end: endValidCoord
 			}
 		};
 
-		for (let i = 0; i < pathLength; i++) {
+		restoreSolved();
+		for (let i = 0; i <= validLength; i++) {
 			const x = start.x + direction.x * i;
 			const y = start.y + direction.y * i;
 			const char = selected[i];
@@ -560,6 +570,35 @@
 			cell?.classList.remove('active');
 		});
 	};
+
+	function getNearestAngle(angle: number, angles: number[]): number {
+		// Ensure angles array is not empty
+		if (angles.length === 0) {
+			throw new Error('Angles array must not be empty.');
+		}
+
+		// Sort the angles array in ascending order
+		angles.sort((a, b) => a - b);
+
+		// Find the index of the angle in the sorted array
+		const index = binarySearch(angle, angles);
+
+		// Check if the angle is exactly equal to one of the values in the array
+		if (index !== -1 && angles[index] === angle) {
+			return angle; // Angle is in the array, no need to snap
+		} else {
+			// Find the two nearest angles
+			const lowerAngle = angles[index];
+			const upperAngle = angles[index + 1];
+
+			// Snap to the nearest angle
+			if (upperAngle === undefined || Math.abs(angle - lowerAngle) < Math.abs(angle - upperAngle)) {
+				return lowerAngle;
+			} else {
+				return upperAngle;
+			}
+		}
+	}
 </script>
 
 <div id="interactive-word-placement" class="w-full p-4">

@@ -261,3 +261,96 @@ export function isCoordOnLine(
 
 	return coord.x >= minX && coord.x <= maxX && coord.y >= minY && coord.y <= maxY;
 }
+
+// Binary search helper function
+export function binarySearch(target: number, array: number[]): number {
+	let low = 0;
+	let high = array.length - 1;
+
+	while (low <= high) {
+		const mid = Math.floor((low + high) / 2);
+		const midValue = array[mid];
+
+		if (midValue === target) {
+			return mid; // Target found
+		} else if (midValue < target) {
+			low = mid + 1;
+		} else {
+			high = mid - 1;
+		}
+	}
+
+	return high; // Return the index of the element just before the target
+}
+
+export const getDirectionByAngle = (angle: number) => {
+	const directions = {
+		'0': { x: 1, y: 0 },
+		'45': { x: 1, y: 1 },
+		'90': { x: 0, y: 1 },
+		'135': { x: -1, y: 1 },
+		'180': { x: -1, y: 0 },
+		'-45': { x: 1, y: -1 },
+		'-90': { x: 0, y: -1 },
+		'-135': { x: -1, y: -1 }
+	};
+
+	const angles = Object.keys(directions).map((i) => parseInt(i));
+	if (!angles.includes(angle)) return false;
+
+	return directions[angle.toString()];
+};
+
+// Function to calculate the length between two coordinates
+export function getLineLength(start: Coord, end: Coord): number {
+	const deltaX = Math.abs(end.x - start.x);
+	const deltaY = Math.abs(end.y - start.y);
+
+	// Using the Pythagorean theorem to calculate the distance
+	const length = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+
+	return length;
+}
+
+export const getCoordIntersectPerpendicularOnAngle = (angle: number, base: Coord, coord: Coord) => {
+	if (angle < 0) {
+		// since angle is negative, 180 + angle to get the exterior angle
+		const exterior = 180 + angle;
+		angle = 180 + exterior;
+	}
+
+	// convert angle to radian
+	// add Number.EPSILON to prevent absolute 0, 90, or 270
+	const rad = ((angle + Number.EPSILON) * Math.PI) / 180;
+	// line formula for base with angle
+	const slope = Math.tan(rad);
+	// y = mx + c
+	// base.y = (slope)(base.x) + c
+	// c = base.y - (slope)(base.x)
+	const c1 = base.y - slope * base.x;
+
+	// line formula for coord that is perpendicular to base
+	const perpendicularSlope = -1 / slope;
+	// y = mx + c
+	// coord.y = (perpendicularSlope)(coord.x) + c
+	// c = coord.y - (perpendicularSlope)(coord.x)
+	const c2 = coord.y - perpendicularSlope * coord.x;
+
+	// find intersection of two line
+
+	// find x
+	// (m1)x + c1 = (m2)x + c2
+	// (m1)x - (m2)x = c2 - c1
+	// (m1 - m2)x = c2 - c1
+	// x = (c2 - c1) / (m1 - m2)
+	const x = (c2 - c1) / (slope - perpendicularSlope);
+
+	// find y
+	// replace x with any line formula
+	const y = slope * x + c1;
+
+	return {
+		x,
+		y
+	};
+};

@@ -83,7 +83,7 @@ export type HighlightData = {
 	angle: number;
 	start: Coord;
 	end: Coord;
-	width: number;
+	width?: number;
 	color: string;
 	outline?: string;
 };
