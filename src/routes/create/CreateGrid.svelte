@@ -441,7 +441,7 @@
 			const x = start.x + direction.x * i;
 			const y = start.y + direction.y * i;
 
-			if (y > grid.length || y < 0 || x > grid[0].length || x < 0) break;
+			if (y >= grid.length || y < 0 || x > grid[0].length || x < 0) break;
 
 			let char = word[i];
 			let cell = grid[y][x];
