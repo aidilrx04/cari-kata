@@ -433,11 +433,11 @@
 			y: start.y + direction.y * length
 		};
 
-		const steps = getSteps(start, end) + 1;
+		const steps = getSteps(start, end);
 
 		let count = 0;
 
-		for (let i = 0; i < steps; i++) {
+		for (let i = 0; i <= steps; i++) {
 			const x = start.x + direction.x * i;
 			const y = start.y + direction.y * i;
 
@@ -446,7 +446,8 @@
 			let char = word[i];
 			let cell = grid[y][x];
 
-			if (cell === char || cell === EMPTY_CHAR) count++;
+			if (cell !== char && cell !== EMPTY_CHAR) break;
+			count++;
 		}
 
 		return count;
