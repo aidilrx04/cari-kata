@@ -225,8 +225,6 @@
 			return;
 		}
 
-		endCoord = cell.coord;
-
 		let validPlacement = isValidPlacement(
 			{ start: startCoord, end: endCoord },
 			selected,
@@ -379,6 +377,8 @@
 			x: direction.x * validLength + start.x,
 			y: direction.y * validLength + start.y
 		};
+
+		endCoord = endValidCoord;
 
 		if (!selectedHighlight) {
 			selectedHighlight = options.addHighlight({
