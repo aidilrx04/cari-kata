@@ -359,7 +359,10 @@
 
 		// get x length of start to current if angle is diagonal
 		const currentHighlightLength = [45, 135, -45, -135].includes(angle)
-			? getSteps(start, coordCurrentOnValidAngle)
+			? getSteps(start, {
+					x: Math.round(coordCurrentOnValidAngle.x),
+					y: Math.round(coordCurrentOnValidAngle.y)
+			  })
 			: getLineLength(start, current);
 
 		const direction = getDirectionByAngle(angle);
