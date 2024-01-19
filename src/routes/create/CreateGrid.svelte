@@ -609,11 +609,33 @@
 	const toggleGrid = () => {
 		if (showGrid) {
 			showGrid = false;
+			togglePlacedWords(true);
 			return;
 		}
 		grid = fillEmptyCell(solved);
 
 		showGrid = true;
+		togglePlacedWords(false);
+	};
+
+	const toggleHighlight = (show: boolean) => {
+		wordAndHighlight.forEach(({ highlight }) => {
+			updateHighlight(highlight.id, {
+				color: show ? highlight.color : 'transparent'
+			});
+		});
+	};
+
+	const togglePlacedWords = (show: boolean) => {
+		toggleHighlight(show);
+		placedWords.forEach((word) => {
+			const coords = getRangeCoords(word.start, word.end);
+			if (show) {
+				activateCells(coords);
+			} else {
+				deactivateCells(coords);
+			}
+		});
 	};
 </script>
 
