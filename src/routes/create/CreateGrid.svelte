@@ -52,7 +52,6 @@
 	}
 
 	export let grid: string[][] = [];
-	$: grid = fillEmptyCell(solved);
 
 	// store previous grid state for redo/undo word placement
 	let previousSolved: string[][];
@@ -143,6 +142,15 @@
 		placedCoords = coords;
 		deactivateCells(changed);
 		activateCells(placedCoords);
+	}
+
+	// show filled grid
+	let showGrid = false;
+
+	$: if (showGrid) {
+		gridOptions.grid = grid;
+	} else {
+		gridOptions.grid = solved;
 	}
 
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
@@ -361,7 +369,7 @@
 		const currentHighlightLength = [45, 135, -45, -135].includes(angle)
 			? getSteps(start, {
 					x: Math.round(coordCurrentOnValidAngle.x),
-					y: Math.round(coordCurrentOnValidAngle.y)
+					y: Math.floor(coordCurrentOnValidAngle.y)
 			  })
 			: getLineLength(start, current);
 
@@ -597,9 +605,34 @@
 			}
 		}
 	}
+
+	const toggleGrid = () => {
+		if (showGrid) {
+			showGrid = false;
+			return;
+		}
+		grid = fillEmptyCell(solved);
+
+		showGrid = true;
+	};
 </script>
 
 <div id="interactive-word-placement" class="w-full p-4">
+	<div class="top mb-2 flex items-center justify-end">
+		<button
+			type="button"
+			on:click={toggleGrid}
+			class="py-2 px-3 border rounded border-slate-200 flex items-center justify-center gap-2"
+		>
+			{#if showGrid}
+				<i class="ph ph-pen" />
+				<span>Edit</span>
+			{:else}
+				<i class="ph ph-squares-four" />
+				<span>Grid</span>
+			{/if}
+		</button>
+	</div>
 	<Grid words={[]} options={gridOptions} {handleCellPress} {handleCellRelease} {handleCellMove} />
 </div>
 
