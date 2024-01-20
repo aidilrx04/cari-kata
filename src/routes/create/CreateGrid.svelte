@@ -202,6 +202,8 @@
 	}
 
 	const handleCellPress: OnCellPress = (cell, grid) => {
+		if (showGrid) return;
+
 		if (selected.length < 1) {
 			// find cell to look for any placedword
 			const word = getPlacedWord(cell.coord, placedWords);
@@ -220,6 +222,8 @@
 	};
 
 	const handleCellRelease: OnCellRelease = (cell, currentGrid) => {
+		if (showGrid) return;
+
 		if (selected.length < 1) return;
 
 		if (hasSelectedPlaced) return;
@@ -341,7 +345,7 @@
 		if (!updateHighlight) updateHighlight = options.updateHighlight;
 		if (!removeHighlight) removeHighlight = options.removeHighlight;
 
-		if (selected.length < 1 || hasSelectedPlaced) {
+		if (selected.length < 1 || hasSelectedPlaced || showGrid) {
 			// trick to make highlight dissapear
 			highlight.updateCurrentHighlight({
 				color: 'transparent',
