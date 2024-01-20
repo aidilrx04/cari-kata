@@ -648,7 +648,6 @@
 		const containerID = '#interactive-word-placement';
 		const activeCells = document.querySelectorAll<HTMLElement>(`${containerID} .cell.active`);
 		activeCells.forEach((cell) => {
-			console.log('ran this :(');
 			const dataCoord = cell?.dataset?.coord;
 			if (!dataCoord) return;
 
