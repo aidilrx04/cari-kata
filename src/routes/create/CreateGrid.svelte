@@ -20,7 +20,8 @@
 		binarySearch,
 		getDirectionByAngle,
 		getLineLength,
-		getCoordIntersectPerpendicularOnAngle
+		getCoordIntersectPerpendicularOnAngle,
+		getCoordFromString
 	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
 	import rgba from 'color-rgba';
@@ -615,6 +616,7 @@
 		grid = fillEmptyCell(solved);
 
 		showGrid = true;
+		deactivateUnplacedCells(placedCoords);
 		togglePlacedWords(false);
 	};
 
@@ -635,6 +637,24 @@
 			} else {
 				deactivateCells(coords);
 			}
+		});
+	};
+
+	const deactivateUnplacedCells = (validCells: Coord[]) => {
+		const containerID = '#interactive-word-placement';
+		const activeCells = document.querySelectorAll<HTMLElement>(`${containerID} .cell.active`);
+		activeCells.forEach((cell) => {
+			console.log('ran this :(');
+			const dataCoord = cell?.dataset?.coord;
+			if (!dataCoord) return;
+
+			const coord = getCoordFromString(dataCoord);
+
+			const isPlaced = validCells.findIndex((c) => c.x === coord.x && c.y === coord.y) >= 0;
+
+			if (isPlaced) return;
+
+			cell.classList.remove('active');
 		});
 	};
 </script>
