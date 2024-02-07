@@ -3,7 +3,9 @@
 	import { fade } from 'svelte/transition';
 
 	const dispatch = createEventDispatcher();
-	const close = () => dispatch('close');
+	const close = () => {
+		closeModal();
+	};
 	const defaultTransition = {
 		in: {
 			duration: 250
@@ -26,6 +28,16 @@
 		};
 	} = defaultTransition;
 	$: transition = { ...defaultTransition, ...transitionProps };
+
+	export let open = false;
+
+	export let closeModal = () => {
+		open = false;
+		dispatch('close');
+	};
+	export const openModal = () => {
+		open = true;
+	};
 
 	const handle_keydown = (e) => {
 		if (e.key === 'Escape') {
@@ -62,24 +74,26 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="modal-background z-30" />
+<div class={open ? 'block' : 'hidden'}>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div class="modal-background z-30 bg-slate-800 bg-opacity-25" />
 
-<div
-	{...props}
-	class="modal z-30 w-auto min-w-[250px] max-w-[360px] {$$props.class}"
-	role="dialog"
-	aria-modal="true"
-	bind:this={modal}
-	in:fade={transition.in}
-	out:fade={transition.out}
->
-	<slot name="header" />
-	<slot />
-	<slot name="footer">
-		<!-- svelte-ignore a11y-autofocus -->
-		<button autofocus on:click={close}>close modal</button>
-	</slot>
+	<div
+		{...props}
+		class="modal z-30 w-auto min-w-[250px] max-w-[360px] bg-slate-50 p-4 rounded-lg {$$props.class}"
+		role="dialog"
+		aria-modal="true"
+		bind:this={modal}
+		in:fade={transition.in}
+		out:fade={transition.out}
+	>
+		<slot name="header" />
+		<slot />
+		<slot name="footer">
+			<!-- svelte-ignore a11y-autofocus -->
+			<button autofocus on:click={close}>close modal</button>
+		</slot>
+	</div>
 </div>
 
 <style>

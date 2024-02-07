@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Modal from '$lib/Modal.svelte';
 	import { currentColor } from '$lib/colors';
 	import type { WordInGrid } from '$lib/types';
 	import { fly } from 'svelte/transition';
@@ -12,6 +13,9 @@
 	let isAddWord = false;
 
 	let isOpen = false;
+
+	let openModal: () => void;
+	let closeModal: () => void;
 
 	const get10Words = () => {
 		fetch('https://bahasa-api.vercel.app/api/word?amount=10', {
@@ -59,9 +63,15 @@
 </script>
 
 <!-- TODO: Build Structure for this feature first, then style it -->
-<div class="w-full fixed bottom-0 left-0 p-4 bg-slate-50 rounded-t z-[60]">
-	<div class="actions absolute right-5 bottom-full pb-5 flex flex-col gap-2">
-		<button class="w-12 h-12 cursor-pointer rounded-full bg-blue-600 text-slate-50" type="button">
+<div class="w-full fixed bottom-0 left-0 p-4 bg-slate-50 rounded-t z-20">
+	<div class="actions absolute right-5 bottom-full pb-5 flex flex-col gap-2 z-[99]">
+		<button
+			on:click={() => {
+				openModal();
+			}}
+			class="relative z-30 w-12 h-12 cursor-pointer rounded-full bg-blue-600 text-slate-50"
+			type="button"
+		>
 			<i class="ph ph-plus text-2xl" />
 		</button>
 		<button class="w-12 h-12 cursor-pointer rounded-full bg-slate-300 text-slate-600" type="button">
@@ -114,6 +124,38 @@
 		</div>
 	{/if}
 </div>
+
+<Modal bind:openModal bind:closeModal>
+	<div slot="header">
+		<h5 class="mb-3 text-xl text-slate-700">Add Word</h5>
+	</div>
+	<div class="content mb-6">
+		<input
+			bind:value={word}
+			type="text"
+			class="text-slate-700 bg-slate-200 border-b rounded border-b-slate-600 py-2 px-3"
+		/>
+	</div>
+	<div slot="footer" class="flex items-center justify-end gap-3">
+		<button
+			on:click={closeModal}
+			class="px-3 py-2 bg-slate-50 text-slate-600 text-sm"
+			type="button"
+		>
+			Cancel
+		</button>
+		<button
+			on:click={() => {
+				addWord();
+				closeModal();
+			}}
+			class="px-3 py-2 bg-violet-600 text-slate-50 rounded text-sm font-semibold"
+			type="button"
+		>
+			Add
+		</button>
+	</div>
+</Modal>
 
 <!-- <div class={selected !== undefined ? 'py-5 mb-5' : ''}>
 			{#if selected}
