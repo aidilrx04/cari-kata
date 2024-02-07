@@ -63,13 +63,13 @@
 </script>
 
 <!-- TODO: Build Structure for this feature first, then style it -->
-<div class="w-full fixed bottom-0 left-0 p-4 bg-slate-50 rounded-t z-20">
-	<div class="actions absolute right-5 bottom-full pb-5 flex flex-col gap-2 z-[99]">
+<div class="w-full fixed bottom-0 left-0 p-4 bg-slate-50 rounded-t z-30">
+	<div class="actions absolute right-5 bottom-full pb-5 flex flex-col gap-2">
 		<button
 			on:click={() => {
 				openModal();
 			}}
-			class="relative z-30 w-12 h-12 cursor-pointer rounded-full bg-blue-600 text-slate-50"
+			class="w-12 h-12 cursor-pointer rounded-full bg-blue-600 text-slate-50"
 			type="button"
 		>
 			<i class="ph ph-plus text-2xl" />
