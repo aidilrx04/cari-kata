@@ -11,6 +11,8 @@
 
 	let isAddWord = false;
 
+	let isOpen = false;
+
 	const get10Words = () => {
 		fetch('https://bahasa-api.vercel.app/api/word?amount=10', {
 			headers: {
@@ -56,10 +58,64 @@
 	};
 </script>
 
-<div class="w-full">
-	<span class="font-semibold text-xl text-slate-800 mb-4 block">Words</span>
-	<div class="words-container relative">
-		<div class={selected !== undefined ? 'py-5 mb-5' : ''}>
+<!-- TODO: Build Structure for this feature first, then style it -->
+<div class="w-full fixed bottom-0 left-0 p-4 bg-slate-50 rounded-t z-[60]">
+	<div class="actions absolute right-5 bottom-full pb-5 flex flex-col gap-2">
+		<button class="w-12 h-12 cursor-pointer rounded-full bg-blue-600 text-slate-50" type="button">
+			<i class="ph ph-plus text-2xl" />
+		</button>
+		<button class="w-12 h-12 cursor-pointer rounded-full bg-slate-300 text-slate-600" type="button">
+			<i class="ph ph-dots-three text-2xl" />
+		</button>
+		<button class="w-12 h-12 cursor-pointer rounded-full bg-violet-600 text-slate-50" type="button">
+			<i class="ph ph-check text-2xl" />
+		</button>
+	</div>
+	<button
+		type="button"
+		on:click={() => {
+			isOpen = !isOpen;
+		}}
+		class="w-24 h-6 flex items-center justify-center absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-50 rounded-t"
+	>
+		<i class="ph ph-minus text-2xl text-slate-400" />
+	</button>
+	<div class="not-placed-words">
+		{#if isOpen}
+			<h4 class="uppercase text-slate-600 mb-3 text-sm">Not Placed</h4>
+		{/if}
+		<div class="not-placed-words p-2 flex gap-2 w-full overflow-x-auto {isOpen ? 'flex-wrap' : ''}">
+			{#each words as word}
+				<button
+					class="block px-3 py-2 rounded text-slate-600
+					{word === selected ? 'text-slate-700 font-semibold outline outline-2 outline-violet-600' : ''}
+					"
+					type="button"
+					on:click={() => {
+						selected = word;
+					}}
+				>
+					{word}
+				</button>
+				<div class="divider border-l" />
+			{/each}
+		</div>
+	</div>
+	{#if isOpen}
+		<div class="placed-words mt-11 mb-6">
+			<h4 class="uppercase text-slate-600 mb-3 text-sm">Placed</h4>
+			<div class="flex gap-2 flex-wrap">
+				{#each placedWords as word}
+					<button class="px-4 py-2 bg-violet-600 text-slate-50 rounded" type="button">
+						{word.value}
+					</button>
+				{/each}
+			</div>
+		</div>
+	{/if}
+</div>
+
+<!-- <div class={selected !== undefined ? 'py-5 mb-5' : ''}>
 			{#if selected}
 				<div
 					class="selected flex gap-4 absolute top-0 left-1/2 -translate-x-1/2 py-2 px-6 rounded-full text-slate-50 z-50"
@@ -85,8 +141,8 @@
 					<span>D</span>
 				</div>
 			{/if}
-		</div>
-		<ul class="grid grid-cols-2 gap-1">
+		</div> -->
+<!-- <ul class="grid grid-cols-2 gap-1">
 			{#each words as word (word)}
 				<button
 					on:click={() => {
@@ -172,9 +228,7 @@
 			>
 				Get 10 Words
 			</button>
-		</ul>
-	</div>
-</div>
+		</ul> -->
 
 <style lang="postcss">
 	.word-btn {
