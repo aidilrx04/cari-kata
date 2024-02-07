@@ -10,6 +10,8 @@
 
 	export let placedWords: WordInGrid[];
 
+	$: unplacedWords = words.filter((word) => !placedWords.find((placed) => placed.value === word));
+
 	let isAddWord = false;
 
 	let isOpen = false;
@@ -95,7 +97,7 @@
 			<h4 class="uppercase text-slate-600 mb-3 text-sm">Not Placed</h4>
 		{/if}
 		<div class="not-placed-words p-2 flex gap-2 w-full overflow-x-auto {isOpen ? 'flex-wrap' : ''}">
-			{#each words as word}
+			{#each unplacedWords as word}
 				<button
 					class="block px-3 py-2 rounded text-slate-600
 					{word === selected ? 'text-slate-700 font-semibold outline outline-2 outline-violet-600' : ''}
