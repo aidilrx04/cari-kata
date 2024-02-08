@@ -18,6 +18,7 @@
 
 	let openModal: () => void;
 	let closeModal: () => void;
+	export let nextTab: () => void;
 
 	const get10Words = () => {
 		fetch('https://bahasa-api.vercel.app/api/word?amount=10', {
@@ -79,7 +80,13 @@
 		<button class="w-12 h-12 cursor-pointer rounded-full bg-slate-300 text-slate-600" type="button">
 			<i class="ph ph-dots-three text-2xl" />
 		</button>
-		<button class="w-12 h-12 cursor-pointer rounded-full bg-violet-600 text-slate-50" type="button">
+		<button
+			on:click={() => {
+				nextTab();
+			}}
+			class="w-12 h-12 cursor-pointer rounded-full bg-violet-600 text-slate-50"
+			type="button"
+		>
 			<i class="ph ph-check text-2xl" />
 		</button>
 	</div>
