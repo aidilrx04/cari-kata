@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { currentColor, updateCurrentColor } from '$lib/colors';
 	import type {
 		Coord,
@@ -30,8 +31,6 @@
 	export let columns: number;
 	export let selected: string = '';
 
-	$: console.log(selected);
-
 	export let onSuccessPlacement: OnSuccessPlacement = () => {};
 
 	let previousRows: number = rows;
@@ -39,7 +38,7 @@
 
 	const EMPTY_CHAR = ' ';
 	export let solved: string[][] = [];
-	$: solved = solved.length === 0 ? createEmptyGrid(rows, columns) : solved;
+	$: solved = solved.length === 0 ? createGrid(rows, columns) : solved;
 
 	$: if (
 		(rows !== previousRows || columns !== previousColumns) &&
@@ -76,6 +75,8 @@
 	let removeHighlight: (id: number) => void;
 
 	export let placedWords: WordInGrid[];
+	$: console.log(placedWords);
+
 	let wordAndHighlight: { word: string; highlight: HighlightData }[] = [];
 
 	let intersections: { [id: number]: Coord } = {};
@@ -200,6 +201,20 @@
 			.map(() => Array(columns).fill(EMPTY_CHAR));
 		return result;
 	}
+
+	const createGrid = (rows: number, columns: number) => {
+		let grid = createEmptyGrid(rows, columns);
+
+		// check if placedWords is present
+		if (placedWords.length > 0) {
+			// fill grid with placedWords
+			placedWords.forEach((word) => {
+				grid = placeWord(grid, word.value, word.start, word.end);
+			});
+		}
+
+		return grid;
+	};
 
 	const handleCellPress: OnCellPress = (cell, grid) => {
 		if (showGrid) return;
@@ -659,6 +674,20 @@
 
 			cell.classList.remove('active');
 		});
+	};
+
+	const placeWord = (grid: string[][], word: string, start: Coord, end: Coord) => {
+		const direction = getDirection(start.x, start.y, end.x, end.y);
+		const steps = getSteps(start, end);
+
+		for (let i = 0; i <= steps; i++) {
+			const x = start.x + direction.x * i;
+			const y = start.y + direction.y * i;
+			const char = word[i];
+			grid[y][x] = char;
+		}
+
+		return grid;
 	};
 </script>
 
