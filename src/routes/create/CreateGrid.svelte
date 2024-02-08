@@ -133,7 +133,7 @@
 	}
 
 	let placedCoords: Coord[] = [];
-	$: if (placedWords) {
+	$: if (placedWords && browser) {
 		const coords = placedWords.map((i) => getRangeCoords(i.start, i.end)).flat();
 
 		const changed = placedCoords.filter(
