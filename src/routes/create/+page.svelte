@@ -143,7 +143,17 @@
 					>
 				</div> -->
 			{:else if currTab === 2}
-				<ConfirmCreateTab title={game.title} words={placedWords.map((w) => w.value)} {prevTab} />
+				<ConfirmCreateTab
+					title={game.title}
+					words={placedWords}
+					game={{
+						rows: gridData.rows,
+						columns: gridData.columns,
+						solved: solved,
+						grid: grid
+					}}
+					{prevTab}
+				/>
 			{/if}
 		</div>
 	</form>
