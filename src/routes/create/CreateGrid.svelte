@@ -151,8 +151,14 @@
 
 	$: if (showGrid) {
 		grid = fillEmptyCell(solved);
+
+		deactivateUnplacedCells(placedCoords);
+		togglePlacedWords(false);
+
 		gridOptions.grid = grid;
 	} else {
+		togglePlacedWords(true);
+
 		gridOptions.grid = solved;
 	}
 
@@ -634,15 +640,7 @@
 	}
 
 	const toggleGrid = () => {
-		if (showGrid) {
-			showGrid = false;
-			togglePlacedWords(true);
-			return;
-		}
-
-		showGrid = true;
-		deactivateUnplacedCells(placedCoords);
-		togglePlacedWords(false);
+		showGrid = !showGrid;
 	};
 
 	const toggleHighlight = (show: boolean) => {
