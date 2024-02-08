@@ -147,9 +147,10 @@
 	}
 
 	// show filled grid
-	let showGrid = false;
+	export let showGrid = true;
 
 	$: if (showGrid) {
+		grid = fillEmptyCell(solved);
 		gridOptions.grid = grid;
 	} else {
 		gridOptions.grid = solved;
@@ -632,7 +633,6 @@
 			togglePlacedWords(true);
 			return;
 		}
-		grid = fillEmptyCell(solved);
 
 		showGrid = true;
 		deactivateUnplacedCells(placedCoords);
