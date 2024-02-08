@@ -581,6 +581,12 @@
 	};
 
 	const getCell = (coord: Coord) => {
+		if (!browser) {
+			console.warn('This function must be only called on client!');
+
+			return;
+		}
+
 		const cell = document.querySelector(`[data-coord="${coord.x},${coord.y}"]`);
 		return cell;
 	};
@@ -660,6 +666,11 @@
 	};
 
 	const deactivateUnplacedCells = (validCells: Coord[]) => {
+		if (!browser) {
+			console.warn('This function is called on server! not client');
+			return;
+		}
+
 		const containerID = '#interactive-word-placement';
 		const activeCells = document.querySelectorAll<HTMLElement>(`${containerID} .cell.active`);
 		activeCells.forEach((cell) => {
