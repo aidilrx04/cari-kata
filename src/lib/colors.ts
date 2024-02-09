@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-const pickRandomColor = (colors: string[]) => {
+export const pickRandomColor = (colors: string[]) => {
 	return colors[Math.floor(Math.random() * colors.length)];
 };
 
