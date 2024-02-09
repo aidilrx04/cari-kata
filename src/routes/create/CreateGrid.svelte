@@ -27,6 +27,7 @@
 	import Grid from '../game/Grid.svelte';
 	import rgba from 'color-rgba';
 	import { addHighlight, removeHighlight, updateHighlight } from '../game/HighlightManager.svelte';
+	import { onMount } from 'svelte';
 
 	export let rows: number;
 	export let columns: number;
@@ -39,7 +40,6 @@
 
 	const EMPTY_CHAR = ' ';
 	export let solved: string[][] = [];
-	$: solved = solved.length === 0 ? createGrid(rows, columns) : solved;
 
 	$: if (
 		(rows !== previousRows || columns !== previousColumns) &&
@@ -168,6 +168,38 @@
 
 	$: toggleHighlight(showHighlight);
 
+	onMount(() => {
+		// create empty grid
+		solved = createEmptyGrid(rows, columns);
+
+		// populate grid and the highlight if placedWords is present
+		if (placedWords.length > 0) {
+			solved = placeWords(solved, placedWords);
+
+			placedWords.forEach((word) => {
+				const wordHighlight = addHighlight({
+					angle: getAngle(word.start.x, word.start.y, word.end.x, word.end.y),
+					color: pickRandomColor(colors),
+					end: word.end,
+					start: word.start
+				});
+				wordAndHighlight = [
+					{
+						word: word.value,
+						highlight: wordHighlight
+					}
+				];
+			});
+		}
+	});
+
+	const placeWords = (grid: string[][], words: WordInGrid[]) => {
+		words.forEach((word) => {
+			grid = placeWord(grid, word.value, word.start, word.end);
+		});
+
+		return grid;
+	};
 
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
 		let result: string[][];
@@ -215,32 +247,6 @@
 			.map(() => Array(columns).fill(EMPTY_CHAR));
 		return result;
 	}
-
-	const createGrid = (rows: number, columns: number) => {
-		let grid = createEmptyGrid(rows, columns);
-
-		// check if placedWords is present
-		if (placedWords.length > 0) {
-			// fill grid with placedWords
-			placedWords.forEach((word) => {
-				grid = placeWord(grid, word.value, word.start, word.end);
-				const wordHighlight = addHighlight({
-					angle: getAngle(word.start.x, word.start.y, word.end.x, word.end.y),
-					color: pickRandomColor(colors),
-					end: word.end,
-					start: word.start
-				});
-				wordAndHighlight = [
-					{
-						word: word.value,
-						highlight: wordHighlight
-					}
-				];
-			});
-		}
-
-		return grid;
-	};
 
 	const handleCellPress: OnCellPress = (cell, grid) => {
 		if (showGrid) return;
