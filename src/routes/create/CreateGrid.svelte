@@ -26,6 +26,7 @@
 	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
 	import rgba from 'color-rgba';
+	import { addHighlight, removeHighlight, updateHighlight } from '../game/HighlightManager.svelte';
 
 	export let rows: number;
 	export let columns: number;
@@ -71,8 +72,6 @@
 	let angle: number;
 
 	let selectedHighlight: HighlightData | null;
-	let updateHighlight: (id: number, data: Partial<Omit<HighlightData, 'id'>>) => void;
-	let removeHighlight: (id: number) => void;
 
 	export let placedWords: WordInGrid[];
 	$: console.log(placedWords);
@@ -364,9 +363,6 @@
 	};
 
 	const handleCellMove: OnCellMove = (start, current, highlight, options) => {
-		if (!updateHighlight) updateHighlight = options.updateHighlight;
-		if (!removeHighlight) removeHighlight = options.removeHighlight;
-
 		if (selected.length < 1 || hasSelectedPlaced || showGrid) {
 			// trick to make highlight dissapear
 			highlight.updateCurrentHighlight({
