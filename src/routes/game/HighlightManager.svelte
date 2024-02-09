@@ -48,6 +48,7 @@
 	import { get, writable } from 'svelte/store';
 	import { cellWidth, isPressing, startCoord } from './CellsManager.svelte';
 	import Highlight, { calculateDistance, calculateHighlightWidth } from './Highlight.svelte';
+	import { onDestroy } from 'svelte';
 
 	export let solvedWords: Solved[];
 	export let containerRect: DOMRect;
@@ -112,6 +113,11 @@
 		handleCellMove();
 		$highlights = $highlights.slice(1);
 	}
+
+	onDestroy(() => {
+		$highlights = [];
+		$id = 1;
+	});
 
 	const getMouseLocation = (event: MouseEvent) => {
 		mouse = {
