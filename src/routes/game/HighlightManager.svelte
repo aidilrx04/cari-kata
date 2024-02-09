@@ -1,3 +1,39 @@
+<script lang="ts" context="module">
+	const id = writable(1);
+	// higlights data for manually added highlight
+	const highlights = writable<HighlightData[]>([]);
+
+	export const addHighlight = (data: Omit<HighlightData, 'id'>) => {
+		let currId = get(id);
+		const toAdd = {
+			id: currId,
+			...data
+		};
+
+		highlights.update((data) => {
+			return [...data, toAdd];
+		});
+
+		id.update((i) => i + 1);
+
+		return toAdd;
+	};
+
+	export const updateHighlight = (id: number, data: Partial<Omit<HighlightData, 'id'>>) => {
+		highlights.update((highlights) => {
+			const index = highlights.findIndex((i) => i.id === id);
+			highlights[index] = { ...highlights[index], ...data };
+			return highlights;
+		});
+	};
+
+	export const removeHighlight = (id: number) => {
+		highlights.update((highlights) => {
+			return highlights.filter((i) => i.id !== id);
+		});
+	};
+</script>
+
 <script lang="ts">
 	import { currentColor } from '$lib/colors';
 	import type {
@@ -9,6 +45,7 @@
 		Solved
 	} from '$lib/types';
 	import { getAngle, getCoordFromString, isValidCellElement } from '$lib/util';
+	import { get, writable } from 'svelte/store';
 	import { cellWidth, isPressing, startCoord } from './CellsManager.svelte';
 	import Highlight, { calculateDistance, calculateHighlightWidth } from './Highlight.svelte';
 
@@ -35,10 +72,6 @@
 		width: 0,
 		color: 'blue'
 	};
-
-	// higlights data for manually added highlight
-	let highlights: HighlightData[] = [];
-	let id = 1;
 
 	export let onCellMove: OnCellMove = () => {};
 
@@ -75,9 +108,9 @@
 			color: $currentColor
 		};
 
-		highlights = [highlight, ...highlights];
+		$highlights = [highlight, ...$highlights];
 		handleCellMove();
-		highlights = highlights.slice(1);
+		$highlights = $highlights.slice(1);
 	}
 
 	const getMouseLocation = (event: MouseEvent) => {
@@ -122,33 +155,12 @@
 				calcHighlightWidth: calcHighlightWidth
 			},
 			{
-				highlights,
+				highlights: $highlights,
 				addHighlight: addHighlight,
 				updateHighlight: updateHighlight,
 				removeHighlight
 			}
 		);
-	};
-
-	const addHighlight = (data: Omit<HighlightData, 'id'>) => {
-		const toAdd = {
-			id: id,
-			...data
-		};
-		highlights = [...highlights, toAdd];
-		id++;
-
-		return toAdd;
-	};
-	const updateHighlight = (id: number, data: Partial<Omit<HighlightData, 'id'>>) => {
-		const index = highlights.findIndex((i) => i.id === id);
-		highlights[index] = { ...highlights[index], ...data };
-
-		highlights = [...highlights];
-	};
-
-	const removeHighlight = (id: number) => {
-		highlights = highlights.filter((i) => i.id !== id);
 	};
 
 	const calcHighlightWidth: CalcHighlightWidth = (start, end) => {
@@ -171,7 +183,7 @@
 			color={solvedWord.color}
 		/>
 	{/each}
-	{#each highlights as highlight}
+	{#each $highlights as highlight}
 		<Highlight
 			angle={highlight.angle}
 			start={highlight.start}
