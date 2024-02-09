@@ -184,6 +184,7 @@
 					start: word.start
 				});
 				wordAndHighlight = [
+					...wordAndHighlight,
 					{
 						word: word.value,
 						highlight: wordHighlight
