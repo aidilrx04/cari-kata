@@ -145,6 +145,24 @@
 		activateCells(placedCoords);
 	}
 
+	// trick to slightly delay activate cells when the dom isnt fully loaded yet
+	let firstTimeLoaded = true;
+	$: if (firstTimeLoaded) {
+		new Promise((resolve, rejext) => {
+			// poll until first cell is loaded
+			let i = setInterval(() => {
+				const loaded = getCell({ x: 0, y: 0 });
+				if (loaded) {
+					clearInterval(i);
+					resolve(true);
+				}
+			}, 100);
+		}).then(() => {
+			firstTimeLoaded = false;
+			activateCells(placedCoords);
+		});
+	}
+
 	// show filled grid
 	export let showGrid = true;
 
