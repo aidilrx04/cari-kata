@@ -61,14 +61,16 @@
 	};
 </script>
 
-<div
-	class="w-full absolute rounded-full z-10"
-	style:background-color={color}
-	style:width="{absoluteWidth + height}px"
-	style:height="{height}px"
-	style:top="{position.y}px"
-	style:left="{position.x}px"
-	style:transform="translate({-halfHeight}px, {-halfHeight}px) rotate({angle}deg)"
-	style:transform-origin="{halfHeight}px 50%"
-	style:outline
-/>
+{#if position}
+	<div
+		class="w-full absolute rounded-full z-10"
+		style:background-color={color}
+		style:width="{absoluteWidth + height}px"
+		style:height="{height}px"
+		style:top="{position.y}px"
+		style:left="{position.x}px"
+		style:transform="translate({-halfHeight}px, {-halfHeight}px) rotate({angle}deg)"
+		style:transform-origin="{halfHeight}px 50%"
+		style:outline
+	/>
+{/if}
