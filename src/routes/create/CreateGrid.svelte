@@ -150,6 +150,7 @@
 
 	$: if (showGrid) {
 		grid = fillEmptyCell(solved);
+		showHighlight = false;
 
 		deactivateUnplacedCells(placedCoords);
 		togglePlacedWords(false);
@@ -158,8 +159,15 @@
 	} else {
 		togglePlacedWords(true);
 
+		showHighlight = true;
 		gridOptions.grid = solved;
 	}
+
+	// show highlighted placed words
+	export let showHighlight = true;
+
+	$: toggleHighlight(showHighlight);
+
 
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
 		let result: string[][];
@@ -660,7 +668,6 @@
 	};
 
 	const togglePlacedWords = (show: boolean) => {
-		toggleHighlight(show);
 		placedWords.forEach((word) => {
 			const coords = getRangeCoords(word.start, word.end);
 			if (show) {
