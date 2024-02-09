@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { currentColor, updateCurrentColor } from '$lib/colors';
+	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
 	import type {
 		Coord,
 		GridOptions,
@@ -216,6 +216,18 @@
 			// fill grid with placedWords
 			placedWords.forEach((word) => {
 				grid = placeWord(grid, word.value, word.start, word.end);
+				const wordHighlight = addHighlight({
+					angle: getAngle(word.start.x, word.start.y, word.end.x, word.end.y),
+					color: pickRandomColor(colors),
+					end: word.end,
+					start: word.start
+				});
+				wordAndHighlight = [
+					{
+						word: word.value,
+						highlight: wordHighlight
+					}
+				];
 			});
 		}
 
