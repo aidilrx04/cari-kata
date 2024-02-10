@@ -147,7 +147,7 @@
 
 	// trick to slightly delay activate cells when the dom isnt fully loaded yet
 	let firstTimeLoaded = true;
-	$: if (firstTimeLoaded) {
+	$: if (firstTimeLoaded && browser) {
 		new Promise((resolve, rejext) => {
 			// poll until first cell is loaded
 			let i = setInterval(() => {
