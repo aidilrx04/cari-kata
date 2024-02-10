@@ -36,6 +36,8 @@
 		placedWords={words}
 		grid={game.grid}
 		solved={game.solved}
+		showGrid={true}
+		showHighlight={false}
 	/>
 </div>
 
