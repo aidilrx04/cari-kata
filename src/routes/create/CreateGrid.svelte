@@ -159,7 +159,7 @@
 			}, 100);
 		}).then(() => {
 			firstTimeLoaded = false;
-			activateCells(placedCoords);
+			togglePlacedWords(showHighlight);
 		});
 	}
 
@@ -168,23 +168,20 @@
 
 	$: if (showGrid) {
 		grid = fillEmptyCell(solved);
-		showHighlight = false;
+		gridOptions.grid = grid;
 
 		deactivateUnplacedCells(placedCoords);
-		togglePlacedWords(false);
-
-		gridOptions.grid = grid;
 	} else {
-		togglePlacedWords(true);
-
-		showHighlight = true;
 		gridOptions.grid = solved;
 	}
 
 	// show highlighted placed words
 	export let showHighlight = true;
 
-	$: toggleHighlight(showHighlight);
+	$: {
+		toggleHighlight(showHighlight);
+		togglePlacedWords(showHighlight);
+	}
 
 	onMount(() => {
 		// create empty grid
@@ -209,6 +206,9 @@
 					}
 				];
 			});
+
+			toggleHighlight(showHighlight);
+			togglePlacedWords(showHighlight);
 		}
 	});
 
