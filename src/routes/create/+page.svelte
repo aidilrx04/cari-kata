@@ -27,7 +27,7 @@
 	let words: string[] = ['hei', 'whatsup', 'gais', 'harini', 'kita', 'makan', 'sayur', 'berapi'];
 	let selected: string = '';
 
-	let currTab = 2;
+	let currTab = 1;
 
 	const handleSubmit = (e: MouseEvent) => {
 		e.preventDefault();

@@ -53,18 +53,31 @@
 	}
 
 	export let grid: string[][] = [];
-
+	$: if (placedWords.length && browser) {
+		grid = fillEmptyCell(solved);
+	}
 	// store previous grid state for redo/undo word placement
 	let previousSolved: string[][];
 
 	let startCoord: Coord;
 	let endCoord: Coord;
 
-	let gridOptions: GridOptions;
-	$: gridOptions = {
+	// show filled grid
+	export let showGrid = true;
+	$: if (showGrid) {
+		deactivateUnplacedCells(placedCoords);
+	}
+
+	let gridOptions: GridOptions = {
 		rows: rows,
 		columns: columns,
 		grid: solved,
+		solved: solved
+	};
+	$: gridOptions = {
+		rows: rows,
+		columns: columns,
+		grid: showGrid ? grid : solved,
 		solved: solved
 	};
 
@@ -163,18 +176,6 @@
 		});
 	}
 
-	// show filled grid
-	export let showGrid = true;
-
-	$: if (showGrid) {
-		grid = fillEmptyCell(solved);
-		gridOptions.grid = grid;
-
-		deactivateUnplacedCells(placedCoords);
-	} else {
-		gridOptions.grid = solved;
-	}
-
 	// show highlighted placed words
 	export let showHighlight = true;
 
@@ -210,6 +211,7 @@
 			toggleHighlight(showHighlight);
 			togglePlacedWords(showHighlight);
 		}
+		grid = fillEmptyCell(solved);
 	});
 
 	const placeWords = (grid: string[][], words: WordInGrid[]) => {
