@@ -29,7 +29,9 @@
 
 	let currTab = 2;
 
-	const handleSubmit = () => {
+	const handleSubmit = (e: MouseEvent) => {
+		e.preventDefault();
+		console.log('creating...');
 		fetch('/create', {
 			headers: {
 				'Content-Type': 'application/json'
@@ -88,7 +90,7 @@
 </header>
 
 <main id="create-game" class="p-3 max-w-full bg-slate-50 dark:bg-slate-700 rounded-lg">
-	<form on:submit={handleSubmit} class="section-container w-full">
+	<form class="section-container w-full">
 		<div id="section1" class="section">
 			{#if currTab === 0}
 				<div class="w-[360px] max-w-full mx-auto">
@@ -154,6 +156,7 @@
 						grid: grid
 					}}
 					{prevTab}
+					onGameCreate={handleSubmit}
 				/>
 			{/if}
 		</div>

@@ -8,6 +8,7 @@
 	export let game: GridOptions;
 
 	export let prevTab: () => void;
+	export let onGameCreate: (e: MouseEvent) => void;
 </script>
 
 <h2 class="text-2xl mb-6 text-slate-700">Create Confirmation</h2>
@@ -44,6 +45,7 @@
 <div class="input-group !flex gap-2">
 	<button on:click={prevTab} type="button" class="prev nav-btn">Back</button>
 	<button
+		on:click={onGameCreate}
 		type="submit"
 		class="block w-full py-3 px-2 rounded text-slate-50 bg-violet-600 hover:bg-violet-700 active:focus:bg-violet-800"
 	>
