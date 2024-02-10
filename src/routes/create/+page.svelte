@@ -124,6 +124,7 @@
 						bind:selected
 						bind:placedWords
 						onSuccessPlacement={handleSuccessPlacement}
+						showGrid={false}
 					/>
 				</div>
 				<!-- <div class="input-group !flex gap-2">
