@@ -89,7 +89,7 @@
 	>
 		<slot name="header" />
 		<slot />
-		<slot name="footer">
+		<slot name="footer" {closeModal}>
 			<!-- svelte-ignore a11y-autofocus -->
 			<button autofocus on:click={close}>close modal</button>
 		</slot>
