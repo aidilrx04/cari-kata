@@ -74,7 +74,10 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<div class={open ? 'block' : 'hidden'}>
+<div
+	class="{open ? 'block' : 'hidden'} 
+		w-full h-full p-3 flex items-center justify-center absolute top-0 left-0"
+>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div class="modal-background z-30 bg-slate-800 bg-opacity-25" />
 
@@ -104,13 +107,5 @@
 		width: 100%;
 		height: 100%;
 		/* background: rgba(0, 0, 0, 0.3); */
-	}
-
-	.modal {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		overflow: auto;
-		transform: translate(-50%, -50%);
 	}
 </style>
