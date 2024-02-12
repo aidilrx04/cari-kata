@@ -17,13 +17,11 @@
 	import { updateCurrentColor } from '$lib/colors';
 
 	export let grid: string[][];
-	export let words: Word[];
-	export let solvedWords: Solved[];
 
-	let solvedWordsCoords: Coord[];
-	$: solvedWordsCoords = solvedWords
-		.map((solved) => solved.coords)
-		.reduce((acc, coords) => [...acc, ...coords], []);
+	// let solvedWordsCoords: Coord[];
+	// $: solvedWordsCoords = solvedWords
+	// 	.map((solved) => solved.coords)
+	// 	.reduce((acc, coords) => [...acc, ...coords], []);
 
 	// container rect
 	export let containerRect: DOMRect;
@@ -43,7 +41,7 @@
 
 	export let onCellPress: OnCellPress = () => {};
 	export let onCellRelease: OnCellRelease = () => {
-		calculateAnswer();
+		// calculateAnswer();
 	};
 
 	// set the cellWidth and cellHeight based on containerRect
@@ -99,45 +97,45 @@
 		);
 	};
 
-	const calculateAnswer = () => {
-		if ($startCoord === undefined || $endCoord === undefined) return;
+	// const calculateAnswer = () => {
+	// 	if ($startCoord === undefined || $endCoord === undefined) return;
 
-		// check if start and end coord is set
-		if (!$startCoord || !$endCoord) return;
+	// 	// check if start and end coord is set
+	// 	if (!$startCoord || !$endCoord) return;
 
-		// validate the path between start and end
-		// only accept <degree> % 45 == 0
-		const angleOrInvalid = validateAngle($startCoord, $endCoord);
-		if (angleOrInvalid === false) return;
+	// 	// validate the path between start and end
+	// 	// only accept <degree> % 45 == 0
+	// 	const angleOrInvalid = validateAngle($startCoord, $endCoord);
+	// 	if (angleOrInvalid === false) return;
 
-		const { word, coords } = getWordFromCoord($startCoord, $endCoord, angleOrInvalid, grid);
+	// 	const { word, coords } = getWordFromCoord($startCoord, $endCoord, angleOrInvalid, grid);
 
-		const validWord = validateWord(word, words);
+	// 	const validWord = validateWord(word, words);
 
-		if (!validWord.valid) {
-			console.log(`${word} is not a valid answer`);
-			return;
-		}
+	// 	if (!validWord.valid) {
+	// 		console.log(`${word} is not a valid answer`);
+	// 		return;
+	// 	}
 
-		// get real word if the path is backword
-		let solidWord = !validWord.backword ? word : [...word].reverse().join('');
+	// 	// get real word if the path is backword
+	// 	let solidWord = !validWord.backword ? word : [...word].reverse().join('');
 
-		// skip if word already found
-		const solvedWordsWords = solvedWords.map((word) => word.word);
-		if (solvedWordsWords.includes(solidWord)) return;
+	// 	// skip if word already found
+	// 	const solvedWordsWords = solvedWords.map((word) => word.word);
+	// 	if (solvedWordsWords.includes(solidWord)) return;
 
-		solvedWords = [
-			...solvedWords,
-			{
-				word: solidWord,
-				coords: coords,
-				angle: angleOrInvalid,
-				color: $currentColor
-			}
-		];
-		// change to new color
-		updateCurrentColor();
-	};
+	// 	solvedWords = [
+	// 		...solvedWords,
+	// 		{
+	// 			word: solidWord,
+	// 			coords: coords,
+	// 			angle: angleOrInvalid,
+	// 			color: $currentColor
+	// 		}
+	// 	];
+	// 	// change to new color
+	// 	updateCurrentColor();
+	// };
 
 	export const getWordFromCoord = (start: Coord, end: Coord, angle: number, grid: string[][]) => {
 		const direction = getDirection(start.x, start.y, end.x, end.y);
@@ -257,7 +255,6 @@
 			height={$cellHeight}
 			on:pressedOn={handleCellPress}
 			on:releasedOn={handleCellRelease}
-			found={isCellFound({ x: j, y: i }, solvedWordsCoords)}
 		>
 			{letter}
 		</Cell>
