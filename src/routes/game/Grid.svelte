@@ -13,21 +13,15 @@
 	import HighlightManager from './HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
 
-	// words used to placed in the grid
-	export let words: Word[];
+	// grid containers scambled letters
+	export let grid: string[][];
 
-	export let solvedWords: Solved[] = []; // populate by cellsmanager
-
-	// grid options
-	export let options: GridOptions;
+	export let rows: number;
+	export let columns: number;
 
 	export let handleCellPress: OnCellPress | undefined = undefined;
 	export let handleCellRelease: OnCellRelease | undefined = undefined;
 	export let handleCellMove: OnCellMove | undefined = undefined;
-
-	// grid containers scambled letters
-	let grid: string[][];
-	$: grid = options.grid;
 
 	let container: HTMLDivElement;
 
@@ -67,22 +61,20 @@
 	style:max-width="{containerWidth}px"
 	bind:this={container}
 >
-	<HighlightManager {solvedWords} {containerRect} onCellMove={handleCellMove} />
+	<HighlightManager {containerRect} onCellMove={handleCellMove} />
 	<div
 		id="ck-grid"
 		class="grid relative bg-slate-50 dark:bg-slate-600 rounded-md"
-		style:grid-template-rows="repeat({options.rows}, minmax(0, 1fr))"
-		style:grid-template-columns="repeat({options.columns}, minmax(0, 1fr))"
+		style:grid-template-rows="repeat({rows}, minmax(0, 1fr))"
+		style:grid-template-columns="repeat({columns}, minmax(0, 1fr))"
 	>
 		{#if containerRect}
 			<CellsManager
 				onCellPress={handleCellPress}
 				onCellRelease={handleCellRelease}
 				{grid}
-				{words}
-				bind:solvedWords
 				{containerRect}
-				column={options.columns}
+				column={columns}
 			/>
 		{/if}
 	</div>
