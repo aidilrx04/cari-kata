@@ -50,7 +50,6 @@
 	import Highlight, { calculateDistance, calculateHighlightWidth } from './Highlight.svelte';
 	import { onDestroy } from 'svelte';
 
-	export let solvedWords: Solved[];
 	export let containerRect: DOMRect;
 
 	// absolute position on screen
@@ -181,14 +180,6 @@
 <svelte:body on:touchmove={handleTouchInput} on:touchstart={handleTouchInput} />
 
 <div class="highlights-container absolute w-full h-full">
-	{#each solvedWords as solvedWord}
-		<Highlight
-			angle={solvedWord.angle}
-			start={solvedWord.coords[0]}
-			end={solvedWord.coords[solvedWord.coords.length - 1]}
-			color={solvedWord.color}
-		/>
-	{/each}
 	{#each $highlights as highlight}
 		<Highlight
 			angle={highlight.angle}
