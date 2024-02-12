@@ -1,8 +1,17 @@
-<script>
+<script lang="ts">
+	import type { Game } from '$lib/types';
+	import type { PageServerData } from './$types';
+
+	export let data: PageServerData;
+
+	let game: Game;
+	$: game = data.game;
+
+	$: console.log(game);
 </script>
 
 <main class="bg-slate-50 p-3 mt-5">
-	<h1 class="text-slate-800 text-xl mb-6">Download [Game Title]</h1>
+	<h1 class="text-slate-800 text-xl mb-6">Download {game.title}</h1>
 
 	<section class="mb-9">
 		<h2 class="text-slate-600 mb-2 uppercase text-sm font-semibold">Word Position</h2>
