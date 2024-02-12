@@ -1,11 +1,11 @@
 <script>
 </script>
 
-<main>
-	<h1>Download [Game Title]</h1>
+<main class="bg-slate-50 p-3 mt-5">
+	<h1 class="text-slate-800 text-xl mb-6">Download [Game Title]</h1>
 
-	<section>
-		<h2>Word Position</h2>
+	<section class="mb-9">
+		<h2 class="text-slate-600 mb-2 uppercase text-sm font-semibold">Word Position</h2>
 		<div class="input-group">
 			<input type="radio" id="pos-top" value="top" />
 			<label for="pos-top">Top</label>
@@ -24,9 +24,19 @@
 		</div>
 	</section>
 
-	<section>
-		<h2>Preview</h2>
+	<section class="mb-9">
+		<h2 class="text-slate-700 mb-2 uppercase text-sm font-semibold">Preview</h2>
 
 		<!-- <PreviewGrid /> -->
 	</section>
 </main>
+
+<style lang="scss">
+	.input-group {
+		@apply flex items-center justify-start gap-2;
+
+		label {
+			@apply text-slate-700;
+		}
+	}
+</style>
