@@ -31,12 +31,12 @@ export const expandShrinkGrid = (grid: string[][], rows: number, columns: number
 	result = grid;
 
 	// expand / shrink given grid
-	let currentRows = result.length;
-	let currentCols = result[0].length;
+	const currentRows = result.length;
+	const currentCols = result[0].length;
 
 	if (rows > currentRows) {
 		// expand rows
-		let totalRows = rows - currentRows;
+		const totalRows = rows - currentRows;
 		console.log('Expanding rows by: ', totalRows);
 		for (let i = 0; i < totalRows; i++) {
 			result.push(Array(currentCols).fill(EMPTY_CHAR));
