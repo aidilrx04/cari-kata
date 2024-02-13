@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import CoverImage from './images/ogp-cover-image.jpg';
+	import CoverImage from '$lib/images/ogp-cover-image.jpg';
 
 	export let title = 'Cari Kata';
 	export let type = 'website';
