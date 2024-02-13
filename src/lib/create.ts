@@ -115,3 +115,39 @@ export const fillEmptyCell = (
 
 	return filled;
 };
+
+// get maximum valid length of word in grid and return the last length
+// before clashing with another character in grid
+export const getMaxValidLength = (
+	word: string,
+	start: Coord,
+	direction: ReturnType<typeof getDirection>,
+	grid: string[][]
+): number => {
+	// subtract 1 to count for 0 based grid system
+	const length = word.length - 1;
+
+	const end: Coord = {
+		x: start.x + direction.x * length,
+		y: start.y + direction.y * length
+	};
+
+	const steps = getSteps(start, end);
+
+	let count = 0;
+
+	for (let i = 0; i <= steps; i++) {
+		const x = start.x + direction.x * i;
+		const y = start.y + direction.y * i;
+
+		if (y >= grid.length || y < 0 || x > grid[0].length || x < 0) break;
+
+		const char = word[i];
+		const cell = grid[y][x];
+
+		if (cell !== char && cell !== EMPTY_CHAR) break;
+		count++;
+	}
+
+	return count;
+};
