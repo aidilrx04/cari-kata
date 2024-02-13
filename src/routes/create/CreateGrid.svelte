@@ -3,6 +3,7 @@
 	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
 	import {
 		EMPTY_CHAR,
+		clearCells,
 		createEmptyGrid,
 		expandShrinkGrid,
 		fillEmptyCell,
@@ -418,21 +419,6 @@
 
 	const restoreSolved = () => {
 		solved = [...previousSolved.map((i) => i.slice())];
-	};
-
-	const clearCells = (start: Coord, end: Coord, grid: string[][], excepts?: Coord[]) => {
-		const steps = getSteps(start, end);
-		const direction = getDirection(start.x, start.y, end.x, end.y);
-		for (let i = 0; i <= steps; i++) {
-			const x = start.x + direction.x * i;
-			const y = start.y + direction.y * i;
-
-			if (excepts !== undefined && excepts.findIndex((i) => i.x === x && i.y === y) >= 0) continue;
-
-			grid[y][x] = EMPTY_CHAR;
-		}
-
-		return grid;
 	};
 
 	const getIntersects = (start: Coord, end: Coord, items: WordInGrid[]) => {

@@ -151,3 +151,18 @@ export const getMaxValidLength = (
 
 	return count;
 };
+
+export const clearCells = (start: Coord, end: Coord, grid: string[][], excepts?: Coord[]) => {
+	const steps = getSteps(start, end);
+	const direction = getDirection(start.x, start.y, end.x, end.y);
+	for (let i = 0; i <= steps; i++) {
+		const x = start.x + direction.x * i;
+		const y = start.y + direction.y * i;
+
+		if (excepts !== undefined && excepts.findIndex((i) => i.x === x && i.y === y) >= 0) continue;
+
+		grid[y][x] = EMPTY_CHAR;
+	}
+
+	return grid;
+};
