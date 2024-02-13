@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
+	import { placeWords } from '$lib/create';
 	import type {
 		AddHighlight,
 		Coord,
@@ -220,14 +221,6 @@
 		}
 		grid = fillEmptyCell(solved);
 	});
-
-	const placeWords = (grid: string[][], words: WordInGrid[]) => {
-		words.forEach((word) => {
-			grid = placeWord(grid, word.value, word.start, word.end);
-		});
-
-		return grid;
-	};
 
 	function expandShrinkGrid(grid: string[][], rows: number, columns: number) {
 		let result: string[][];
@@ -735,20 +728,6 @@
 
 			cell.classList.remove('active');
 		});
-	};
-
-	const placeWord = (grid: string[][], word: string, start: Coord, end: Coord) => {
-		const direction = getDirection(start.x, start.y, end.x, end.y);
-		const steps = getSteps(start, end);
-
-		for (let i = 0; i <= steps; i++) {
-			const x = start.x + direction.x * i;
-			const y = start.y + direction.y * i;
-			const char = word[i];
-			grid[y][x] = char;
-		}
-
-		return grid;
 	};
 </script>
 
