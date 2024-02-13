@@ -84,7 +84,8 @@
 	// handle cell now split for touch end call
 	const handleCellRelease = (e: ComponentEvents<Cell>['releasedOn']) => {
 		$endCoord = e.detail.coord;
-		$isPressing = false;
+
+		releasePress();
 		onCellRelease(
 			{
 				coord: e.detail.coord,
@@ -184,9 +185,6 @@
 	};
 
 	const releasePress = () => {
-		// and dont set endCoord because the mouseup element is invalid
-
-		// set isPressing to false
 		$isPressing = false;
 	};
 
@@ -213,6 +211,7 @@
 		// check if element is valid tag and class
 		if (!isValidCellElement(element) || element?.dataset?.coord === undefined) {
 			console.log('Invalid endtouch target');
+			releasePress(); // reset press
 			onCellRelease(
 				{
 					coord: { x: 0, y: 0 },
@@ -223,7 +222,6 @@
 					updateGrid: updateGridFunction
 				}
 			);
-			releasePress(); // reset press
 			return;
 		}
 
@@ -231,6 +229,7 @@
 		const coordNumbers = coordString.split(',');
 		const cellCoord: Coord = { x: Number(coordNumbers[0]), y: Number(coordNumbers[1]) };
 
+		releasePress(); // reset press
 		onCellRelease(
 			{
 				coord: cellCoord,
