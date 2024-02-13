@@ -9,6 +9,7 @@
 		fillEmptyCell,
 		getIntersects,
 		getMaxValidLength,
+		getRangeCoords,
 		isValidPlacement,
 		placeWords
 	} from '$lib/create';
@@ -434,19 +435,6 @@
 		}
 
 		return null;
-	};
-
-	const getRangeCoords = (start: Coord, end: Coord) => {
-		const steps = getSteps(start, end);
-		const direction = getDirection(start.x, start.y, end.x, end.y);
-		const coords: Coord[] = [];
-		for (let i = 0; i <= steps; i++) {
-			const x = start.x + direction.x * i;
-			const y = start.y + direction.y * i;
-			coords.push({ x, y });
-		}
-
-		return coords;
 	};
 
 	const getCell = (coord: Coord) => {
