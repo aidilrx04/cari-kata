@@ -7,7 +7,11 @@
 		Word,
 		OnCellPress,
 		OnCellRelease,
-		OnCellMove
+		OnCellMove,
+		HighlightData,
+		AddHighlight,
+		UpdateHighlight,
+		RemoveHighlight
 	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
@@ -18,6 +22,10 @@
 
 	export let rows: number;
 	export let columns: number;
+
+	export let addHighlight: AddHighlight | undefined = undefined;
+	export let updateHighlight: UpdateHighlight | undefined = undefined;
+	export let removeHighlight: RemoveHighlight | undefined = undefined;
 
 	export let handleCellPress: OnCellPress | undefined = undefined;
 	export let handleCellRelease: OnCellRelease | undefined = undefined;
@@ -61,7 +69,13 @@
 	style:max-width="{containerWidth}px"
 	bind:this={container}
 >
-	<HighlightManager {containerRect} onCellMove={handleCellMove} />
+	<HighlightManager
+		{containerRect}
+		onCellMove={handleCellMove}
+		bind:addHighlight
+		bind:removeHighlight
+		bind:updateHighlight
+	/>
 	<div
 		id="ck-grid"
 		class="grid relative bg-slate-50 dark:bg-slate-600 rounded-md"

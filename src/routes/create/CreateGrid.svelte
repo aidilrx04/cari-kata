@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
 	import type {
+		AddHighlight,
 		Coord,
 		GridOptions,
 		HighlightData,
@@ -9,6 +10,8 @@
 		OnCellPress,
 		OnCellRelease,
 		OnSuccessPlacement,
+		RemoveHighlight,
+		UpdateHighlight,
 		WordInGrid
 	} from '$lib/types';
 	import {
@@ -26,7 +29,7 @@
 	} from '$lib/util';
 	import Grid from '../game/Grid.svelte';
 	import rgba from 'color-rgba';
-	import { addHighlight, removeHighlight, updateHighlight } from '../game/HighlightManager.svelte';
+	// import { addHighlight, removeHighlight, updateHighlight } from '../game/HighlightManager.svelte';
 	import { onMount } from 'svelte';
 
 	export let rows: number;
@@ -34,6 +37,10 @@
 	export let selected: string = '';
 
 	export let onSuccessPlacement: OnSuccessPlacement = () => {};
+
+	let addHighlight: AddHighlight;
+	let updateHighlight: UpdateHighlight;
+	let removeHighlight: RemoveHighlight;
 
 	let previousRows: number = rows;
 	let previousColumns: number = columns;
@@ -758,7 +765,17 @@
 			{/if}
 		</button>
 	</div>
-	<Grid words={[]} options={gridOptions} {handleCellPress} {handleCellRelease} {handleCellMove} />
+	<Grid
+		grid={gridOptions.grid}
+		{columns}
+		{rows}
+		{handleCellPress}
+		{handleCellRelease}
+		{handleCellMove}
+		bind:addHighlight
+		bind:updateHighlight
+		bind:removeHighlight
+	/>
 </div>
 
 <style lang="scss">
