@@ -2,7 +2,7 @@
 	import Board from '$lib/components/Board.svelte';
 	import Timer from '$lib/Timer.svelte';
 	import Words from './Words.svelte';
-	import Modal from '$lib/Modal.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import FinishModal from './FinishModal.svelte';
 	import type { Solved } from '$lib/types';
 	import type { PageServerData } from './$types';

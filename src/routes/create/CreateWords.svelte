@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Modal from '$lib/Modal.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import { currentColor } from '$lib/colors';
 	import type { WordInGrid } from '$lib/types';
 	import { fly } from 'svelte/transition';
