@@ -24,3 +24,41 @@ export const placeWords = (grid: string[][], words: WordInGrid[]) => {
 
 	return grid;
 };
+
+export const expandShrinkGrid = (grid: string[][], rows: number, columns: number) => {
+	let result: string[][];
+
+	result = grid;
+
+	// expand / shrink given grid
+	let currentRows = result.length;
+	let currentCols = result[0].length;
+
+	if (rows > currentRows) {
+		// expand rows
+		let totalRows = rows - currentRows;
+		console.log('Expanding rows by: ', totalRows);
+		for (let i = 0; i < totalRows; i++) {
+			result.push(Array(currentCols).fill(EMPTY_CHAR));
+		}
+	} else if (rows < currentRows) {
+		// shrink rows
+		console.log('Shrinking rows by: ', currentRows - rows);
+
+		result = result.slice(0, currentRows - (currentRows - rows));
+	}
+
+	if (columns > currentCols) {
+		// expand all rows
+		const totalCols = columns - currentCols;
+		for (let i = 0; i < result.length; i++) {
+			result[i] = [...result[i], ...Array(totalCols).fill(EMPTY_CHAR)];
+		}
+	} else if (columns < currentCols) {
+		for (let i = 0; i < result.length; i++) {
+			result[i] = result[i].slice(0, currentCols - (currentCols - columns));
+		}
+	}
+
+	return result;
+};
