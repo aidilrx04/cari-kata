@@ -1,10 +1,11 @@
+import type { WordInGrid } from './types';
 import { shuffle } from './util';
 
 export type WordSearch = {
 	grid: string[][];
 	solved: string[][];
 	unplaced: string[];
-	words: string[];
+	words: WordInGrid[];
 	config: WordSearchOption;
 };
 
@@ -40,7 +41,7 @@ export const wordsearch = (
 		config.letters = LETTERS;
 	}
 
-	const usedWords: string[] = [];
+	const usedWords: WordInGrid[] = [];
 	const unplaced: string[] = [];
 
 	// populate the grid with empty arrays
@@ -120,7 +121,12 @@ export const wordsearch = (
 				x += info.dx;
 			}
 
-			usedWords.push(originalWord);
+			usedWords.push({
+				value: word,
+				display: word,
+				start: { x: ox, y: oy },
+				end: { x: ox + word.length * info.dx, y: oy + +word.length * info.dy }
+			});
 			break;
 		} // end placement loop
 
