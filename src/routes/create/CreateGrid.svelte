@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
-	import { EMPTY_CHAR, expandShrinkGrid, placeWords } from '$lib/create';
+	import { EMPTY_CHAR, createEmptyGrid, expandShrinkGrid, placeWords } from '$lib/create';
 	import type {
 		AddHighlight,
 		Coord,
@@ -220,15 +220,6 @@
 		}
 		grid = fillEmptyCell(solved);
 	});
-
-	function createEmptyGrid(rows: number, columns: number) {
-		let result: string[][] = [];
-
-		result = Array(rows)
-			.fill(null)
-			.map(() => Array(columns).fill(EMPTY_CHAR));
-		return result;
-	}
 
 	const handleCellPress: OnCellPress = (cell, grid) => {
 		if (showGrid) return;

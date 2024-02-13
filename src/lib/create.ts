@@ -25,6 +25,15 @@ export const placeWords = (grid: string[][], words: WordInGrid[]) => {
 	return grid;
 };
 
+export const createEmptyGrid = (rows: number, columns: number) => {
+	let result: string[][] = [];
+
+	result = Array(rows)
+		.fill(null)
+		.map(() => Array(columns).fill(EMPTY_CHAR));
+	return result;
+};
+
 export const expandShrinkGrid = (grid: string[][], rows: number, columns: number) => {
 	let result: string[][];
 
