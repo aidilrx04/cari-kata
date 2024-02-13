@@ -37,7 +37,7 @@
 		getCoordIntersectPerpendicularOnAngle,
 		getCoordFromString
 	} from '$lib/util';
-	import Board from '../game/Board.svelte';
+	import Board from '$lib/components/Board.svelte';
 	import rgba from 'color-rgba';
 	// import { addHighlight, removeHighlight, updateHighlight } from '../game/HighlightManager.svelte';
 	import { onMount } from 'svelte';

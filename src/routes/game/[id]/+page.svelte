@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import Modal from '$lib/Modal.svelte';
-	import Board from '../Board.svelte';
+	import Board from '$lib/components/Board.svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;

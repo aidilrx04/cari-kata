@@ -8,8 +8,8 @@
 		UpdateHighlight,
 		RemoveHighlight
 	} from '$lib/types';
-	import CellsManager from './CellsManager.svelte';
-	import HighlightManager from './HighlightManager.svelte';
+	import CellsManager from '../../routes/game/CellsManager.svelte';
+	import HighlightManager from '../../routes/game/HighlightManager.svelte';
 	import { ResizeObserver } from '@juggle/resize-observer';
 
 	// grid containers scambled letters

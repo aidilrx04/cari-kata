@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Board from './Board.svelte';
+	import Board from '$lib/components/Board.svelte';
 	import Timer from '$lib/Timer.svelte';
 	import Words from './Words.svelte';
 	import Modal from '$lib/Modal.svelte';
