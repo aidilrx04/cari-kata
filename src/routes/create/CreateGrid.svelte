@@ -691,6 +691,9 @@
 
 	const toggleGrid = () => {
 		showGrid = !showGrid;
+
+		toggleHighlight(!showGrid);
+		togglePlacedWords(!showGrid);
 	};
 
 	const toggleHighlight = (show: boolean) => {
