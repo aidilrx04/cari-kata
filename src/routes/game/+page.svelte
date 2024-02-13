@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Grid from './Grid.svelte';
+	import Board from './Board.svelte';
 	import Timer from '$lib/Timer.svelte';
 	import Words from './Words.svelte';
 	import Modal from '$lib/Modal.svelte';
@@ -81,7 +81,7 @@
 grid grid-cols-1 mt-28 relative min-h-[400px]
 lg:grid-cols-2 lg:gap-3 lg:mt-0"
 		>
-			<Grid options={game.grid} words={game.words} bind:solvedWords />
+			<Board options={game.grid} words={game.words} bind:solvedWords />
 			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
 				<header class="absolute bottom-[104%] left-0 w-full lg:static">
 					<div class="content-header flex items-center justify-between my-4 px-4">

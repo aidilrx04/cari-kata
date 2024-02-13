@@ -37,7 +37,7 @@
 		getCoordIntersectPerpendicularOnAngle,
 		getCoordFromString
 	} from '$lib/util';
-	import Grid from '../game/Grid.svelte';
+	import Board from '../game/Board.svelte';
 	import rgba from 'color-rgba';
 	// import { addHighlight, removeHighlight, updateHighlight } from '../game/HighlightManager.svelte';
 	import { onMount } from 'svelte';
@@ -517,7 +517,7 @@
 			{/if}
 		</button>
 	</div>
-	<Grid
+	<Board
 		grid={gridOptions.grid}
 		{columns}
 		{rows}

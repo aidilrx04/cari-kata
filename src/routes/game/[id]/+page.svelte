@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import Modal from '$lib/Modal.svelte';
-	import Grid from '../Grid.svelte';
+	import Board from '../Board.svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -41,7 +41,7 @@
 	</div>
 
 	<h2 class="text-slate-600 text-sm font-semibold mb-3">Game Board</h2>
-	<Grid
+	<Board
 		options={{
 			columns: 7,
 			rows: 9,
