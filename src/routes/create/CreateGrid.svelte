@@ -9,6 +9,7 @@
 		fillEmptyCell,
 		getIntersects,
 		getMaxValidLength,
+		getNearestAngle,
 		getPlacedWord,
 		getRangeCoords,
 		isValidPlacement,
@@ -31,7 +32,6 @@
 		getDirection,
 		getSteps,
 		getAngle,
-		binarySearch,
 		getDirectionByAngle,
 		getLineLength,
 		getCoordIntersectPerpendicularOnAngle,
@@ -451,35 +451,6 @@
 			cell?.classList.remove('active');
 		});
 	};
-
-	function getNearestAngle(angle: number, angles: number[]): number {
-		// Ensure angles array is not empty
-		if (angles.length === 0) {
-			throw new Error('Angles array must not be empty.');
-		}
-
-		// Sort the angles array in ascending order
-		angles.sort((a, b) => a - b);
-
-		// Find the index of the angle in the sorted array
-		const index = binarySearch(angle, angles);
-
-		// Check if the angle is exactly equal to one of the values in the array
-		if (index !== -1 && angles[index] === angle) {
-			return angle; // Angle is in the array, no need to snap
-		} else {
-			// Find the two nearest angles
-			const lowerAngle = angles[index];
-			const upperAngle = angles[index + 1];
-
-			// Snap to the nearest angle
-			if (upperAngle === undefined || Math.abs(angle - lowerAngle) < Math.abs(angle - upperAngle)) {
-				return lowerAngle;
-			} else {
-				return upperAngle;
-			}
-		}
-	}
 
 	const toggleGrid = () => {
 		showGrid = !showGrid;
