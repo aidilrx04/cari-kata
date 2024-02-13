@@ -7,6 +7,7 @@
 		createEmptyGrid,
 		expandShrinkGrid,
 		fillEmptyCell,
+		getIntersects,
 		getMaxValidLength,
 		isValidPlacement,
 		placeWords
@@ -27,8 +28,6 @@
 	import {
 		getDirection,
 		getSteps,
-		parallelLineOverlap,
-		line_intersect,
 		isCoordOnLine,
 		getAngle,
 		binarySearch,
@@ -419,53 +418,6 @@
 
 	const restoreSolved = () => {
 		solved = [...previousSolved.map((i) => i.slice())];
-	};
-
-	const getIntersects = (start: Coord, end: Coord, items: WordInGrid[]) => {
-		let intersects: { item: WordInGrid; coord: Coord[] }[] = [];
-
-		for (let i = 0; i < items.length; i++) {
-			const item = items[i];
-
-			let parallelOverlaps = parallelLineOverlap(
-				{
-					start,
-					end
-				},
-				{
-					start: item.start,
-					end: item.end
-				}
-			);
-
-			if (parallelOverlaps) {
-				intersects.push({
-					item: item,
-					coord: parallelOverlaps
-				});
-			}
-
-			const intersect = line_intersect(
-				start.x,
-				start.y,
-				end.x,
-				end.y,
-				item.start.x,
-				item.start.y,
-				item.end.x,
-				item.end.y
-			);
-
-			if (!intersect) {
-				continue;
-			}
-
-			intersects.push({
-				item: item,
-				coord: [intersect]
-			});
-		}
-		return intersects;
 	};
 
 	let intersectId = 0;

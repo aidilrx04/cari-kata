@@ -1,5 +1,5 @@
 import type { Coord, WordInGrid } from './types';
-import { getDirection, getSteps } from './util';
+import { getDirection, getSteps, line_intersect, parallelLineOverlap } from './util';
 
 export const EMPTY_CHAR = ' ';
 
@@ -165,4 +165,51 @@ export const clearCells = (start: Coord, end: Coord, grid: string[][], excepts?:
 	}
 
 	return grid;
+};
+
+export const getIntersects = (start: Coord, end: Coord, items: WordInGrid[]) => {
+	const intersects: { item: WordInGrid; coord: Coord[] }[] = [];
+
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i];
+
+		const parallelOverlaps = parallelLineOverlap(
+			{
+				start,
+				end
+			},
+			{
+				start: item.start,
+				end: item.end
+			}
+		);
+
+		if (parallelOverlaps) {
+			intersects.push({
+				item: item,
+				coord: parallelOverlaps
+			});
+		}
+
+		const intersect = line_intersect(
+			start.x,
+			start.y,
+			end.x,
+			end.y,
+			item.start.x,
+			item.start.y,
+			item.end.x,
+			item.end.y
+		);
+
+		if (!intersect) {
+			continue;
+		}
+
+		intersects.push({
+			item: item,
+			coord: [intersect]
+		});
+	}
+	return intersects;
 };
