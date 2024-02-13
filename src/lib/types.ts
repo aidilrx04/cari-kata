@@ -113,3 +113,7 @@ export type WordInGrid = Word & {
 	start: Coord;
 	end: Coord;
 };
+
+export type AddHighlight = (data: Omit<HighlightData, 'id'>) => HighlightData;
+export type UpdateHighlight = (id: number, data: Partial<Omit<HighlightData, 'id'>>) => void;
+export type RemoveHighlight = (id: number) => void;

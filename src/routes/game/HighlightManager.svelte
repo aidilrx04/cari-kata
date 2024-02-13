@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { currentColor } from '$lib/colors';
 	import type {
+		AddHighlight,
 		CalcHighlightWidth,
 		Coord,
 		HighlightData,
 		HighlightUpdate,
 		OnCellMove,
-		Solved
+		RemoveHighlight,
+		Solved,
+		UpdateHighlight
 	} from '$lib/types';
 	import { getAngle, getCoordFromString, isValidCellElement } from '$lib/util';
 	import { get, writable } from 'svelte/store';
@@ -82,7 +85,7 @@
 		highlights = highlights.slice(1);
 	}
 
-	export const addHighlight = (data: Omit<HighlightData, 'id'>) => {
+	export let addHighlight: AddHighlight = (data) => {
 		const toAdd = {
 			id: idCounter,
 			...data
@@ -95,14 +98,14 @@
 		return toAdd;
 	};
 
-	export const updateHighlight = (id: number, data: Partial<Omit<HighlightData, 'id'>>) => {
+	export const updateHighlight: UpdateHighlight = (id, data) => {
 		const index = highlights.findIndex((i) => i.id === id);
 		highlights[index] = { ...highlights[index], ...data };
 
 		highlights = [...highlights];
 	};
 
-	export const removeHighlight = (id: number) => {
+	export const removeHighlight: RemoveHighlight = (id) => {
 		highlights = highlights.filter((i) => i.id !== id);
 	};
 
