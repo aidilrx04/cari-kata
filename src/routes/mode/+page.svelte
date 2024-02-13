@@ -1,6 +1,6 @@
 <script>
 	import OGP from '$lib/OGP.svelte';
-	import Meta from '$lib/Meta.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import ModeCard from './ModeCard.svelte';
 	import { MODES, MODE_TYPES } from '$lib/modes';
 	import { onDestroy } from 'svelte';

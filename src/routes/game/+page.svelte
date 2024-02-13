@@ -7,7 +7,7 @@
 	import type { Solved } from '$lib/types';
 	import type { PageServerData } from './$types';
 	import { functions } from '$lib/functions';
-	import Meta from '$lib/Meta.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import Ogp from '$lib/OGP.svelte';
 
 	export let data: PageServerData;
