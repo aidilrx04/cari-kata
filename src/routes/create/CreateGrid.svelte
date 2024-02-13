@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
-	import { placeWords } from '$lib/create';
+	import { EMPTY_CHAR, placeWords } from '$lib/create';
 	import type {
 		AddHighlight,
 		Coord,
@@ -46,7 +46,6 @@
 	let previousRows: number = rows;
 	let previousColumns: number = columns;
 
-	const EMPTY_CHAR = ' ';
 	export let solved: string[][] = [];
 
 	$: if (

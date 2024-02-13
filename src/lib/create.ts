@@ -1,6 +1,8 @@
 import type { Coord, WordInGrid } from './types';
 import { getDirection, getSteps } from './util';
 
+export const EMPTY_CHAR = ' ';
+
 const placeWord = (grid: string[][], word: string, start: Coord, end: Coord) => {
 	const direction = getDirection(start.x, start.y, end.x, end.y);
 	const steps = getSteps(start, end);
