@@ -71,3 +71,34 @@ export const expandShrinkGrid = (grid: string[][], rows: number, columns: number
 
 	return result;
 };
+
+export const isValidPlacement = (
+	coords: { start: Coord; end: Coord },
+	word: string,
+	grid: string[][],
+	allowOverflow = false
+) => {
+	const { start, end } = coords;
+
+	const distance = getSteps(start, end) + 1;
+
+	const direction = getDirection(start.x, start.y, end.x, end.y);
+
+	for (let i = 0; i < distance; i++) {
+		const x = start.x + direction.x * i;
+		const y = start.y + direction.y * i;
+
+		const char = word[i];
+
+		if (char === undefined && !allowOverflow) return false;
+		if (char === undefined && allowOverflow) return true;
+
+		const charInCell = grid[y][x];
+
+		// skip if cell is considered 'empty'
+		if (charInCell === EMPTY_CHAR) continue;
+
+		if (charInCell !== char) return false;
+	}
+	return true;
+};

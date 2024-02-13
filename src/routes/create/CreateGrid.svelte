@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { colors, currentColor, pickRandomColor, updateCurrentColor } from '$lib/colors';
-	import { EMPTY_CHAR, createEmptyGrid, expandShrinkGrid, placeWords } from '$lib/create';
+	import {
+		EMPTY_CHAR,
+		createEmptyGrid,
+		expandShrinkGrid,
+		isValidPlacement,
+		placeWords
+	} from '$lib/create';
 	import type {
 		AddHighlight,
 		Coord,
@@ -317,37 +323,6 @@
 		currentGrid.updateGrid(solved);
 		previousSolved = solved;
 		updateCurrentColor();
-	};
-
-	const isValidPlacement = (
-		coords: { start: Coord; end: Coord },
-		word: string,
-		grid: string[][],
-		allowOverflow = false
-	) => {
-		const { start, end } = coords;
-
-		const distance = getSteps(start, end) + 1;
-
-		const direction = getDirection(start.x, start.y, end.x, end.y);
-
-		for (let i = 0; i < distance; i++) {
-			let x = start.x + direction.x * i;
-			let y = start.y + direction.y * i;
-
-			let char = word[i];
-
-			if (char === undefined && !allowOverflow) return false;
-			if (char === undefined && allowOverflow) return true;
-
-			let charInCell = grid[y][x];
-
-			// skip if cell is considered 'empty'
-			if (charInCell === EMPTY_CHAR) continue;
-
-			if (charInCell !== char) return false;
-		}
-		return true;
 	};
 
 	const fillEmptyCell = (grid: string[][]) => {
