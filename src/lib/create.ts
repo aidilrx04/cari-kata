@@ -1,5 +1,5 @@
 import type { Coord, WordInGrid } from './types';
-import { getDirection, getSteps, line_intersect, parallelLineOverlap } from './util';
+import { getDirection, getSteps, isCoordOnLine, line_intersect, parallelLineOverlap } from './util';
 
 export const EMPTY_CHAR = ' ';
 
@@ -225,4 +225,13 @@ export const getRangeCoords = (start: Coord, end: Coord) => {
 	}
 
 	return coords;
+};
+
+export const getPlacedWord = (coord: Coord, placedWords: WordInGrid[]) => {
+	for (let i = 0; i < placedWords.length; i++) {
+		const placed = placedWords[i];
+		if (isCoordOnLine(coord, placed)) return placed;
+	}
+
+	return null;
 };

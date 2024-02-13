@@ -9,6 +9,7 @@
 		fillEmptyCell,
 		getIntersects,
 		getMaxValidLength,
+		getPlacedWord,
 		getRangeCoords,
 		isValidPlacement,
 		placeWords
@@ -29,7 +30,6 @@
 	import {
 		getDirection,
 		getSteps,
-		isCoordOnLine,
 		getAngle,
 		binarySearch,
 		getDirectionByAngle,
@@ -426,15 +426,6 @@
 		intersectId++;
 		intersections[intersectId] = coord;
 		return intersectId;
-	};
-
-	const getPlacedWord = (coord: Coord, placedWords: WordInGrid[]) => {
-		for (let i = 0; i < placedWords.length; i++) {
-			const placed = placedWords[i];
-			if (isCoordOnLine(coord, placed)) return placed;
-		}
-
-		return null;
 	};
 
 	const getCell = (coord: Coord) => {
