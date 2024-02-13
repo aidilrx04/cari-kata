@@ -1,7 +1,7 @@
 <script>
 	import Footer from '$lib/components/Footer.svelte';
 	import Meta from '$lib/components/Meta.svelte';
-	import Navigation from '$lib/Navigation.svelte';
+	import Navigation from '$lib/components/Navigation.svelte';
 	import Ogp from '$lib/OGP.svelte';
 </script>
 

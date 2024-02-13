@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentTheme, theme } from './theme';
+	import { currentTheme, theme } from '../theme';
 
 	export let showDropdown = false;
 

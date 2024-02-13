@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Footer from '$lib/components/Footer.svelte';
-	import Navigation from '$lib/Navigation.svelte';
+	import Navigation from '$lib/components/Navigation.svelte';
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { currentTheme, theme } from '$lib/theme';
