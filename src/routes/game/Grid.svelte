@@ -1,14 +1,9 @@
 <script lang="ts">
-	import { wordsearch } from '$lib/wordsearch';
 	import { onMount } from 'svelte';
 	import type {
-		Solved,
-		GridOptions,
-		Word,
 		OnCellPress,
 		OnCellRelease,
 		OnCellMove,
-		HighlightData,
 		AddHighlight,
 		UpdateHighlight,
 		RemoveHighlight
