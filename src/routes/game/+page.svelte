@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Board from '$lib/components/Board.svelte';
-	import Timer from '$lib/Timer.svelte';
+	import Timer from './Timer.svelte';
 	import Words from './Words.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import FinishModal from './FinishModal.svelte';

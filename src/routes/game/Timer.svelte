@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { addPrefix } from './util';
+	import { addPrefix } from '../../lib/util';
 
 	export let startAt: Date;
 	export let finishAt: Date | null = null;
