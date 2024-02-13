@@ -102,3 +102,16 @@ export const isValidPlacement = (
 	}
 	return true;
 };
+
+export const fillEmptyCell = (
+	grid: string[][],
+	CHARACTERS: string | string[] = 'abcdefghijklmnopqrstuvwxyz'
+) => {
+	const filled = grid.map((row) =>
+		row.map((cell) =>
+			cell === EMPTY_CHAR ? CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)] : cell
+		)
+	);
+
+	return filled;
+};

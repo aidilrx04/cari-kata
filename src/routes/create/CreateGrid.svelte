@@ -5,6 +5,7 @@
 		EMPTY_CHAR,
 		createEmptyGrid,
 		expandShrinkGrid,
+		fillEmptyCell,
 		isValidPlacement,
 		placeWords
 	} from '$lib/create';
@@ -323,17 +324,6 @@
 		currentGrid.updateGrid(solved);
 		previousSolved = solved;
 		updateCurrentColor();
-	};
-
-	const fillEmptyCell = (grid: string[][]) => {
-		const CHARACTERS = 'abcdefghijklmnopqrstuvwxyz';
-		const filled = grid.map((row) =>
-			row.map((cell) =>
-				cell === EMPTY_CHAR ? CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)] : cell
-			)
-		);
-
-		return filled;
 	};
 
 	const handleCellMove: OnCellMove = (start, current, highlight, options) => {
