@@ -1,5 +1,5 @@
 <script>
-	import OGP from '$lib/OGP.svelte';
+	import OGP from '$lib/components/OGP.svelte';
 	import Meta from '$lib/components/Meta.svelte';
 	import ModeCard from './ModeCard.svelte';
 	import { MODES, MODE_TYPES } from '$lib/modes';

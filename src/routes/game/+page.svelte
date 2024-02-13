@@ -8,7 +8,7 @@
 	import type { PageServerData } from './$types';
 	import { functions } from '$lib/functions';
 	import Meta from '$lib/components/Meta.svelte';
-	import Ogp from '$lib/OGP.svelte';
+	import Ogp from '$lib/components/OGP.svelte';
 
 	export let data: PageServerData;
 

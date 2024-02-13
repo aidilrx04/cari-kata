@@ -2,7 +2,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Meta from '$lib/components/Meta.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
-	import Ogp from '$lib/OGP.svelte';
+	import Ogp from '$lib/components/OGP.svelte';
 </script>
 
 <Meta title="Cari Kata" />
