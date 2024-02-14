@@ -11,6 +11,7 @@
 		OnCellPress,
 		OnCellRelease,
 		ResetCells,
+		Solved,
 		WordInGrid
 	} from '$lib/types';
 	import { getAngle } from '$lib/util';
@@ -19,10 +20,7 @@
 	export let rows: number;
 	export let columns: number;
 	export let words: WordInGrid[];
-	export let solveds: {
-		word: WordInGrid;
-		highlight: HighlightData;
-	}[] = [];
+	export let solveds: Solved[] = [];
 
 	let wordCoords: { start: Coord; end: Coord }[] = [];
 	$: wordCoords = words.map(({ start, end }) => ({ start, end }));

@@ -87,6 +87,7 @@ lg:grid-cols-2 lg:gap-3 lg:mt-0"
 				words={game.words}
 				rows={game.grid.rows}
 				columns={game.grid.columns}
+				bind:solveds={solvedWords}
 			/>
 			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
 				<header class="absolute bottom-[104%] left-0 w-full lg:static">

@@ -29,10 +29,8 @@ export type Coord = {
 };
 
 export type Solved = {
-	word: string;
-	coords: Coord[];
-	angle: number;
-	color?: string;
+	word: WordInGrid;
+	highlight: HighlightData;
 };
 
 export type Game = {

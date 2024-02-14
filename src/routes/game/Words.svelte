@@ -30,13 +30,13 @@
 	};
 
 	const getBackgroundColor = (word: string, solvedWords: Solved[]) => {
-		const color = solvedWords.find((solved) => solved.word === word)?.color ?? '';
+		const color = solvedWords.find((solved) => solved.word.value === word)?.highlight.color ?? '';
 
 		return color;
 	};
 
 	const isSolved = (word: string, solvedWords: Solved[]) => {
-		const index = solvedWords.findIndex((solved) => solved.word === word);
+		const index = solvedWords.findIndex((solved) => solved.word.value === word);
 		return index >= 0;
 	};
 </script>
