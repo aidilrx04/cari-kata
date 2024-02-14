@@ -16,6 +16,7 @@
 <div class="finish-modal">
 	{#if showModal}
 		<Modal
+			open={showModal}
 			on:close={() => {
 				showModal = false;
 			}}

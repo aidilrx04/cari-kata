@@ -132,6 +132,7 @@ lg:grid-cols-2 lg:gap-3 lg:mt-0"
 			</div>
 		</div>
 	{/if}
+</main>
 
 	{#if hasFinished && timeStartedAt && timeFinishedAt}
 		<FinishModal
@@ -139,4 +140,3 @@ lg:grid-cols-2 lg:gap-3 lg:mt-0"
 			duration={timeFinishedAt.getTime() - timeStartedAt.getTime()}
 		/>
 	{/if}
-</main>
