@@ -78,6 +78,10 @@ export type OnCellRelease = (
 	}
 ) => void;
 
+export type ActivateCells = (coords: Coord[]) => void;
+export type DeactivateCells = (coords: Coord[]) => void;
+export type ResetCells = () => void;
+
 export type HighlightData = {
 	id: number;
 	angle: number;

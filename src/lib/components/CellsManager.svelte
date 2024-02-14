@@ -10,7 +10,16 @@
 <script lang="ts">
 	import type { ComponentEvents } from 'svelte';
 	import Cell from './Cell.svelte';
-	import type { Coord, OnCellPress, OnCellRelease, Solved, Word } from '$lib/types';
+	import type {
+		ActivateCells,
+		Coord,
+		DeactivateCells,
+		OnCellPress,
+		OnCellRelease,
+		ResetCells,
+		Solved,
+		Word
+	} from '$lib/types';
 	import { writable } from 'svelte/store';
 	import { getDirection, isValidCellElement, validateAngle } from '$lib/util';
 	import { currentColor } from '$lib/colors';
@@ -28,6 +37,11 @@
 	// grid column
 	export let column: number;
 
+	// indicates whether particular cell is active or not
+	let cellStates: { [coord: string]: boolean } = {
+		// ['0,0']: true
+	};
+
 	const updateCellFunction = (coord: Coord) => {
 		return function (cell: { value: string }) {
 			grid[coord.y][coord.x] = cell.value;
@@ -42,6 +56,24 @@
 	export let onCellPress: OnCellPress = () => {};
 	export let onCellRelease: OnCellRelease = () => {
 		// calculateAnswer();
+	};
+
+	export const activateCells: ActivateCells = (coords: Coord[]) => {
+		coords.forEach((coord) => {
+			const coordStr = `${coord.x},${coord.y}`;
+			cellStates[coordStr] = true;
+		});
+	};
+
+	export const deactivateCells: DeactivateCells = (coords: Coord[]) => {
+		coords.forEach((coord) => {
+			const coordStr = `${coord.x},${coord.y}`;
+			cellStates[coordStr] = false;
+		});
+	};
+
+	export const resetCells: ResetCells = () => {
+		cellStates = {};
 	};
 
 	// set the cellWidth and cellHeight based on containerRect
@@ -254,6 +286,7 @@
 			height={$cellHeight}
 			on:pressedOn={handleCellPress}
 			on:releasedOn={handleCellRelease}
+			active={cellStates[`${j},${i}`] ?? false}
 		>
 			{letter}
 		</Cell>
