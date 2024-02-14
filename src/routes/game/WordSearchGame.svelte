@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentColor } from '$lib/colors';
+	import { currentColor, updateCurrentColor } from '$lib/colors';
 	import Board from '$lib/components/Board.svelte';
 	import { getRangeCoords } from '$lib/create';
 	import type {
@@ -28,9 +28,24 @@
 	let start: Coord;
 	let end: Coord;
 
-	$: if (start && end) {
+	let addHighlight: AddHighlight;
+	let activateCells: ActivateCells;
+	let deactivateCells: DeactivateCells;
+	let resetCells: ResetCells;
+
+	const handleCellPress: OnCellPress = ({ coord }) => {
+		start = coord;
+	};
+	const handleCellRelease: OnCellRelease = ({ coord, valid }) => {
+		if (valid) {
+			end = coord;
+
+			calculateAnswer();
+		}
+	};
+
+	const calculateAnswer = () => {
 		const answer = findAnswer(start, end, wordCoords);
-		console.log(answer);
 		if (answer >= 0) {
 			const word = words[answer];
 
@@ -45,20 +60,8 @@
 			activateCells(coords);
 
 			solveds = [...solveds, { word, highlight }];
-		}
-	}
 
-	let addHighlight: AddHighlight;
-	let activateCells: ActivateCells;
-	let deactivateCells: DeactivateCells;
-	let resetCells: ResetCells;
-
-	const handleCellPress: OnCellPress = ({ coord }) => {
-		start = coord;
-	};
-	const handleCellRelease: OnCellRelease = ({ coord, valid }) => {
-		if (valid) {
-			end = coord;
+			updateCurrentColor();
 		}
 	};
 
@@ -68,7 +71,6 @@
 
 			// normal order left -> right, top -> bottom word order
 			if (isCoordEqual(start, coord.start) && isCoordEqual(end, coord.end)) {
-				console.log('balls');
 				return i;
 			}
 
