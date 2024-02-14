@@ -125,7 +125,7 @@ export const wordsearch = (
 				value: word,
 				display: word,
 				start: { x: ox, y: oy },
-				end: { x: ox + word.length * info.dx, y: oy + +word.length * info.dy }
+				end: { x: ox + (word.length - 1) * info.dx, y: oy + (word.length - 1) * info.dy } // - 1 to consider 0-based board grid
 			});
 			break;
 		} // end placement loop
