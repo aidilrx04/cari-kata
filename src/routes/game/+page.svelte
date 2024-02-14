@@ -58,9 +58,9 @@
 <Meta title="Permainan | Cari Kata" description="Main sekarang!" />
 <Ogp title="Permainan | Cari Kata" />
 
-<main class="p-3 relative my-5 min-h-[400px]">
 	{#if !hasStarted}
 		<Modal
+		open={true}
 			class="bg-slate-50 dark:bg-slate-700 w-[250px] max-w-full px-2 py-1 shadow top-[70%] rounded"
 		>
 			<div slot="header" class="text-xl text-center mb-2">Cari Kata</div>
@@ -75,6 +75,7 @@
 			<div slot="footer" />
 		</Modal>
 	{/if}
+<main class="p-3 relative my-5 min-h-[400px]">
 	{#if hasStarted}
 		<div
 			id="ck-game"
