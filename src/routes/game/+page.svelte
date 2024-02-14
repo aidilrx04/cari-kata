@@ -9,6 +9,7 @@
 	import { functions } from '$lib/functions';
 	import Meta from '$lib/components/Meta.svelte';
 	import Ogp from '$lib/components/OGP.svelte';
+	import WordSearchGame from './WordSearchGame.svelte';
 
 	export let data: PageServerData;
 
@@ -81,7 +82,12 @@
 grid grid-cols-1 mt-28 relative min-h-[400px]
 lg:grid-cols-2 lg:gap-3 lg:mt-0"
 		>
-			<Board options={game.grid} words={game.words} bind:solvedWords />
+			<WordSearchGame
+				grid={game.grid.grid}
+				words={game.words}
+				rows={game.grid.rows}
+				columns={game.grid.columns}
+			/>
 			<div class="bg-slate-50 dark:bg-slate-700 rounded-md">
 				<header class="absolute bottom-[104%] left-0 w-full lg:static">
 					<div class="content-header flex items-center justify-between my-4 px-4">
