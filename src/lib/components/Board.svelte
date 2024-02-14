@@ -6,7 +6,10 @@
 		OnCellMove,
 		AddHighlight,
 		UpdateHighlight,
-		RemoveHighlight
+		RemoveHighlight,
+		ActivateCells,
+		DeactivateCells,
+		ResetCells
 	} from '$lib/types';
 	import CellsManager from './CellsManager.svelte';
 	import HighlightManager from './HighlightManager.svelte';
@@ -25,6 +28,9 @@
 	export let handleCellPress: OnCellPress | undefined = undefined;
 	export let handleCellRelease: OnCellRelease | undefined = undefined;
 	export let handleCellMove: OnCellMove | undefined = undefined;
+	export let activateCells: ActivateCells | undefined = undefined;
+	export let deactivateCells: DeactivateCells | undefined = undefined;
+	export let resetCells: ResetCells | undefined = undefined;
 
 	let container: HTMLDivElement;
 
@@ -81,6 +87,9 @@
 			<CellsManager
 				onCellPress={handleCellPress}
 				onCellRelease={handleCellRelease}
+				bind:activateCells
+				bind:deactivateCells
+				bind:resetCells
 				{grid}
 				{containerRect}
 				column={columns}
