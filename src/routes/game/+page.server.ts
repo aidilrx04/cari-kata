@@ -96,7 +96,7 @@ export const load: PageServerLoad = async (req) => {
 		totalWordsInGrid: 16
 	});
 
-	game.words = result.words.map((word) => ({ value: word, display: word }));
+	game.words = result.words;
 	game.grid.grid = result.grid;
 	game.grid.solved = result.solved;
 

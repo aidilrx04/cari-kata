@@ -37,7 +37,7 @@ export type Solved = {
 
 export type Game = {
 	title: string;
-	words: Word[];
+	words: WordInGrid[];
 	timeStartedAt?: number;
 	timeFinishedAt?: number;
 
