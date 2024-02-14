@@ -5,8 +5,9 @@
 	// coord of the cell on the grid
 	export let coord: Coord;
 
-	// indicate whether the cell has been found
-	export let found: boolean = false;
+	// indicate whether the cell is active
+	// active is when cell is within a highlight
+	export let active: boolean = false;
 
 	// cell dimension
 	export let width: number;
@@ -43,7 +44,7 @@
 		class="cell relative flex items-center justify-center select-none uppercase z-20"
 		style:width="{width}px"
 		style:height="{height}px"
-		class:text-slate-50={found}
+		class:active
 		data-coord={[coord.x, coord.y]}
 		on:mousedown={handleMouseDown}
 		on:mouseup={handleMouseUp}
@@ -56,5 +57,9 @@
 <style>
 	span {
 		touch-action: none;
+	}
+
+	.cell.active {
+		@apply text-slate-50;
 	}
 </style>
