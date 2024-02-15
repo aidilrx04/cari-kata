@@ -41,15 +41,7 @@
 	</div>
 
 	<h2 class="text-slate-600 text-sm font-semibold mb-3">Game Board</h2>
-	<Board
-		options={{
-			columns: 7,
-			rows: 9,
-			grid: [],
-			solved: []
-		}}
-		words={[]}
-	/>
+	<Board grid={game.grid.grid} columns={game.grid.columns} rows={game.grid.rows} />
 
 	<a
 		href="/create"
