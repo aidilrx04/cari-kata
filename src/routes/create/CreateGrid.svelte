@@ -16,8 +16,10 @@
 		placeWords
 	} from '$lib/create';
 	import type {
+		ActivateCells,
 		AddHighlight,
 		Coord,
+		DeactivateCells,
 		GridOptions,
 		HighlightData,
 		OnCellMove,
@@ -51,6 +53,8 @@
 	let addHighlight: AddHighlight;
 	let updateHighlight: UpdateHighlight;
 	let removeHighlight: RemoveHighlight;
+	let activateCells: ActivateCells;
+	let deactivateCells: DeactivateCells;
 
 	let previousRows: number = rows;
 	let previousColumns: number = columns;
@@ -162,7 +166,7 @@
 	}
 
 	let placedCoords: Coord[] = [];
-	$: if (placedWords && browser) {
+	$: if (placedWords && browser && activateCells && deactivateCells) {
 		const coords = placedWords.map((i) => getRangeCoords(i.start, i.end)).flat();
 
 		const changed = placedCoords.filter(
@@ -195,7 +199,8 @@
 	// show highlighted placed words
 	export let showHighlight = true;
 
-	$: {
+	// wait for cells manipulate function to bind
+	$: if (activateCells !== undefined && deactivateCells !== undefined) {
 		toggleHighlight(showHighlight);
 		togglePlacedWords(showHighlight);
 	}
@@ -428,30 +433,6 @@
 		return intersectId;
 	};
 
-	const getCell = (coord: Coord) => {
-		if (!browser) {
-			console.warn('This function must be only called on client!');
-
-			return;
-		}
-
-		const cell = document.querySelector(`[data-coord="${coord.x},${coord.y}"]`);
-		return cell;
-	};
-	const activateCells = (coords: Coord[]) => {
-		coords.forEach((coord) => {
-			const cell = getCell(coord);
-			cell?.classList.add('active');
-		});
-	};
-
-	const deactivateCells = (coords: Coord[]) => {
-		coords.forEach((coord) => {
-			const cell = getCell(coord);
-			cell?.classList.remove('active');
-		});
-	};
-
 	const toggleGrid = () => {
 		showGrid = !showGrid;
 
@@ -527,6 +508,8 @@
 		bind:addHighlight
 		bind:updateHighlight
 		bind:removeHighlight
+		bind:activateCells
+		bind:deactivateCells
 	/>
 </div>
 
